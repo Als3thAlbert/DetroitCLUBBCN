@@ -2,39 +2,668 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DETROIT CLUB — Underground Techno</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="description" content="Detroit Club - Underground Techno Institution. L'Hospitalet de Llobregat, Barcelona.">
+    <title>DETROIT CLUB</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="Logo Detroit club-OSW-01.png" as="image" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Fonts: Industrial brutalist typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
     <style>
+        /* CSS RESET & VARIABLES */
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #111111;
-            --bg-tertiary: #1a1a1a;
-            --text-primary: #e0e0e0;
-            --text-secondary: #888888;
-            --text-muted: #555555;
-            --accent-red: #8b2635;
-            --accent-red-hover: #a33040;
-            --border-color: #2a2a2a;
-            --concrete: #151515;
+            /* Industrial Color Palette - No pure black/white */
+            --void: #080808;
+            --concrete: #0f0f0f;
+            --steel: #1a1a1a;
+            --ash: #2a2a2a;
+            --dust: #3a3a3a;
+            --fog: #666666;
+            --smoke: #999999;
+            --bone: #c4c4c4;
+            --mist: #e0e0e0;
+            
+            /* Oxidized Red - Industrial accent */
+            --rust: #7a1f2a;
+            --blood: #8b2635;
+            --ember: #a03040;
+            
+            /* Typography Scale - Brutalist */
+            --font-display: 'Anton', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            /* Spacing - 8px grid */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-xxl: 5rem;
+            
+            /* Transitions */
+            --transition-sharp: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
-            scroll-behavior: smooth;
             font-size: 16px;
+            scroll-behavior: smooth;
+            background: var(--void);
+            color: var(--mist);
+        }
+
+        @media (min-width: 768px) {
+            html { font-size: 18px; }
         }
 
         body {
-            font-family: 'Oswald', sans-serif;
-            background-color: var(--bg-primary);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.5;
+            background: var(--void);
+            color: var(--mist);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* SELECTION - Industrial red */
+        ::selection {
+            background: var(--blood);
+            color: var(--void);
+        }
+
+        /* SCROLLBAR - Raw industrial */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: var(--concrete);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--dust);
+            border: 2px solid var(--concrete);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--fog);
+        }
+
+        /* LAYERS - Z-index management */
+        .layer-grain { z-index: 9999; }
+        .layer-scanlines { z-index: 9998; }
+        .layer-dust { z-index: 100; }
+        .layer-nav { z-index: 90; }
+        .layer-content { z-index: 10; }
+        .layer-bg { z-index: 1; }
+
+        /* TEXTURE OVERLAYS */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: grain 12s steps(15) infinite;
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-2%, -5%); }
+            20% { transform: translate(-5%, 2%); }
+            30% { transform: translate(3%, -8%); }
+            40% { transform: translate(-2%, 8%); }
+            50% { transform: translate(-5%, 3%); }
+            60% { transform: translate(5%, 0%); }
+            70% { transform: translate(0%, 5%); }
+            80% { transform: translate(1%, 8%); }
+            90% { transform: translate(-3%, 3%); }
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,0,0,0.15),
+                rgba(0,0,0,0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* DUST PARTICLE SYSTEM */
+        .dust-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(224, 224, 224, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* HEADER - Brutalist sticky */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 90;
+            padding: var(--space-md) var(--space-md);
+            background: linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.6) 60%, transparent 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            transition: all var(--transition-smooth);
+            border-bottom: 1px solid transparent;
+        }
+
+        .header.scrolled {
+            background: rgba(8,8,8,0.98);
+            border-bottom-color: var(--ash);
+            padding: var(--space-sm) var(--space-md);
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 36px;
+            width: auto;
+            opacity: 0.9;
+            transition: opacity var(--transition-sharp);
+            filter: drop-shadow(0 0 20px rgba(139,38,53,0.15));
+        }
+
+        .header-logo:hover {
+            opacity: 1;
+        }
+
+        @media (min-width: 768px) {
+            .header-logo { height: 44px; }
+            .header { padding: var(--space-md) var(--space-xl); }
+        }
+
+        /* CONTROLS */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        /* LANGUAGE SELECTOR - Technical */
+        .lang-switcher {
+            display: flex;
+            gap: 2px;
+            background: var(--steel);
+            padding: 4px;
+            border: 1px solid var(--ash);
+        }
+
+        .lang-btn {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 6px 10px;
+            background: transparent;
+            border: none;
+            color: var(--fog);
+            cursor: pointer;
+            transition: all var(--transition-sharp);
+        }
+
+        .lang-btn:hover {
+            color: var(--mist);
+        }
+
+        .lang-btn.active {
+            background: var(--blood);
+            color: var(--mist);
+        }
+
+        /* HAMBURGER - Industrial brutalist */
+        .menu-trigger {
+            width: 32px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+
+        .menu-trigger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--bone);
+            transition: all var(--transition-sharp);
+            transform-origin: center;
+        }
+
+        .menu-trigger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .menu-trigger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .menu-trigger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* FULL SCREEN MENU - Brutalist overlay */
+        .fullscreen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--void);
+            z-index: 80;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--space-xl);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-smooth);
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        }
+
+        .fullscreen-menu.active {
+            opacity: 1;
+            visibility: visible;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .menu-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .menu-link {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 12vw, 6rem);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--mist);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all var(--transition-sharp);
+            position: relative;
+            display: inline-block;
+            transform: translateX(-20px);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease, color 0.2s;
+        }
+
+        .fullscreen-menu.active .menu-link {
+            transform: translateX(0);
+            opacity: 0.8;
+        }
+
+        .fullscreen-menu.active .menu-link:nth-child(1) { transition-delay: 0.1s; }
+        .fullscreen-menu.active .menu-link:nth-child(2) { transition-delay: 0.15s; }
+        .fullscreen-menu.active .menu-link:nth-child(3) { transition-delay: 0.2s; }
+        .fullscreen-menu.active .menu-link:nth-child(4) { transition-delay: 0.25s; }
+        .fullscreen-menu.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
+
+        .menu-link:hover {
+            color: var(--blood);
+            opacity: 1;
+            transform: translateX(20px);
+        }
+
+        .menu-link::before {
+            content: '→';
+            position: absolute;
+            left: -60px;
+            opacity: 0;
+            transition: all var(--transition-sharp);
+            color: var(--blood);
+        }
+
+        .menu-link:hover::before {
+            opacity: 1;
+            left: -40px;
+        }
+
+        /* HERO SECTION - Full brutalist impact */
+        .hero {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: var(--space-xl) var(--space-md);
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(122,31,42,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(42,42,42,0.3) 0%, transparent 50%),
+                var(--void);
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .hero-logo {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin-bottom: var(--space-xl);
+            filter: drop-shadow(0 0 60px rgba(139,38,53,0.25));
+            animation: logoReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+        }
+
+        @keyframes logoReveal {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            animation: fadeUp 1s ease 0.6s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-tagline {
+            font-family: var(--font-mono);
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--smoke);
+        }
+
+        .hero-location {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: var(--fog);
+            text-transform: uppercase;
+        }
+
+        /* SCROLL INDICATOR */
+        .scroll-indicator {
+            position: absolute;
+            bottom: var(--space-xl);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .scroll-text {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--fog);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--fog), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 0.8; transform: scaleY(1); }
+        }
+
+        /* SECTION BASE */
+        section {
+            position: relative;
+            padding: var(--space-xxl) var(--space-md);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            section {
+                padding: var(--space-xxl) var(--space-xl);
+            }
+        }
+
+        .section-header {
+            margin-bottom: var(--space-xl);
+            border-bottom: 1px solid var(--ash);
+            padding-bottom: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--blood);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 8vw, 4rem);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--mist);
+            font-weight: 400;
+        }
+
+        /* EVENTS SECTION - Priority layout */
+        .events-section {
+            background: var(--concrete);
+            position: relative;
+        }
+
+        .events-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--ash), transparent);
+        }
+
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+        }
+
+        /* EVENT CARD - Brutalist architecture */
+        .event-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .event-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(122,31,42,0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .event-card:hover {
+            border-color: var(--dust);
+            transform: translateX(4px);
+            box-shadow: -8px 8px 0 var(--blood);
+        }
+
+        @media (min-width: 768px) {
+            .event-card {
+                grid-template-columns: 280px 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .event-card {
+                grid-template-columns: 320px 1fr;
+            }
+        }
+
+        .event-visual {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            background: var(--concrete);
+        }
+
+        @media (min-width: 768px) {
+            .event-visual {
+                aspect-ratio: auto;
+            }
+        }
+
+        .event-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(40%) contrast(1.1) brightness(0.9);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .event-card:hover .event-image {
+            filter: grayscale(0%) contrast(1.2) brightness(1);
+            transform: scale(1.05);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: var(--space-md);
+            left: 0;
+            background: var(--blood);
+            color: var(--mist);
+            padding: var(--space-xs) var(--space-md);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            z-index: 2;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+        }
+
+        .event-content {
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: var(--space-lg);            background-color: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.4;
