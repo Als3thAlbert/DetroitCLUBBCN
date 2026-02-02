@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="description" content="Detroit Club - Underground Techno Institution. L'Hospitalet de Llobregat, Barcelona.">
+    <title>DETROIT CLUB</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="Logo Detroit club-OSW-01.png" as="image" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts: Industrial brutalist typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS RESET & VARIABLES */
+        :root {
+            /* Industrial Color Palette - No pure black/white */
+            --void: #080808;
+            --concrete: #0f0f0f;
+            --steel: #1a1a1a;
+            --ash: #2a2a2a;
+            --dust: #3a3a3a;
+            --fog: #666666;
+            --smoke: #999999;
+            --bone: #c4c4c4;
+            --mist: #e0e0e0;
+            
+            /* Oxidized Red - Industrial accent */
+            --rust: #7a1f2a;
+            --blood: #8b2635;
+            --ember: #a03040;
+            
+            /* Typography Scale - Brutalist */
+            --font-display: 'Anton', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            /* Spacing - 8px grid */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-xxl: 5rem;
+            
+            /* Transitions */
+            --transition-sharp: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            background: var(--void);
+            color: var(--mist);
+        }
+
+        @media (min-width: 768px) {
+            html { font-size: 18px; }
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.5;
+            background: var(--void);
+            color: var(--mist);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* SELECTION - Industrial red */
+        ::selection {
+            background: var(--blood);
+            color: var(--void);
+        }
+
+        /* SCROLLBAR - Raw industrial */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: var(--concrete);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--dust);
+            border: 2px solid var(--concrete);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--fog);
+        }
+
+        /* LAYERS - Z-index management */
+        .layer-grain { z-index: 9999; }
+        .layer-scanlines { z-index: 9998; }
+        .layer-dust { z-index: 100; }
+        .layer-nav { z-index: 90; }
+        .layer-content { z-index: 10; }
+        .layer-bg { z-index: 1; }
+
+        /* TEXTURE OVERLAYS */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: grain 12s steps(15) infinite;
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-2%, -5%); }
+            20% { transform: translate(-5%, 2%); }
+            30% { transform: translate(3%, -8%); }
+            40% { transform: translate(-2%, 8%); }
+            50% { transform: translate(-5%, 3%); }
+            60% { transform: translate(5%, 0%); }
+            70% { transform: translate(0%, 5%); }
+            80% { transform: translate(1%, 8%); }
+            90% { transform: translate(-3%, 3%); }
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,0,0,0.15),
+                rgba(0,0,0,0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* DUST PARTICLE SYSTEM */
+        .dust-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(224, 224, 224, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* HEADER - Brutalist sticky */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 90;
+            padding: var(--space-md) var(--space-md);
+            background: linear-gradient(to bottom, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.6) 60%, transparent 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            transition: all var(--transition-smooth);
+            border-bottom: 1px solid transparent;
+        }
+
+        .header.scrolled {
+            background: rgba(8,8,8,0.98);
+            border-bottom-color: var(--ash);
+            padding: var(--space-sm) var(--space-md);
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 36px;
+            width: auto;
+            opacity: 0.9;
+            transition: opacity var(--transition-sharp);
+            filter: drop-shadow(0 0 20px rgba(139,38,53,0.15));
+        }
+
+        .header-logo:hover {
+            opacity: 1;
+        }
+
+        @media (min-width: 768px) {
+            .header-logo { height: 44px; }
+            .header { padding: var(--space-md) var(--space-xl); }
+        }
+
+        /* CONTROLS */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        /* LANGUAGE SELECTOR - Technical */
+        .lang-switcher {
+            display: flex;
+            gap: 2px;
+            background: var(--steel);
+            padding: 4px;
+            border: 1px solid var(--ash);
+        }
+
+        .lang-btn {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 6px 10px;
+            background: transparent;
+            border: none;
+            color: var(--fog);
+            cursor: pointer;
+            transition: all var(--transition-sharp);
+        }
+
+        .lang-btn:hover {
+            color: var(--mist);
+        }
+
+        .lang-btn.active {
+            background: var(--blood);
+            color: var(--mist);
+        }
+
+        /* HAMBURGER - Industrial brutalist */
+        .menu-trigger {
+            width: 32px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+
+        .menu-trigger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--bone);
+            transition: all var(--transition-sharp);
+            transform-origin: center;
+        }
+
+        .menu-trigger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .menu-trigger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .menu-trigger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* FULL SCREEN MENU - Brutalist overlay */
+        .fullscreen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--void);
+            z-index: 80;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--space-xl);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-smooth);
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        }
+
+        .fullscreen-menu.active {
+            opacity: 1;
+            visibility: visible;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .menu-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .menu-link {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 12vw, 6rem);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--mist);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all var(--transition-sharp);
+            position: relative;
+            display: inline-block;
+            transform: translateX(-20px);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease, color 0.2s;
+        }
+
+        .fullscreen-menu.active .menu-link {
+            transform: translateX(0);
+            opacity: 0.8;
+        }
+
+        .fullscreen-menu.active .menu-link:nth-child(1) { transition-delay: 0.1s; }
+        .fullscreen-menu.active .menu-link:nth-child(2) { transition-delay: 0.15s; }
+        .fullscreen-menu.active .menu-link:nth-child(3) { transition-delay: 0.2s; }
+        .fullscreen-menu.active .menu-link:nth-child(4) { transition-delay: 0.25s; }
+        .fullscreen-menu.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
+
+        .menu-link:hover {
+            color: var(--blood);
+            opacity: 1;
+            transform: translateX(20px);
+        }
+
+        .menu-link::before {
+            content: '→';
+            position: absolute;
+            left: -60px;
+            opacity: 0;
+            transition: all var(--transition-sharp);
+            color: var(--blood);
+        }
+
+        .menu-link:hover::before {
+            opacity: 1;
+            left: -40px;
+        }
+
+        /* HERO SECTION - Full brutalist impact */
+        .hero {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: var(--space-xl) var(--space-md);
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(122,31,42,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(42,42,42,0.3) 0%, transparent 50%),
+                var(--void);
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .hero-logo {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin-bottom: var(--space-xl);
+            filter: drop-shadow(0 0 60px rgba(139,38,53,0.25));
+            animation: logoReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+        }
+
+        @keyframes logoReveal {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            animation: fadeUp 1s ease 0.6s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-tagline {
+            font-family: var(--font-mono);
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--smoke);
+        }
+
+        .hero-location {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: var(--fog);
+            text-transform: uppercase;
+        }
+
+        /* SCROLL INDICATOR */
+        .scroll-indicator {
+            position: absolute;
+            bottom: var(--space-xl);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .scroll-text {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--fog);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--fog), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 0.8; transform: scaleY(1); }
+        }
+
+        /* SECTION BASE */
+        section {
+            position: relative;
+            padding: var(--space-xxl) var(--space-md);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            section {
+                padding: var(--space-xxl) var(--space-xl);
+            }
+        }
+
+        .section-header {
+            margin-bottom: var(--space-xl);
+            border-bottom: 1px solid var(--ash);
+            padding-bottom: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--blood);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 8vw, 4rem);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--mist);
+            font-weight: 400;
+        }
+
+        /* EVENTS SECTION - Priority layout */
+        .events-section {
+            background: var(--concrete);
+            position: relative;
+        }
+
+        .events-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--ash), transparent);
+        }
+
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+        }
+
+        /* EVENT CARD - Brutalist architecture */
+        .event-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .event-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(122,31,42,0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .event-card:hover {
+            border-color: var(--dust);
+            transform: translateX(4px);
+            box-shadow: -8px 8px 0 var(--blood);
+        }
+
+        @media (min-width: 768px) {
+            .event-card {
+                grid-template-columns: 280px 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .event-card {
+                grid-template-columns: 320px 1fr;
+            }
+        }
+
+        .event-visual {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            background: var(--concrete);
+        }
+
+        @media (min-width: 768px) {
+            .event-visual {
+                aspect-ratio: auto;
+            }
+        }
+
+        .event-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(40%) contrast(1.1) brightness(0.9);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .event-card:hover .event-image {
+            filter: grayscale(0%) contrast(1.2) brightness(1);
+            transform: scale(1.05);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: var(--space-md);
+            left: 0;
+            background: var(--blood);
+            color: var(--mist);
+            padding: var(--space-xs) var(--space-md);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            z-index: 2;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+        }
+
+        .event-content {
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: var(--space-lg);
+            position: relative;
+            z-index: 2;
+        }
+
+        .event-header {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .event-date {
+            display: flex;
+            align-items: flex-end;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .event-day {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 10vw, 5rem);
+            line-height: 0.85;
+            color: var(--blood);
+            opacity: 0.9;
+        }
+
+        .event-month-block {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-month {
+            font-size: 1.1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mist);
+            font-weight: 500;
+        }
+
+        .event-year {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--fog);
+        }
+
+        .event-time {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--smoke);
+            padding: var(--space-xs) var(--space-sm);
+            border: 1px solid var(--ash);
+            align-self: flex-end;
+        }
+
+        .event-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            color: var(--mist);
+            margin-top: var(--space-sm);
+        }
+
+        .event-lineup {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+
+        .artist {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--smoke);
+            position: relative;
+            padding-left: var(--space-md);
+        }
+
+        .artist::before {
+            content: '//';
+            position: absolute;
+            left: 0;
+            color: var(--blood);
+        }
+
+        .event-actions {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--ash);
+        }
+
+        /* BUTTONS - Industrial brutalist */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-lg);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--ash);
+            background: transparent;
+            color: var(--mist);
+            cursor: pointer;
+            transition: all var(--transition-sharp);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--blood);
+            transform: translateX(-100%);
+            transition: transform var(--transition-sharp);
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn:hover {
+            border-color: var(--blood);
+            color: var(--mist);
+        }
+
+        .btn-primary {
+            background: var(--blood);
+            border-color: var(--blood);
+        }
+
+        .btn-primary::before {
+            background: var(--ember);
+        }
+
+        .btn-primary:hover {
+            border-color: var(--ember);
+        }
+
+        /* CALENDAR SECTION - Brutalist grid */
+        .calendar-section {
+            background: var(--void);
+        }
+
+        .calendar-container {
+            border: 1px solid var(--ash);
+            background: var(--concrete);
+        }
+
+        .calendar-header-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            border-bottom: 1px solid var(--ash);
+        }
+
+        .calendar-day-name {
+            padding: var(--space-md) var(--space-xs);
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--fog);
+            border-right: 1px solid var(--ash);
+        }
+
+        .calendar-day-name:last-child {
+            border-right: none;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .calendar-cell {
+            aspect-ratio: 1;
+            border-right: 1px solid var(--ash);
+            border-bottom: 1px solid var(--ash);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-sharp);
+            position: relative;
+            min-height: 60px;
+        }
+
+        .calendar-cell:nth-child(7n) {
+            border-right: none;
+        }
+
+        .calendar-cell:hover {
+            background: var(--steel);
+        }
+
+        .calendar-cell.other-month {
+            opacity: 0.3;
+        }
+
+        .calendar-cell.has-event {
+            background: rgba(122,31,42,0.05);
+        }
+
+        .calendar-cell.has-event .cell-number {
+            color: var(--mist);
+            font-weight: 500;
+        }
+
+        .calendar-cell.highlight {
+            background: var(--blood);
+            border-color: var(--blood);
+        }
+
+        .calendar-cell.highlight .cell-number {
+            color: var(--mist);
+            font-weight: 700;
+        }
+
+        .calendar-cell.highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            width: 4px;
+            height: 4px;
+            background: var(--mist);
+            border-radius: 50%;
+        }
+
+        .cell-number {
+            font-size: 1rem;
+            color: var(--fog);
+            font-family: var(--font-body);
+            font-weight: 300;
+        }
+
+        .cell-event-dot {
+            position: absolute;
+            bottom: 8px;
+            width: 4px;
+            height: 4px;
+            background: var(--blood);
+            border-radius: 50%;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-cell {
+                min-height: 80px;
+            }
+            .cell-number {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* MERCH SECTION */
+        .merch-section {
+            background: var(--concrete);
+        }
+
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--ash);
+            border: 1px solid var(--ash);
+        }
+
+        @media (min-width: 768px) {
+            .merch-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .merch-item {
+            position: relative;
+            aspect-ratio: 1;
+            background: var(--steel);
+            overflow: hidden;
+            cursor: pointer;
+            group: merch;
+        }
+
+        .merch-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(60%) contrast(1.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .merch-item:hover img {
+            filter: grayscale(0%) contrast(1.2);
+            transform: scale(1.1);
+        }
+
+        .merch-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--space-md);
+            background: linear-gradient(to top, rgba(8,8,8,0.95), transparent);
+            transform: translateY(100%);
+            transition: transform var(--transition-smooth);
+        }
+
+        .merch-item:hover .merch-info {
+            transform: translateY(0);
+        }
+
+        .merch-name {
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            color: var(--mist);
+        }
+
+        .merch-price {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--blood);
+        }
+
+        /* LOCATION SECTION */
+        .location-section {
+            background: var(--void);
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-xl);
+        }
+
+        @media (min-width: 768px) {
+            .location-grid {
+                grid-template-columns: 1.2fr 1fr;
+            }
+        }
+
+        .map-block {
+            position: relative;
+            aspect-ratio: 16/10;
+            background: var(--concrete);
+            border: 1px solid var(--ash);
+            overflow: hidden;
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    var(--concrete),
+                    var(--concrete) 10px,
+                    var(--steel) 10px,
+                    var(--steel) 20px
+                );
+            position: relative;
+        }
+
+        .map-placeholder::before {
+            content: 'LOADING MAP DATA...';
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--fog);
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        .location-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+        }
+
+        .info-block h3 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--blood);
+            margin-bottom: var(--space-sm);
+            font-weight: 500;
+        }
+
+        .info-block p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--bone);
+            font-weight: 300;
+        }
+
+        .info-block .address {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--smoke);
+            line-height: 1.8;
+        }
+
+        .metro-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-top: var(--space-sm);
+        }
+
+        .metro-line {
+            display: inline-block;
+            background: var(--blood);
+            color: var(--mist);
+            padding: 4px 10px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* FLOATING ACTION BUTTON */
+        .fab {
+            position: fixed;
+            bottom: var(--space-lg);
+            right: var(--space-lg);
+            z-index: 50;
+        }
+
+        .fab-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--blood);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(139,38,53,0.4);
+            transition: all var(--transition-sharp);
+            animation: fabPulse 4s ease-in-out infinite;
+            text-decoration: none;
+        }
+
+        @keyframes fabPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(139,38,53,0.4); }
+            50% { box-shadow: 0 4px 30px rgba(139,38,53,0.7); }
+        }
+
+        .fab-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: var(--ember);
+            box-shadow: 0 6px 30px rgba(139,38,53,0.6);
+        }
+
+        .fab-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--mist);
+        }
+
+        /* FOOTER - Minimal brutalist */
+        .footer {
+            background: var(--void);
+            border-top: 1px solid var(--ash);
+            padding: var(--space-xxl) var(--space-md) var(--space-xl);
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xl);
+        }
+
+        .footer-logo {
+            height: 28px;
+            opacity: 0.4;
+            transition: opacity var(--transition-sharp);
+        }
+
+        .footer-logo:hover {
+            opacity: 0.7;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: var(--space-lg);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-link {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--fog);
+            text-decoration: none;
+            transition: color var(--transition-sharp);
+        }
+
+        .footer-link:hover {
+            color: var(--mist);
+        }
+
+        .admin-gate {
+            margin-top: var(--space-xl);
+            padding: var(--space-xs) var(--space-md);
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            color: var(--dust);
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: all var(--transition-sharp);
+            opacity: 0.3;
+        }
+
+        .admin-gate:hover {
+            opacity: 0.8;
+            border-color: var(--ash);
+            color: var(--fog);
+        }
+
+        .copyright {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--dust);
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        /* UTILITY CLASSES */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* REDUCED MOTION */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* LOADING STATE */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--void);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-text {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.5em;
+            color: var(--fog);
+            animation: loadingPulse 1.5s infinite;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loader">
+        <div class="loading-text">DETROIT CLUB // LOADING</div>
+    </div>
+
+    <!-- Texture Overlays -->
+    <div class="grain-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div class="dust-container" id="dustContainer"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#hero" aria-label="Detroit Club Home">
+                <img src="Logo Detroit club-OSW-01.png" alt="Detroit Club" class="header-logo" id="headerLogo">
+            </a>
+            <div class="header-controls">
+                <div class="lang-switcher" role="group" aria-label="Language selector">
+                    <button class="lang-btn active" data-lang="es" aria-label="Español">ES</button>
+                    <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                    <button class="lang-btn" data-lang="ca" aria-label="Català">CA</button>
+                    <button class="lang-btn" data-lang="it" aria-label="Italiano">IT</button>
+                </div>
+                <button class="menu-trigger" id="menuTrigger" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Fullscreen Menu -->
+    <nav class="fullscreen-menu" id="fullscreenMenu" aria-hidden="true">
+        <div class="menu-nav">
+            <a href="#events" class="menu-link" data-i18n="nav.events">Eventos</a>
+            <a href="#agenda" class="menu-link" data-i18n="nav.agenda">Agenda</a>
+            <a href="#merch" class="menu-link" data-i18n="nav.merch">Merch</a>
+            <a href="#location" class="menu-link" data-i18n="nav.location">Ubicación</a>
+            <a href="https://www.residentadvisor.net" target="_blank" class="menu-link" data-i18n="nav.tickets">Tickets</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <img src="Logo Detroit club-OSW-01.png" alt="Detroit Club" class="hero-logo" id="heroLogo">
+            <div class="hero-meta">
+                <p class="hero-tagline" data-i18n="hero.tagline">Tecnología Underground desde 2026</p>
+                <p class="hero-location">L'Hospitalet de Llobregat, Barcelona</p>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span class="scroll-text" data-i18n="hero.scroll">Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section" id="events" aria-labelledby="events-heading">
+        <div class="section-header">
+            <span class="section-label" data-i18n="events.label">Programación</span>
+            <h2 class="section-title" id="events-heading" data-i18n="events.title">Próximos Eventos</h2>
+        </div>
+
+        <div class="event-list">
+            <!-- Priority Event: Inauguration -->
+            <article class="event-card" data-date="2026-02-14" id="event-inauguration">
+                <div class="event-visual">
+                    <span class="event-badge" data-i18n="events.inauguration">Inauguración</span>
+                    <img src="https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=1080&h=1350&fit=crop&q=80" 
+                         alt="Inauguración Detroit Club" 
+                         class="event-image" 
+                         loading="eager"
+                         decoding="async">
+                </div>
+                <div class="event-content">
+                    <div class="event-header">
+                        <div class="event-date">
+                            <span class="event-day">14</span>
+                            <div class="event-month-block">
+                                <span class="event-month" data-i18n="months.february">Febrero</span>
+                                <span class="event-year">2026</span>
+                            </div>
+                            <span class="event-time">23:59 → 06:00</span>
+                        </div>
+                        <h3 class="event-title" data-i18n="events.inauguration_title">Inauguración Detroit Club</h3>
+                        <div class="event-lineup">
+                            <span class="artist">James Ruskin</span>
+                            <span class="artist">Cecilia Tosh</span>
+                            <span class="artist">Aaron Black</span>
+                        </div>
+                    </div>
+                    <div class="event-actions">
+                        <a href="https://www.residentadvisor.net" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="events.tickets">
+                            Tickets
+                        </a>
+                        <button class="btn" onclick="shareEvent('inauguracion')" data-i18n="events.share">
+                            Compartir
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 2 -->
+            <article class="event-card" data-date="2026-02-21">
+                <div class="event-visual">
+                    <img src="https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=1080&h=1350&fit=crop&q=80" 
+                         alt="Industrial Night" 
+                         class="event-image" 
+                         loading="lazy"
+                         decoding="async">
+                </div>
+                <div class="event-content">
+                    <div class="event-header">
+                        <div class="event-date">
+                            <span class="event-day">21</span>
+                            <div class="event-month-block">
+                                <span class="event-month" data-i18n="months.february">Febrero</span>
+                                <span class="event-year">2026</span>
+                            </div>
+                            <span class="event-time">23:59 → 06:00</span>
+                        </div>
+                        <h3 class="event-title">Industrial Night</h3>
+                        <div class="event-lineup">
+                            <span class="artist">Surgeon</span>
+                            <span class="artist">Regis</span>
+                            <span class="artist">Female</span>
+                        </div>
+                    </div>
+                    <div class="event-actions">
+                        <a href="https://www.residentadvisor.net" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="events.tickets">Tickets</a>
+                        <button class="btn" onclick="shareEvent('industrial')" data-i18n="events.share">Compartir</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 3 -->
+            <article class="event-card" data-date="2026-02-28">
+                <div class="event-visual">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1080&h=1350&fit=crop&q=80" 
+                         alt="Berlin Calling" 
+                         class="event-image" 
+                         loading="lazy"
+                         decoding="async">
+                </div>
+                <div class="event-content">
+                    <div class="event-header">
+                        <div class="event-date">
+                            <span class="event-day">28</span>
+                            <div class="event-month-block">
+                                <span class="event-month" data-i18n="months.february">Febrero</span>
+                                <span class="event-year">2026</span>
+                            </div>
+                            <span class="event-time">23:59 → 06:00</span>
+                        </div>
+                        <h3 class="event-title">Berlin Calling</h3>
+                        <div class="event-lineup">
+                            <span class="artist">Ben Klock</span>
+                            <span class="artist">Marcel Dettmann</span>
+                        </div>
+                    </div>
+                    <div class="event-actions">
+                        <a href="https://www.residentadvisor.net" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="events.tickets">Tickets</a>
+                        <button class="btn" onclick="shareEvent('berlin')" data-i18n="events.share">Compartir</button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="calendar-section" id="agenda" aria-labelledby="calendar-heading">
+        <div class="section-header">
+            <span class="section-label" data-i18n="calendar.label">Calendario</span>
+            <h2 class="section-title" id="calendar-heading" data-i18n="calendar.title">Agenda</h2>
+        </div>
+        <div class="calendar-container">
+            <div class="calendar-header-row">
+                <div class="calendar-day-name" data-i18n="days.mon">Lun</div>
+                <div class="calendar-day-name" data-i18n="days.tue">Mar</div>
+                <div class="calendar-day-name" data-i18n="days.wed">Mié</div>
+                <div class="calendar-day-name" data-i18n="days.thu">Jue</div>
+                <div class="calendar-day-name" data-i18n="days.fri">Vie</div>
+                <div class="calendar-day-name" data-i18n="days.sat">Sáb</div>
+                <div class="calendar-day-name" data-i18n="days.sun">Dom</div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="February 2026 calendar"></div>
+        </div>
+    </section>
+
+    <!-- Merch Section -->
+    <section class="merch-section" id="merch" aria-labelledby="merch-heading">
+        <div class="section-header">
+            <span class="section-label" data-i18n="merch.label">Tienda</span>
+            <h2 class="section-title" id="merch-heading" data-i18n="merch.title">Merch</h2>
+        </div>
+        <div class="merch-grid">
+            <div class="merch-item">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=600&fit=crop&q=80" 
+                     alt="Detroit Club T-Shirt" 
+                     loading="lazy"
+                     decoding="async">
+                <div class="merch-info">
+                    <div class="merch-name">Detroit Club Tee</div>
+                    <div class="merch-price">€35</div>
+                </div>
+            </div>
+            <div class="merch-item">
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=600&fit=crop&q=80" 
+                     alt="Industrial Hoodie" 
+                     loading="lazy"
+                     decoding="async">
+                <div class="merch-info">
+                    <div class="merch-name">Industrial Hoodie</div>
+                    <div class="merch-price">€75</div>
+                </div>
+            </div>
+            <div class="merch-item">
+                <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&h=600&fit=crop&q=80" 
+                     alt="Logo Cap" 
+                     loading="lazy"
+                     decoding="async">
+                <div class="merch-info">
+                    <div class="merch-name">Logo Cap</div>
+                    <div class="merch-price">€25</div>
+                </div>
+            </div>
+            <div class="merch-item">
+                <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&h=600&fit=crop&q=80" 
+                     alt="Compilation Vinyl" 
+                     loading="lazy"
+                     decoding="async">
+                <div class="merch-info">
+                    <div class="merch-name">Compilation Vinyl</div>
+                    <div class="merch-price">€30</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section" id="location" aria-labelledby="location-heading">
+        <div class="section-header">
+            <span class="section-label" data-i18n="location.label">Contacto</span>
+            <h2 class="section-title" id="location-heading" data-i18n="location.title">Ubicación</h2>
+        </div>
+        <div class="location-grid">
+            <div class="map-block">
+                <div class="map-placeholder"></div>
+            </div>
+            <div class="location-details">
+                <div class="info-block">
+                    <h3 data-i18n="location.address_title">Dirección</h3>
+                    <p class="address">
+                        Passatge Can Polític 13<br>
+                        08907 L'Hospitalet de Llobregat<br>
+                        Barcelona, Spain
+                    </p>
+                </div>
+                <div class="info-block">
+                    <h3 data-i18n="location.transport">Transporte</h3>
+                    <div class="metro-tag">
+                        <span class="metro-line">L1</span>
+                        <span data-i18n="location.metro">Av. Carrilet / Bellvitge</span>
+                    </div>
+                </div>
+                <div class="info-block">
+                    <h3 data-i18n="location.hours">Horario</h3>
+                    <p data-i18n="location.hours_text">Sábados: 23:59 → 06:00<br>Eventos especiales: Consultar agenda</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Action Button -->
+    <div class="fab">
+        <a href="https://t.me/detroitclub" target="_blank" rel="noopener" class="fab-btn" aria-label="Contactar por Telegram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <img src="Logo Detroit club-OSW-01.png" alt="Detroit Club" class="footer-logo">
+            <nav class="footer-nav" aria-label="Social links">
+                <a href="https://instagram.com" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+                <a href="https://soundcloud.com" target="_blank" rel="noopener" class="footer-link">SoundCloud</a>
+                <a href="https://residentadvisor.net" target="_blank" rel="noopener" class="footer-link">Resident Advisor</a>
+                <a href="mailto:info@detroitclub.es" class="footer-link">Email</a>
+            </nav>
+            <a href="/admin" class="admin-gate">Admin</a>
+            <p class="copyright">© 2026 Detroit Club. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // TRANSLATIONS SYSTEM
+        const i18n = {
+            es: {
+                'nav.events': 'Eventos',
+                'nav.agenda': 'Agenda',
+                'nav.merch': 'Merch',
+                'nav.location': 'Ubicación',
+                'nav.tickets': 'Tickets',
+                'hero.tagline': 'Tecnología Underground desde 2026',
+                'hero.scroll': 'Scroll',
+                'events.label': 'Programación',
+                'events.title': 'Próximos Eventos',
+                'events.inauguration': 'Inauguración',
+                'events.inauguration_title': 'Inauguración Detroit Club',
+                'events.tickets': 'Tickets',
+                'events.share': 'Compartir',
+                'calendar.label': 'Calendario',
+                'calendar.title': 'Agenda',
+                'merch.label': 'Tienda',
+                'merch.title': 'Merch',
+                'location.label': 'Contacto',
+                'location.title': 'Ubicación',
+                'location.address_title': 'Dirección',
+                'location.transport': 'Transporte',
+                'location.metro': 'Av. Carrilet / Bellvitge',
+                'location.hours': 'Horario',
+                'location.hours_text': 'Sábados: 23:59 → 06:00\nEventos especiales: Consultar agenda',
+                'months.february': 'Febrero',
+                'days.mon': 'Lun',
+                'days.tue': 'Mar',
+                'days.wed': 'Mié',
+                'days.thu': 'Jue',
+                'days.fri': 'Vie',
+                'days.sat': 'Sáb',
+                'days.sun': 'Dom'
+            },
+            en: {
+                'nav.events': 'Events',
+                'nav.agenda': 'Agenda',
+                'nav.merch': 'Merch',
+                'nav.location': 'Location',
+                'nav.tickets': 'Tickets',
+                'hero.tagline': 'Underground Techno since 2026',
+                'hero.scroll': 'Scroll',
+                'events.label': 'Program',
+                'events.title': 'Upcoming Events',
+                'events.inauguration': 'Opening',
+                'events.inauguration_title': 'Detroit Club Opening',
+                'events.tickets': 'Tickets',
+                'events.share': 'Share',
+                'calendar.label': 'Calendar',
+                'calendar.title': 'Agenda',
+                'merch.label': 'Shop',
+                'merch.title': 'Merch',
+                'location.label': 'Contact',
+                'location.title': 'Location',
+                'location.address_title': 'Address',
+                'location.transport': 'Transport',
+                'location.metro': 'Av. Carrilet / Bellvitge',
+                'location.hours': 'Hours',
+                'location.hours_text': 'Saturdays: 23:59 → 06:00\nSpecial events: Check agenda',
+                'months.february': 'February',
+                'days.mon': 'Mon',
+                'days.tue': 'Tue',
+                'days.wed': 'Wed',
+                'days.thu': 'Thu',
+                'days.fri': 'Fri',
+                'days.sat': 'Sat',
+                'days.sun': 'Sun'
+            },
+            ca: {
+                'nav.events': 'Esdeveniments',
+                'nav.agenda': 'Agenda',
+                'nav.merch': 'Merch',
+                'nav.location': 'Ubicació',
+                'nav.tickets': 'Entrades',
+                'hero.tagline': 'Tecnologia Underground des de 2026',
+                'hero.scroll': 'Scroll',
+                'events.label': 'Programació',
+                'events.title': 'Pròxims Esdeveniments',
+                'events.inauguration': 'Inauguració',
+                'events.inauguration_title': 'Inauguració Detroit Club',
+                'events.tickets': 'Entrades',
+                'events.share': 'Compartir',
+                'calendar.label': 'Calendari',
+                'calendar.title': 'Agenda',
+                'merch.label': 'Botiga',
+                'merch.title': 'Merch',
+                'location.label': 'Contacte',
+                'location.title': 'Ubicació',
+                'location.address_title': 'Adreça',
+                'location.transport': 'Transport',
+                'location.metro': 'Av. Carrilet / Bellvitge',
+                'location.hours': 'Horari',
+                'location.hours_text': 'Dissabtes: 23:59 → 06:00\nEsdeveniments especials: Consultar agenda',
+                'months.february': 'Febrer',
+                'days.mon': 'Dl',
+                'days.tue': 'Dt',
+                'days.wed': 'Dc',
+                'days.thu': 'Dj',
+                'days.fri': 'Dv',
+                'days.sat': 'Ds',
+                'days.sun': 'Dg'
+            },
+            it: {
+                'nav.events': 'Eventi',
+                'nav.agenda': 'Agenda',
+                'nav.merch': 'Merch',
+                'nav.location': 'Location',
+                'nav.tickets': 'Biglietti',
+                'hero.tagline': 'Tecnologia Underground dal 2026',
+                'hero.scroll': 'Scroll',
+                'events.label': 'Programma',
+                'events.title': 'Prossimi Eventi',
+                'events.inauguration': 'Inaugurazione',
+                'events.inauguration_title': 'Inaugurazione Detroit Club',
+                'events.tickets': 'Biglietti',
+                'events.share': 'Condividi',
+                'calendar.label': 'Calendario',
+                'calendar.title': 'Agenda',
+                'merch.label': 'Negozio',
+                'merch.title': 'Merch',
+                'location.label': 'Contatto',
+                'location.title': 'Location',
+                'location.address_title': 'Indirizzo',
+                'location.transport': 'Trasporto',
+                'location.metro': 'Av. Carrilet / Bellvitge',
+                'location.hours': 'Orari',
+                'location.hours_text': 'Sabato: 23:59 → 06:00\nEventi speciali: Consultare agenda',
+                'months.february': 'Febbraio',
+                'days.mon': 'Lun',
+                'days.tue': 'Mar',
+                'days.wed': 'Mer',
+                'days.thu': 'Gio',
+                'days.fri': 'Ven',
+                'days.sat': 'Sab',
+                'days.sun': 'Dom'
+            }
+        };
+
+        let currentLang = 'es';
+
+        // Language Switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentLang = e.target.dataset.lang;
+                updateTranslations();
+            });
+        });
+
+        function updateTranslations() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (i18n[currentLang]?.[key]) {
+                    el.textContent = i18n[currentLang][key];
+                }
+            });
+        }
+
+        // MENU SYSTEM
+        const menuTrigger = document.getElementById('menuTrigger');
+        const fullscreenMenu = document.getElementById('fullscreenMenu');
+        let menuOpen = false;
+
+        function toggleMenu() {
+            menuOpen = !menuOpen;
+            menuTrigger.classList.toggle('active');
+            fullscreenMenu.classList.toggle('active');
+            menuTrigger.setAttribute('aria-expanded', menuOpen);
+            fullscreenMenu.setAttribute('aria-hidden', !menuOpen);
+            document.body.style.overflow = menuOpen ? 'hidden' : '';
+        }
+
+        menuTrigger.addEventListener('click', toggleMenu);
+
+        // Close menu on link click
+        fullscreenMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (menuOpen) toggleMenu();
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menuOpen) toggleMenu();
+        });
+
+        // HEADER SCROLL BEHAVIOR
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+        let ticking = false;
+
+        function updateHeader() {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateHeader);
+                ticking = true;
+            }
+        });
+
+        // CALENDAR GENERATOR
+        function generateCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const year = 2026;
+            const month = 1; // February
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            // Monday start adjustment
+            const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            
+            const eventDates = {
+                '14': 'inauguration',
+                '21': 'industrial',
+                '28': 'berlin'
+            };
+            
+            // Previous month days
+            for (let i = startOffset - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                const cell = createCell(day, true);
+                grid.appendChild(cell);
+            }
+            
+            // Current month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const hasEvent = eventDates[day] !== undefined;
+                const isHighlight = day === 14;
+                const cell = createCell(day, false, hasEvent, isHighlight, eventDates[day]);
+                grid.appendChild(cell);
+            }
+            
+            // Next month
+            const totalCells = 42;
+            const remaining = totalCells - (startOffset + daysInMonth);
+            for (let day = 1; day <= remaining; day++) {
+                const cell = createCell(day, true);
+                grid.appendChild(cell);
+            }
+        }
+
+        function createCell(day, isOtherMonth, hasEvent = false, isHighlight = false, eventId = null) {
+            const cell = document.createElement('div');
+            cell.className = 'calendar-cell';
+            cell.setAttribute('role', 'gridcell');
+            
+            if (isOtherMonth) cell.classList.add('other-month');
+            if (hasEvent) cell.classList.add('has-event');
+            if (isHighlight) cell.classList.add('highlight');
+            
+            cell.innerHTML = `<span class="cell-number">${day}</span>`;
+            
+            if (hasEvent && !isHighlight) {
+                cell.innerHTML += `<span class="cell-event-dot"></span>`;
+            }
+            
+            if (hasEvent) {
+                cell.addEventListener('click', () => {
+                    document.querySelector(`[data-date="2026-02-${day.toString().padStart(2, '0')}"]`)?.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                });
+                cell.style.cursor = 'pointer';
+            }
+            
+            return cell;
+        }
+
+        // INTERSECTION OBSERVER - Reveal animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // DUST PARTICLE SYSTEM
+        function initDust() {
+            const container = document.getElementById('dustContainer');
+            const particleCount = window.matchMedia('(pointer: coarse)').matches ? 15 : 25;
+            
+            for (let i = 0; i < particleCount; i++) {
+                createParticle(container);
+            }
+        }
+
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 3 + 1;
+            const startX = Math.random() * 100;
+            const duration = 15 + Math.random() * 20;
+            const delay = Math.random() * 10;
+            
+            particle.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                left: ${startX}%;
+                opacity: ${Math.random() * 0.3 + 0.1};
+                animation: float ${duration}s linear ${delay}s infinite;
+            `;
+            
+            container.appendChild(particle);
+        }
+
+        // SHARE FUNCTIONALITY
+        function shareEvent(eventId) {
+            const url = window.location.href;
+            const text = `Detroit Club // ${eventId.toUpperCase()}`;
+            
+            if (navigator.share) {
+                navigator.share({ title: 'Detroit Club', text, url });
+            } else {
+                navigator.clipboard.writeText(`${text} — ${url}`).then(() => {
+                    // Visual feedback could go here
+                    console.log('Copied to clipboard');
+                });
+            }
+        }
+
+        // SMOOTH SCROLL
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove loader
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 800);
+            
+            // Initialize systems
+            generateCalendar();
+            initDust();
+            
+            // Observe elements
+            document.querySelectorAll('.event-card').forEach(card => {
+                revealObserver.observe(card);
+            });
+            
+            // Trigger first card
+            setTimeout(() => {
+                document.querySelector('.event-card')?.classList.add('visible');
+            }, 1000);
+        });
+
+        // Performance: Pause animations when tab hidden
+        document.addEventListener('visibilitychange', () => {
+            document.body.style.animationPlayState = document.hidden ? 'paused' : 'running';
+        });
+    </script>
+</body>
+</html>
