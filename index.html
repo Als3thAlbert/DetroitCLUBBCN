@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="description" content="Detroit Club - Underground Techno Institution. L'Hospitalet de Llobregat, Barcelona. Pure industrial techno since 2026.">
+    <title>DETROIT CLUB — Underground Techno</title>
+    
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="Logo Detroit club-OSW-01.png" as="image" type="image/png" fetchpriority="high">
+    <link rel="preload" href="IMG-20260202-WA0006.jpg" as="image" type="image/jpeg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS RESET & DESIGN SYSTEM - FONDO MÁS OSCURO */
+        :root {
+            --void: #0a0a0a;
+            --concrete: #141414;
+            --steel: #1c1c1c;
+            --iron: #242424;
+            --ash: #2e2e2e;
+            --dust: #3d3d3d;
+            --fog: #5a5a5a;
+            --smoke: #7a7a7a;
+            --bone: #a0a0a0;
+            --mist: #d4d4d4;
+            /* Fondo más oscuro para mejor visibilidad */
+            --bg-dark: #1f1f1f;
+            --bg-darker: #161616;
+            
+            --rust: #6b1a24;
+            --blood: #7a1f2a;
+            --ember: #8b2635;
+            --glow: #a03040;
+            
+            --font-display: 'Anton', Impact, sans-serif;
+            --font-body: 'Space Grotesk', system-ui, sans-serif;
+            --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+            
+            --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+            --space-4: 1rem; --space-6: 1.5rem; --space-8: 2rem;
+            --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem;
+            --space-20: 5rem; --space-24: 6rem; --space-32: 8rem;
+            
+            --ease-sharp: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-dramatic: cubic-bezier(0.87, 0, 0.13, 1);
+            
+            --duration-fast: 150ms;
+            --duration-normal: 300ms;
+            --duration-slow: 600ms;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            background: var(--bg-dark);
+            color: var(--mist);
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        @media (min-width: 768px) { html { font-size: 17px; } }
+        @media (min-width: 1200px) { html { font-size: 18px; } }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.6;
+            background: var(--bg-dark);
+            color: var(--mist);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        ::selection { background: var(--ember); color: var(--void); }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-darker); }
+        ::-webkit-scrollbar-thumb { background: var(--dust); border-radius: 0; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--fog); }
+
+        /* LAYER SYSTEM */
+        .layer-grain { z-index: 1000; pointer-events: none; }
+        .layer-scanlines { z-index: 999; pointer-events: none; }
+        .layer-vignette { z-index: 998; pointer-events: none; }
+        .layer-cracks { z-index: 997; pointer-events: none; }
+        .layer-dust-bg { z-index: 150; pointer-events: none; }
+        .layer-dust-fg { z-index: 99999; pointer-events: none; }
+        .layer-nav { z-index: 90; }
+        .layer-modal { z-index: 80; }
+        .layer-content { z-index: 10; }
+        .layer-admin { z-index: 200; }
+
+        /* TEXTURE OVERLAYS */
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation: grain 15s steps(20) infinite;
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-2%, -3%); }
+            20% { transform: translate(-4%, 2%); }
+            30% { transform: translate(2%, -5%); }
+            40% { transform: translate(-1%, 5%); }
+            50% { transform: translate(-3%, 2%); }
+            60% { transform: translate(3%, 0%); }
+            70% { transform: translate(0%, 3%); }
+            80% { transform: translate(1%, 4%); }
+            90% { transform: translate(-2%, 2%); }
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 1px, transparent 1px, transparent 2px);
+            opacity: 0.35;
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(10,10,10,0.7) 100%);
+        }
+
+        /* CRACKS TEXTURE */
+        .cracks-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='rough'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%231f1f1f' surfaceScale='2'%3E%3CfeDistantLight azimuth='45' elevation='60'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' filter='url(%23rough)' opacity='0.4'/%3E%3Cpath d='M0,20 Q50,10 100,30 T200,25 T300,40 T400,20' stroke='%23111' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3Cpath d='M50,0 Q60,50 40,100 T55,200 T30,300 T45,400' stroke='%23111' stroke-width='0.5' fill='none' opacity='0.2'/%3E%3Cpath d='M150,0 Q140,80 160,150 T145,250 T165,350 T150,500' stroke='%23111' stroke-width='0.3' fill='none' opacity='0.25'/%3E%3Cpath d='M300,50 Q320,100 280,150 T310,220 T290,300 T305,400' stroke='%230a0a0a' stroke-width='0.4' fill='none' opacity='0.2'/%3E%3C/svg%3E");
+            mix-blend-mode: multiply;
+        }
+
+        /* DUST BACKGROUND */
+        .dust-bg-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .dust-bg-particle {
+            position: absolute;
+            background: rgba(180, 180, 180, 0.12);
+            border-radius: 50%;
+            will-change: transform;
+            animation: float-bg 25s infinite linear;
+        }
+
+        @keyframes float-bg {
+            0% { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.25; }
+            90% { opacity: 0.25; }
+            100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); opacity: 0; }
+        }
+
+        /* DUST FOREGROUND - MÁS PROMINENTE */
+        .dust-fg-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 99999;
+        }
+
+        .dust-fg-particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            will-change: transform;
+            box-shadow: 0 0 8px rgba(255,255,255,0.4);
+        }
+
+        .dust-fg-particle.small {
+            width: 2px; height: 2px;
+            animation: float-fg-small 10s infinite ease-in-out;
+        }
+
+        .dust-fg-particle.medium {
+            width: 3px; height: 3px;
+            animation: float-fg-medium 13s infinite ease-in-out;
+        }
+
+        .dust-fg-particle.large {
+            width: 4px; height: 4px;
+            animation: float-fg-large 16s infinite ease-in-out;
+        }
+
+        .dust-fg-particle.xl {
+            width: 6px; height: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 12px rgba(255,255,255,0.3);
+            animation: float-fg-xl 20s infinite ease-in-out;
+        }
+
+        @keyframes float-fg-small {
+            0%, 100% { transform: translateY(100vh) translateX(0) scale(0.5); opacity: 0; }
+            5% { opacity: 0.8; }
+            95% { opacity: 0.8; }
+            50% { transform: translateY(50vh) translateX(30px) scale(1); }
+            100% { transform: translateY(-10vh) translateX(-20px) scale(0.5); opacity: 0; }
+        }
+
+        @keyframes float-fg-medium {
+            0%, 100% { transform: translateY(100vh) translateX(0) scale(0.8); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            40% { transform: translateY(60vh) translateX(-40px) scale(1.2); }
+            70% { transform: translateY(30vh) translateX(20px) scale(1); }
+            100% { transform: translateY(-10vh) translateX(0) scale(0.8); opacity: 0; }
+        }
+
+        @keyframes float-fg-large {
+            0%, 100% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.6; }
+            85% { opacity: 0.6; }
+            30% { transform: translateY(70vh) translateX(60px) rotate(180deg); }
+            60% { transform: translateY(40vh) translateX(-30px) rotate(90deg); }
+            100% { transform: translateY(-10vh) translateX(0) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes float-fg-xl {
+            0%, 100% { transform: translateY(100vh) translateX(-20px) scale(0.6); opacity: 0; }
+            20% { opacity: 0.5; }
+            80% { opacity: 0.5; }
+            40% { transform: translateY(50vh) translateX(40px) scale(1); }
+            60% { transform: translateY(25vh) translateX(-20px) scale(0.8); }
+            100% { transform: translateY(-10vh) translateX(20px) scale(0.6); opacity: 0; }
+        }
+
+        /* HEADER */
+        .header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 90;
+            padding: var(--space-4);
+            background: linear-gradient(to bottom, rgba(31,31,31,0.95) 0%, rgba(31,31,31,0.7) 50%, transparent 100%);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border-bottom: 1px solid transparent;
+            transition: all var(--duration-normal) var(--ease-sharp);
+        }
+
+        .header.scrolled {
+            background: rgba(22,22,22,0.98);
+            border-bottom-color: var(--ash);
+            padding: var(--space-3) var(--space-4);
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 32px;
+            width: auto;
+            opacity: 0.9;
+            transition: opacity var(--duration-fast) var(--ease-sharp);
+            filter: drop-shadow(0 0 20px rgba(138,38,53,0.15));
+        }
+
+        .header-logo:hover { opacity: 1; }
+
+        @media (min-width: 768px) { .header-logo { height: 40px; } }
+        @media (min-width: 1024px) { 
+            .header { padding: var(--space-4) var(--space-6); }
+            .header.scrolled { padding: var(--space-3) var(--space-6); }
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .lang-switcher {
+            display: flex;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            padding: 2px;
+        }
+
+        .lang-btn {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: var(--space-2) var(--space-3);
+            background: transparent;
+            border: none;
+            color: var(--fog);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-sharp);
+        }
+
+        .lang-btn:hover { color: var(--mist); }
+        .lang-btn.active { background: var(--ember); color: var(--mist); }
+
+        .menu-trigger {
+            width: 28px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .menu-trigger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--bone);
+            transition: all var(--duration-fast) var(--ease-sharp);
+            transform-origin: center;
+        }
+
+        .menu-trigger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-trigger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .menu-trigger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        .fullscreen-menu {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: var(--bg-dark);
+            z-index: 80;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--space-8);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--duration-slow) var(--ease-dramatic);
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        }
+
+        .fullscreen-menu.active {
+            opacity: 1;
+            visibility: visible;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .menu-nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            max-width: 800px;
+        }
+
+        .menu-link {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 12vw, 5rem);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--mist);
+            text-decoration: none;
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all var(--duration-normal) var(--ease-smooth);
+            position: relative;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .fullscreen-menu.active .menu-link {
+            opacity: 0.8;
+            transform: translateX(0);
+        }
+
+        .fullscreen-menu.active .menu-link:nth-child(1) { transition-delay: 0.1s; }
+        .fullscreen-menu.active .menu-link:nth-child(2) { transition-delay: 0.15s; }
+        .fullscreen-menu.active .menu-link:nth-child(3) { transition-delay: 0.2s; }
+        .fullscreen-menu.active .menu-link:nth-child(4) { transition-delay: 0.25s; }
+        .fullscreen-menu.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
+
+        .menu-link:hover {
+            color: var(--ember);
+            opacity: 1;
+            padding-left: var(--space-8);
+        }
+
+        .menu-link::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transition: all var(--duration-fast) var(--ease-sharp);
+            color: var(--ember);
+        }
+
+        .menu-link:hover::before {
+            opacity: 1;
+            left: var(--space-4);
+        }
+
+        /* HERO - MÁS IMPACTO */
+        .hero {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: var(--space-8) var(--space-4);
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(107,26,36,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(20,20,20,0.4) 0%, transparent 50%),
+                var(--bg-dark);
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .hero-logo {
+            width: 100%;
+            max-width: 550px;
+            height: auto;
+            margin-bottom: var(--space-10);
+            filter: drop-shadow(0 0 100px rgba(138,38,53,0.3));
+            animation: logoReveal 1.4s var(--ease-smooth) forwards;
+            opacity: 0;
+            transform: scale(0.95) translateY(30px);
+        }
+
+        @keyframes logoReveal {
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+            animation: fadeUp 1s var(--ease-smooth) 0.5s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-tagline {
+            font-family: var(--font-mono);
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--smoke);
+        }
+
+        .hero-location {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            color: var(--fog);
+            text-transform: uppercase;
+        }
+
+        /* NEXT EVENT HIGHLIGHT - NUEVO */
+        .next-event-hero {
+            margin-top: var(--space-10);
+            padding: var(--space-6);
+            background: rgba(138,38,53,0.08);
+            border: 1px solid rgba(138,38,53,0.3);
+            animation: fadeUp 1s var(--ease-smooth) 0.8s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .next-event-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-bottom: var(--space-3);
+        }
+
+        .next-event-date {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: var(--mist);
+            margin-bottom: var(--space-2);
+        }
+
+        .next-event-artists {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--smoke);
+            margin-bottom: var(--space-4);
+        }
+
+        .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: var(--ember);
+            color: var(--mist);
+            border: none;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-sharp);
+        }
+
+        .btn-hero:hover {
+            background: var(--glow);
+            transform: translateY(-2px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: var(--space-8);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-3);
+            opacity: 0;
+            animation: fadeIn 1s var(--ease-smooth) 1.2s forwards;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        .scroll-text {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--fog);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--fog), transparent);
+            animation: scrollPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.2; transform: scaleY(0.5); }
+            50% { opacity: 0.6; transform: scaleY(1); }
+        }
+
+        /* SECTIONS */
+        section {
+            position: relative;
+            padding: var(--space-24) var(--space-4);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) { section { padding: var(--space-32) var(--space-6); } }
+        @media (min-width: 1024px) { section { padding: var(--space-32) var(--space-8); } }
+
+        .section-header {
+            margin-bottom: var(--space-12);
+            border-bottom: 1px solid var(--ash);
+            padding-bottom: var(--space-6);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--ember);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--mist);
+            font-weight: 400;
+        }
+
+        /* EVENTS - MEJORADO */
+        .events-section {
+            background: var(--bg-darker);
+            position: relative;
+        }
+
+        .events-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--ash), transparent);
+        }
+
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-10);
+        }
+
+        .event-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all var(--duration-slow) var(--ease-smooth);
+        }
+
+        .event-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(107,26,36,0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .event-card:hover {
+            border-color: var(--dust);
+            transform: translateX(6px);
+            box-shadow: -12px 12px 0 var(--ember);
+        }
+
+        @media (min-width: 768px) { .event-card { grid-template-columns: 300px 1fr; } }
+        @media (min-width: 1024px) { .event-card { grid-template-columns: 350px 1fr; } }
+
+        .event-visual {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            background: var(--concrete);
+        }
+
+        @media (min-width: 768px) { .event-visual { aspect-ratio: auto; } }
+
+        .event-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(1.1) brightness(0.9);
+            transition: all 0.8s var(--ease-smooth);
+        }
+
+        .event-card:hover .event-image {
+            filter: grayscale(0%) contrast(1.2) brightness(0.95);
+            transform: scale(1.05);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: var(--space-4);
+            left: 0;
+            background: var(--ember);
+            color: var(--mist);
+            padding: var(--space-2) var(--space-4);
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            z-index: 2;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+        }
+
+        .event-content {
+            padding: var(--space-6);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: var(--space-6);
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) { .event-content { padding: var(--space-8); } }
+
+        .event-header { display: flex; flex-direction: column; gap: var(--space-4); }
+
+        .event-date {
+            display: flex;
+            align-items: flex-end;
+            gap: var(--space-4);
+            flex-wrap: wrap;
+        }
+
+        .event-day {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            line-height: 0.85;
+            color: var(--ember);
+            opacity: 0.9;
+        }
+
+        .event-month-block {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: var(--space-1);
+        }
+
+        .event-month {
+            font-size: 1rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--mist);
+            font-weight: 500;
+        }
+
+        .event-year {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--fog);
+        }
+
+        .event-time {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--smoke);
+            padding: var(--space-2) var(--space-3);
+            border: 1px solid var(--ash);
+            align-self: flex-end;
+        }
+
+        .event-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 4vw, 2rem);
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            color: var(--mist);
+            margin-top: var(--space-2);
+        }
+
+        .event-lineup {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            margin-top: var(--space-2);
+        }
+
+        .artist {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--smoke);
+            position: relative;
+            padding-left: var(--space-4);
+        }
+
+        .artist::before {
+            content: '//';
+            position: absolute;
+            left: 0;
+            color: var(--ember);
+        }
+
+        .event-actions {
+            display: flex;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: var(--space-6);
+            border-top: 1px solid var(--ash);
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--ash);
+            background: transparent;
+            color: var(--mist);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-sharp);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--ember);
+            transform: translateX(-101%);
+            transition: transform var(--duration-fast) var(--ease-sharp);
+            z-index: -1;
+        }
+
+        .btn:hover::before { transform: translateX(0); }
+        .btn:hover { border-color: var(--ember); }
+
+        .btn-primary {
+            background: var(--ember);
+            border-color: var(--ember);
+        }
+
+        .btn-primary::before { background: var(--glow); }
+        .btn-primary:hover { border-color: var(--glow); }
+
+        /* NEWSLETTER SECTION - NUEVO */
+        .newsletter-section {
+            background: var(--steel);
+            border-top: 1px solid var(--ash);
+            border-bottom: 1px solid var(--ash);
+            padding: var(--space-16) var(--space-4);
+        }
+
+        .newsletter-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            color: var(--mist);
+            margin-bottom: var(--space-4);
+        }
+
+        .newsletter-text {
+            font-size: 0.9rem;
+            color: var(--smoke);
+            margin-bottom: var(--space-6);
+            line-height: 1.7;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: var(--space-2);
+            flex-wrap: wrap;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 200px;
+            padding: var(--space-3) var(--space-4);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--mist);
+            background: var(--concrete);
+            border: 1px solid var(--ash);
+            outline: none;
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--ember);
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--fog);
+        }
+
+        .newsletter-submit {
+            padding: var(--space-3) var(--space-6);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: var(--ember);
+            color: var(--mist);
+            border: none;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-sharp);
+        }
+
+        .newsletter-submit:hover {
+            background: var(--glow);
+        }
+
+        /* CALENDAR */
+        .calendar-section { background: var(--bg-dark); }
+
+        .calendar-container {
+            border: 1px solid var(--ash);
+            background: var(--bg-darker);
+        }
+
+        .calendar-header-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            border-bottom: 1px solid var(--ash);
+        }
+
+        .calendar-day-name {
+            padding: var(--space-4) var(--space-2);
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--fog);
+            border-right: 1px solid var(--ash);
+        }
+
+        .calendar-day-name:last-child { border-right: none; }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .calendar-cell {
+            aspect-ratio: 1;
+            border-right: 1px solid var(--ash);
+            border-bottom: 1px solid var(--ash);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-sharp);
+            position: relative;
+            min-height: 50px;
+        }
+
+        .calendar-cell:nth-child(7n) { border-right: none; }
+
+        .calendar-cell:hover { background: var(--iron); }
+
+        .calendar-cell.other-month { opacity: 0.2; }
+
+        .calendar-cell.has-event { background: rgba(138,38,53,0.05); }
+
+        .calendar-cell.has-event .cell-number {
+            color: var(--mist);
+            font-weight: 500;
+        }
+
+        .calendar-cell.highlight {
+            background: var(--ember);
+            border-color: var(--ember);
+        }
+
+        .calendar-cell.highlight .cell-number {
+            color: var(--mist);
+            font-weight: 700;
+        }
+
+        .calendar-cell.highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            width: 3px; height: 3px;
+            background: var(--mist);
+            border-radius: 50%;
+        }
+
+        .cell-number {
+            font-size: 0.9rem;
+            color: var(--fog);
+            font-family: var(--font-body);
+            font-weight: 300;
+        }
+
+        .cell-event-dot {
+            position: absolute;
+            bottom: 8px;
+            width: 3px; height: 3px;
+            background: var(--ember);
+            border-radius: 50%;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-cell { min-height: 70px; }
+            .cell-number { font-size: 1.1rem; }
+        }
+
+        /* MERCH - LOCAL IMAGES MEJORADO */
+        .merch-section { background: var(--bg-darker); }
+
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            background: var(--ash);
+            border: 1px solid var(--ash);
+        }
+
+        @media (min-width: 768px) { .merch-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .merch-item {
+            position: relative;
+            aspect-ratio: 1;
+            background: var(--steel);
+            overflow: hidden;
+            cursor: pointer;
+            group: merch;
+        }
+
+        .merch-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(10%) contrast(1.05);
+            transition: all 0.6s var(--ease-smooth);
+        }
+
+        .merch-item:hover img {
+            filter: grayscale(0%) contrast(1.1);
+            transform: scale(1.08);
+        }
+
+        .merch-info {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%;
+            padding: var(--space-4);
+            background: linear-gradient(to top, rgba(10,10,10,0.95), transparent);
+            transform: translateY(100%);
+            transition: transform var(--duration-normal) var(--ease-smooth);
+        }
+
+        .merch-item:hover .merch-info { transform: translateY(0); }
+
+        .merch-name {
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            color: var(--mist);
+        }
+
+        .merch-price {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--ember);
+        }
+
+        /* LOCATION MEJORADO */
+        .location-section { background: var(--bg-dark); }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-8);
+        }
+
+        @media (min-width: 768px) { .location-grid { grid-template-columns: 1.3fr 1fr; } }
+
+        .map-wrapper {
+            position: relative;
+            background: var(--bg-darker);
+            border: 1px solid var(--ash);
+            overflow: hidden;
+            border-radius: 0;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 70%;
+            filter: grayscale(100%) contrast(1.2) brightness(0.85);
+        }
+
+        @media (min-width: 768px) { .map-container { padding-bottom: 55%; } }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: 0;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(31,31,31,0.1);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .map-actions {
+            display: flex;
+            gap: var(--space-2);
+            padding: var(--space-4);
+            background: var(--steel);
+            border-top: 1px solid var(--ash);
+        }
+
+        .map-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-4);
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--ash);
+            background: transparent;
+            color: var(--mist);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-sharp);
+        }
+
+        .map-btn:hover {
+            background: var(--ember);
+            border-color: var(--ember);
+        }
+
+        .map-btn svg {
+            width: 16px; height: 16px;
+            fill: currentColor;
+        }
+
+        .location-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+
+        .info-block h3 {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-bottom: var(--space-3);
+            font-weight: 500;
+        }
+
+        .info-block p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--bone);
+            font-weight: 300;
+        }
+
+        .info-block .address {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--smoke);
+            line-height: 1.9;
+        }
+
+        .metro-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-top: var(--space-3);
+        }
+
+        .metro-line {
+            display: inline-block;
+            background: var(--ember);
+            color: var(--mist);
+            padding: 3px 10px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .contact-cta {
+            margin-top: var(--space-6);
+            padding: var(--space-6);
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            text-align: center;
+        }
+
+        .contact-cta h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--fog);
+            margin-bottom: var(--space-4);
+        }
+
+        .tel-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            color: var(--mist);
+            text-decoration: none;
+            padding: var(--space-4) var(--space-6);
+            border: 1px solid var(--ember);
+            background: rgba(138,38,53,0.1);
+            transition: all var(--duration-fast) var(--ease-sharp);
+        }
+
+        .tel-btn:hover {
+            background: var(--ember);
+            color: var(--mist);
+        }
+
+        .tel-btn svg {
+            width: 20px; height: 20px;
+            fill: currentColor;
+        }
+
+        /* SOCIAL SECTION - NUEVO */
+        .social-section {
+            background: var(--bg-darker);
+            padding: var(--space-12) var(--space-4);
+            border-top: 1px solid var(--ash);
+        }
+
+        .social-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .social-title {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--fog);
+            margin-bottom: var(--space-6);
+        }
+
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-6);
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border: 1px solid var(--ash);
+            background: var(--steel);
+            color: var(--smoke);
+            transition: all var(--duration-fast) var(--ease-sharp);
+        }
+
+        .social-link:hover {
+            border-color: var(--ember);
+            color: var(--mist);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(138,38,53,0.2);
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* FAB */
+        .fab {
+            position: fixed;
+            bottom: var(--space-6);
+            right: var(--space-4);
+            z-index: 50;
+        }
+
+        @media (min-width: 768px) { .fab { right: var(--space-6); } }
+
+        .fab-btn {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: var(--ember);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 24px rgba(138,38,53,0.4);
+            transition: all var(--duration-fast) var(--ease-sharp);
+            animation: fabPulse 4s ease-in-out infinite;
+            text-decoration: none;
+        }
+
+        @keyframes fabPulse {
+            0%, 100% { box-shadow: 0 4px 24px rgba(138,38,53,0.4); }
+            50% { box-shadow: 0 4px 32px rgba(138,38,53,0.7); }
+        }
+
+        .fab-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: var(--glow);
+        }
+
+        .fab-btn svg {
+            width: 24px; height: 24px;
+            fill: var(--mist);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--void);
+            border-top: 1px solid var(--ash);
+            padding: var(--space-16) var(--space-4) var(--space-8);
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .footer-logo {
+            height: 28px;
+            opacity: 0.4;
+            transition: opacity var(--duration-fast) var(--ease-sharp);
+        }
+
+        .footer-logo:hover { opacity: 0.7; }
+
+        .footer-nav {
+            display: flex;
+            gap: var(--space-6);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-link {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fog);
+            text-decoration: none;
+            transition: color var(--duration-fast) var(--ease-sharp);
+        }
+
+        .footer-link:hover { color: var(--mist); }
+
+        .copyright {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--dust);
+            letter-spacing: 0.08em;
+            text-align: center;
+        }
+
+        /* ADMIN SECTION */
+        .admin-section {
+            background: var(--void);
+            padding: var(--space-12) var(--space-4);
+            border-top: 1px solid var(--ash);
+        }
+
+        .admin-inner {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .admin-toggle {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--dust);
+            background: transparent;
+            border: 1px solid var(--ash);
+            padding: var(--space-3) var(--space-6);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-sharp);
+        }
+
+        .admin-toggle:hover {
+            color: var(--fog);
+            border-color: var(--dust);
+        }
+
+        .admin-panel {
+            display: none;
+            margin-top: var(--space-6);
+            padding: var(--space-6);
+            background: var(--steel);
+            border: 1px solid var(--ash);
+        }
+
+        .admin-panel.active {
+            display: block;
+            animation: fadeIn 0.3s var(--ease-smooth);
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--mist);
+            background: var(--concrete);
+            border: 1px solid var(--ash);
+            margin-bottom: var(--space-4);
+            outline: none;
+        }
+
+        .admin-input:focus { border-color: var(--ember); }
+
+        .admin-submit {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mist);
+            background: var(--ember);
+            border: none;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-sharp);
+        }
+
+        .admin-submit:hover { background: var(--glow); }
+
+        .admin-error {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--ember);
+            margin-top: var(--space-3);
+            display: none;
+        }
+
+        .admin-error.active { display: block; }
+
+        /* LOADER */
+        .loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg-dark);
+            z-index: 100000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-4);
+            transition: opacity 0.6s var(--ease-smooth), visibility 0.6s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-text {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.6em;
+            color: var(--fog);
+            text-transform: uppercase;
+        }
+
+        .loader-bar {
+            width: 120px;
+            height: 1px;
+            background: var(--ash);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--ember);
+            animation: loadProgress 2s var(--ease-smooth) forwards;
+        }
+
+        @keyframes loadProgress { to { width: 100%; } }
+
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        @media (prefers-contrast: high) {
+            :root {
+                --fog: #888;
+                --smoke: #aaa;
+                --bone: #ccc;
+                --mist: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-text">Detroit Club</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Texture Layers -->
+    <div class="grain-overlay layer-grain"></div>
+    <div class="scanlines layer-scanlines"></div>
+    <div class="vignette layer-vignette"></div>
+    <div class="cracks-overlay layer-cracks"></div>
+    <div class="dust-bg-container layer-dust-bg" id="dustBgContainer"></div>
+    <!-- DUST FOREGROUND - POR ENCIMA DE TODO -->
+    <div class="dust-fg-container layer-dust-fg" id="dustFgContainer"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#hero" aria-label="Detroit Club Home">
+                <img src="Logo Detroit club-OSW-01.png" alt="Detroit Club" class="header-logo" id="headerLogo" fetchpriority="high">
+            </a>
+            <div class="header-controls">
+                <div class="lang-switcher" role="group" aria-label="Language selector">
+                    <button class="lang-btn active" data-lang="es" aria-label="Español">ES</button>
+                    <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+                    <button class="lang-btn" data-lang="ca" aria-label="Català">CA</button>
+                    <button class="lang-btn" data-lang="it" aria-label="Italiano">IT</button>
+                </div>
+                <button class="menu-trigger" id="menuTrigger" aria-label="Toggle menu" aria-expanded="false" aria-controls="fullscreenMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Fullscreen Menu -->
+    <nav class="fullscreen-menu layer-modal" id="fullscreenMenu" aria-hidden="true" aria-label="Main navigation">
+        <div class="menu-nav">
+            <a href="#events" class="menu-link" data-i18n="nav.events">Eventos</a>
+            <a href="#agenda" class="menu-link" data-i18n="nav.agenda">Agenda</a>
+            <a href="#merch" class="menu-link" data-i18n="nav.merch">Merch</a>
+            <a href="#location" class="menu-link" data-i18n="nav.location">Ubicación</a>
+            <a href="https://es.ra.co/clubs/163338" target="_blank" rel="noopener" class="menu-link" data-i18n="nav.tickets">Tickets</a>
+        </div>
+    </nav>
+
+    <!-- Hero con Next Event Highlight -->
+    <section class="hero" id="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <img src="Logo Detroit club-OSW-01.png" alt="Detroit Club" class="hero-logo" id="heroLogo" fetchpriority="high">
+            <div class="hero-meta">
+                <p class="hero-tagline" data-i18n="hero.tagline">Tecnología Underground desde 2026</p>
+                <p class="hero-location">L'Hospitalet de Llobregat, Barcelona</p>
+            </div>
+            
+            <!-- NEXT EVENT HIGHLIGHT - NUEVO -->
+            <div class="next-event-hero">
+                <div class="next-event-label">Próximo Evento</div>
+                <div class="next-event-date">14 FEB 2026 — INAUGURACIÓN</div>
+                <div class="next-event-artists">James Ruskin / Cecilia Tosh / Aaron Black</div>
+                <a href="https://es.ra.co/clubs/163338" target="_blank" rel="noopener noreferrer" class="btn-hero">
+                    Tickets →
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span class="scroll-text" data-i18n="hero.scroll">Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Events -->
+    <section class="events-section layer-content" id="events" aria-labelledby="events-heading">
+        <div class="section-header">
+            <span class="section-label" data-i18n="events.label">Programación</span>
+            <h2 class="section-title" id="events-heading" data-i18n="events.title">Próximos Eventos</h2>
+        </div>
+
+        <div class="event-list">
+            <!-- Inauguration - LOCAL IMAGE -->
+            <article class="event-card" data-date="2026-02-14" id="event-inauguration">
+                <div class="event-visual">
+                    <span class="event-badge" data-i18n="events.inauguration">Inauguración</span>
+                    <img src="IMG-20260202-WA0006.jpg" 
+                         alt="Inauguración Detroit Club" 
+                         class="event-image" 
+                         loading="eager"
+                         decoding="async"
+                         fetchpriority="high">
+                </div>
+                <div class="event-content">
+                    <div class="event-header">
+                        <div class="event-date">
+                            <span class="event-day">14</span>
+                            <div class="event-month-block">
+                                <span class="event-month" data-i18n="months.february">Febrero</span>
+                                <span class="event-year">2026</span>
+                            </div>
+                            <span class="event-time">23:59 → 06:00</span>
+                        </div>
+                        <h3 class="event-title" data-i18n="events.inauguration_title">Inauguración Detroit Club</h3>
+                        <div class="event-lineup">
+                            <span class="artist">James Ruskin</span>
+                            <span class="artist">Cecilia Tosh</span>
+                            <span class="artist">Aaron Black</span>
+                        </div>
+                    </div>
+                    <div class="event-actions">
+                        <a href="https://es.ra.co/clubs/163338" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-i18n="events.tickets">Tickets RA</a>
+                        <button class="btn" onclick="shareEvent('inauguracion')" data-i18n="events.share" type="button">Compartir</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 2 -->
+            <article class="event-card" data-date="2026-02-21">
+                <div class="event-visual">
+                    <img src="https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=1080&h=1350&fit=crop&q=80" 
+                         alt="Industrial Night" 
+                         class="event-image" 
+                         loading="lazy"
+                         decoding="async">
+                </div>
+                <div class="event-content">
+                    <div class="event-header">
+                        <div class="event-date">
+                            <span class="event-day">21</span>
+                            <div class="event-month-block">
+                                <span class="event-month" data-i18n="months.february">Febrero</span>
+                                <span class="event-year">2026</span>
+                            </div>
+                            <span class="event-time">23:59 → 06:00</span>
+                        </div>
+                        <h3 class="event-title">Industrial Night</h3>
+                        <div class="event-lineup">
+                            <span class="artist">Surgeon</span>
+                            <span class="artist">Regis</span>
+                            <span class="artist">Female</span>
+                        </div>
+                    </div>
+                    <div class="event-actions">
+                        <a href="https://es.ra.co/clubs/163338" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-i18n="events.tickets">Tickets RA</a>
+                        <button class="btn" onclick="shareEvent('industrial')" data-i18n="events.share" type="button">Compartir</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event 3 -->
+            <article class="event-card" data-date="2026-02-28">
+                <div class="event-visual">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1080&h=1350&fit=crop&q=80" 
+                         alt="Berlin Calling" 
+                         class="event-image" 
+                         loading="lazy"
+                         decoding="async">
+                </div>
+                <div class="event-content">
+                    <div class="event-header">
+                        <div class="event-date">
+                            <span class="event-day">28</span>
+                            <div class="event-month-block">
+                                <span class="event-month" data-i18n="months.february">Febrero</span>
+                                <span class="event-year">2026</span>
+                            </div>
+                            <span class="event-time">23:59 → 06:00</span>
+                        </div>
+                        <h3 class="event-title">Berlin Calling</h3>
+                        <div class="event-lineup">
+                            <span class="artist">Ben Klock</span>
+                            <span class="artist">Marcel Dettmann</span>
+                        </div>
+                    </div>
+                    <div class="event-actions">
+                        <a href="https://es.ra.co/clubs/163338" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-i18n="events.tickets">Tickets RA</a>
+                        <button class="btn" onclick="shareEvent('berlin')" data-i18n="events.share" type="button">Compartir</button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Newsletter - NUEVO -->
+    <section class="newsletter-section" id="newsletter">
+        <div class="newsletter-inner">
+            <h3 class="newsletter-title">Mantente Informado</h3>
+            <p class="newsletter-text">Suscríbete para recibir información exclusiva sobre eventos, artistas secretos y ventas anticipadas.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('¡Gracias por suscribirte!');">
+                <input type="email" class="newsletter-input" placeholder="tu@email.com" required>
+                <button type="submit" class="newsletter-submit">Suscribirse</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Calendar -->
+    <section class="calendar-section layer-content" id="agenda" aria-labelledby="calendar-heading">
+        <div class="section-header">
+            <span class="section-label" data-i18n="calendar.label">Calendario</span>
+            <h2 class="section-title" id="calendar-heading" data-i18n="calendar.title">Agenda</h2>
+        </div>
+        <div class="calendar-container">
+            <div class="calendar-header-row">
+                <div class="calendar-day-name" data-i18n="days.mon">Lun</div>
+                <div class="calendar-day-name" data-i18n="days.tue">Mar</div>
+                <div class="calendar-day-name" data-i18n="days.wed">Mié</div>
+                <div class="calendar-day-name" data-i18n="days.thu">Jue</div>
+                <div class="calendar-day-name" data-i18n="days.fri">Vie</div>
+                <div class="calendar-day-name" data-i18n="days.sat">Sáb</div>
+                <div class="calendar-day-name" data-i18n="days.sun">Dom</div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="February 2026 calendar"></div>
+        </div>
+    </section>
+
+    <!-- Merch - LOCAL IMAGES -->
+    <section class="merch-section layer-content" id="merch" aria-labelledby="merch-heading">
+        <div class="section-header">
+            <span class="section-label" data-i18n="merch.label">Tienda</span>
+            <h2 class="section-title" id="merch-heading" data-i18n="merch.title">Merch</h2>
+        </div>
+        <div class="merch-grid">
+            <!-- Gorra -->
+            <div class="merch-item">
+                <img src="Screenshot_2026-02-02-22-19-24-528_com.openai.chatgpt.png" 
+                     alt="Detroit Club Cap" 
+                     loading="lazy"
+                     decoding="async">
+                <div class="merch-info">
+                    <div class="merch-name">Logo Cap</div>
+                    <div class="merch-price">€25</div>
+                </div>
+            </div>
+            <!-- Sudadera -->
+            <div class="merch-item">
+                <img src="Screenshot_2026-02-02-22-19-36-121_com.openai.chatgpt.png" 
+                     alt="Industrial Hoodie" 
+                     loading="lazy"
+                     decoding="async">
+                <div class="merch-info">
+                    <div class="merch-name">Industrial Hoodie</div>
+                    <div class="merch-price">€75</div>
+                </div>
+            </div>
+            <!-- Camiseta 1 -->
+            <div class="merch-item">
+                <img src="Screenshot_2026-02-02-22-19-45-344_com.openai.chatgpt.png" 
+                     alt="Detroit Club Tee 1" 
+                     loading="lazy"
+                     decoding="async">
+                <div class="merch-info">
+                    <div class="merch-name">Detroit Club Tee I</div>
+                    <div class="merch-price">€35</div>
+                </div>
+            </div>
+            <!-- Camiseta 2 -->
+            <div class="merch-item">
+                <img src="Screenshot_2026-02-02-22-20-03-847_com.openai.chatgpt.png" 
+                     alt="Detroit Club Tee 2" 
+                     loading="lazy"
+                     decoding="async">
+                <div class="merch-info">
+                    <div class="merch-name">Detroit Club Tee II</div>
+                    <div class="merch-price">€35</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location -->
+    <section class="location-section layer-content" id="location" aria-labelledby="location-heading">
+        <div class="section-header">
+            <span class="section-label" data-i18n="location.label">Contacto</span>
+            <h2 class="section-title" id="location-heading" data-i18n="location.title">Ubicación</h2>
+        </div>
+        <div class="location-grid">
+            <div class="map-wrapper">
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2995.113048888295!2d2.0996!3d41.3494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a498d64bd023fd%3A0x26089fc39cb352a6!2sPassatge%20de%20Can%20Pol%C3%ADtic%2C%2013%2C%2008907%20L&#39;Hospitalet%20de%20Llobregat%2C%20Barcelona!5e0!3m2!1ses!2ses!4v1699999999999!5m2!1ses!2ses&maptype=roadmap&style=feature:all|element:all|saturation:-100|lightness:-50|gamma:0.5"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0; filter: grayscale(100%) contrast(1.1) brightness(0.85);" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Detroit Club Location">
+                    </iframe>
+                    <div class="map-overlay"></div>
+                </div>
+                <div class="map-actions">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Passatge+Can+Polític+13,+08907+L'Hospitalet+de+Llobregat,+Barcelona" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="map-btn">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Cómo llegar
+                    </a>
+                    <a href="geo:41.3494,2.0996?q=Passatge+Can+Polític+13,+08907+L'Hospitalet+de+Llobregat" 
+                       class="map-btn">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        Abrir en App
+                    </a>
+                </div>
+            </div>
+            
+            <div class="location-details">
+                <div class="info-block">
+                    <h3 data-i18n="location.address_title">Dirección</h3>
+                    <p class="address">
+                        Passatge Can Polític 13<br>
+                        08907 L'Hospitalet de Llobregat<br>
+                        Barcelona, Spain
+                    </p>
+                </div>
+                <div class="info-block">
+                    <h3 data-i18n="location.transport">Transporte</h3>
+                    <div class="metro-tag">
+                        <span class="metro-line">L1</span>
+                        <span data-i18n="location.metro">Av. Carrilet / Bellvitge</span>
+                    </div>
+                </div>
+                <div class="info-block">
+                    <h3 data-i18n="location.hours">Horario</h3>
+                    <p data-i18n="location.hours_text">Sábados: 23:59 → 06:00<br>Eventos especiales: Consultar agenda</p>
+                </div>
+                
+                <div class="contact-cta">
+                    <h4>Contacto Directo</h4>
+                    <a href="https://t.me/+34618438166" target="_blank" rel="noopener noreferrer" class="tel-btn">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        +34 618 43 81 66
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Section - NUEVO -->
+    <section class="social-section" id="social">
+        <div class="social-inner">
+            <h3 class="social-title">Síguenos</h3>
+            <div class="social-grid">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://soundcloud.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="SoundCloud">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1.175 12.225c-.051 0-.094.046-.101.1l-.233 2.154.233 2.105c.007.058.05.098.101.098.05 0 .09-.04.099-.098l.255-2.105-.27-2.154c-.009-.06-.052-.1-.084-.1zm-.899.828c-.06 0-.091.037-.104.094L0 14.479l.165 1.308c.014.057.045.094.09.094s.089-.037.099-.094l.195-1.308-.21-1.332c-.01-.057-.055-.094-.063-.094zm1.83-1.229c-.061 0-.12.045-.12.104l-.21 2.563.225 2.458c0 .06.045.104.106.104.061 0 .12-.045.12-.104l.24-2.474-.255-2.547c0-.06-.061-.104-.106-.104zm.945-.089c-.075 0-.135.06-.15.135l-.193 2.64.21 2.544c.016.077.075.138.149.138.075 0 .135-.061.15-.138l.24-2.544-.24-2.64c-.015-.075-.06-.135-.166-.135zm.93-.045c-.09 0-.149.075-.165.165l-.18 2.7.195 2.52c.016.09.075.165.165.165.089 0 .165-.075.165-.165l.21-2.52-.21-2.7c0-.09-.076-.165-.18-.165zm.915-.045c-.104 0-.18.09-.18.18l-.165 2.76.18 2.46c.015.104.09.18.18.18.089 0 .18-.09.18-.18l.195-2.46-.21-2.76c-.015-.104-.09-.18-.18-.18zm.93-.045c-.119 0-.209.09-.209.195l-.15 2.82.165 2.415c.016.104.105.195.21.195.119 0 .209-.09.209-.195l.18-2.415-.18-2.82c0-.105-.09-.195-.225-.195zm.945-.015c-.135 0-.225.105-.24.225l-.135 2.88.15 2.37c.016.119.105.225.24.225.135 0 .24-.106.24-.225l.165-2.37-.165-2.88c-.015-.135-.105-.225-.255-.225zm.96-.015c-.149 0-.255.12-.27.255l-.12 2.925.135 2.31c.015.135.12.255.27.255.149 0 .27-.12.27-.255l.15-2.31-.15-2.925c-.015-.149-.12-.255-.285-.255zm.99-.015c-.165 0-.285.135-.3.285l-.105 2.955.12 2.25c.015.165.135.285.3.285.164 0 .3-.12.3-.285l.135-2.25-.135-2.955c-.015-.165-.135-.285-.315-.285zm1.005-.015c-.18 0-.315.15-.33.315l-.09 2.985.105 2.19c.016.18.15.315.33.315.18 0 .315-.135.33-.315l.12-2.19-.12-2.985c-.015-.18-.15-.315-.345-.315zm1.02 0c-.195 0-.345.165-.36.345l-.075 3 .09 2.13c.016.195.165.345.36.345.195 0 .345-.165.36-.345l.105-2.13-.105-3c-.015-.195-.165-.345-.375-.345zm1.035.015c-.21 0-.375.18-.39.375l-.06 3.015.075 2.07c.016.21.18.375.39.375.225 0 .39-.18.405-.375l.09-2.07-.09-3.015c-.015-.225-.18-.375-.42-.375zm1.05.03c-.24 0-.42.195-.435.405l-.045 3.015.06 2.01c.016.24.195.42.435.42.24 0 .435-.195.45-.42l.075-2.01-.075-3.015c-.015-.24-.21-.405-.465-.405zm1.065.045c-.27 0-.465.21-.48.435l-.03 3.015.045 1.95c.016.27.21.465.48.465.27 0 .48-.21.495-.465l.06-1.95-.06-3.015c-.015-.27-.225-.435-.51-.435zm1.08.06c-.3 0-.51.24-.525.48l-.015 3.015.03 1.89c.016.3.225.51.525.51.315 0 .525-.24.54-.51l.045-1.89-.045-3.015c-.015-.315-.24-.48-.555-.48zm1.095.075c-.33 0-.555.255-.57.51l.015 3.015.015 1.83c.016.33.24.555.57.555.345 0 .57-.255.585-.555l.03-1.83-.03-3.015c-.015-.345-.255-.555-.615-.555zm1.11.09c-.36 0-.6.27-.615.54l.045 3.015.015 1.77c.016.36.255.6.615.6.375 0 .615-.27.63-.6l.015-1.77-.045-3.015c-.015-.375-.27-.615-.66-.615zm1.125.105c-.39 0-.645.285-.66.57l.075 3.015.015 1.71c.016.39.27.645.66.645.405 0 .66-.285.675-.645l.015-1.71-.075-3.015c-.015-.405-.285-.66-.705-.66zm1.14.12c-.42 0-.69.3-.705.6l.105 3.015.015 1.65c.016.42.285.69.705.69.435 0 .705-.3.72-.69l.015-1.65-.105-3.015c-.015-.435-.3-.72-.75-.72zm1.155.135c-.45 0-.735.315-.75.63l.135 3.015.015 1.59c.016.45.3.735.75.735.465 0 .75-.315.765-.735l.015-1.59-.135-3.015c-.015-.465-.315-.765-.795-.765zm1.17.15c-.48 0-.78.33-.795.66l.165 3.015.015 1.53c.016.48.315.78.795.78.495 0 .795-.33.81-.78l.015-1.53-.165-3.015c-.015-.495-.33-.825-.84-.825zm1.185.165c-.51 0-.825.345-.84.69l.195 3.015.015 1.47c.016.51.33.825.84.825.525 0 .84-.345.855-.825l.015-1.47-.195-3.015c-.015-.525-.345-.885-.885-.885zm1.2.18c-.54 0-.87.36-.885.72l.225 3.015.015 1.41c.016.54.345.87.885.87.555 0 .885-.36.9-.87l.015-1.41-.225-3.015c-.015-.555-.36-.93-.93-.93zm1.215.195c-.57 0-.915.375-.93.75l.255 3.015.015 1.35c.016.57.36.915.93.915.585 0 .93-.375.945-.915l.015-1.35-.255-3.015c-.015-.585-.375-.975-.975-.975zm1.23.21c-.6 0-.96.39-.975.78l.285 3.015.015 1.29c.016.6.375.96.975.96.615 0 .975-.39.99-.96l.015-1.29-.285-3.015c-.015-.615-.39-1.02-1.02-1.02zm1.245.225c-.63 0-1.005.405-1.02.81l.315 3.015.015 1.23c.016.63.39 1.005 1.02 1.005.645 0 1.02-.405 1.035-1.005l.015-1.23-.315-3.015c-.015-.645-.405-1.065-1.065-1.065zm1.26.24c-.66 0-1.05.42-1.065.84l.345 3.015.015 1.17c.016.66.405 1.05 1.065 1.05.675 0 1.065-.42 1.08-1.05l.015-1.17-.345-3.015c-.015-.675-.42-1.11-1.11-1.11zm1.275.255c-.69 0-1.095.435-1.11.87l.375 3.015.015 1.11c.016.69.42 1.095 1.11 1.095.705 0 1.11-.435 1.125-1.095l.015-1.11-.375-3.015c-.015-.705-.435-1.155-1.155-1.155zm1.29.27c-.72 0-1.14.45-1.155.9l.405 3.015.015 1.05c.016.72.435 1.14 1.155 1.14.735 0 1.155-.45 1.17-1.14l.015-1.05-.405-3.015c-.015-.735-.45-1.2-1.2-1.2zm1.305.285c-.75 0-1.185.465-1.2.93l.435 3.015.015.99c.016.75.45 1.185 1.2 1.185.765 0 1.2-.465 1.215-1.185l.015-.99-.435-3.015c-.015-.765-.465-1.245-1.245-1.245zm1.32.3c-.78 0-1.23.48-1.245.96l.465 3.015.015.93c.016.78.465 1.23 1.245 1.23.795 0 1.245-.48 1.26-1.23l.015-.93-.465-3.015c-.015-.795-.48-1.29-1.29-1.29zm1.335.315c-.81 0-1.275.495-1.29.99l.495 3.015.015.87c.016.81.48 1.275 1.29 1.275.825 0 1.29-.495 1.305-1.275l.015-.87-.495-3.015c-.015-.825-.495-1.335-1.335-1.335zm1.35.33c-.84 0-1.32.51-1.335 1.02l.525 3.015.015.81c.016.84.495 1.32 1.335 1.32.855 0 1.335-.51 1.35-1.32l.015-.81-.525-3.015c-.015-.855-.51-1.38-1.38-1.38zm1.365.345c-.87 0-1.365.525-1.38 1.05l.555 3.015.015.75c.016.87.51 1.365 1.38 1.365.885 0 1.38-.525 1.395-1.365l.015-.75-.555-3.015c-.015-.885-.525-1.425-1.425-1.425zm1.38.36c-.9 0-1.41.54-1.425 1.08l.585 3.015.015.69c.016.9.525 1.41 1.425 1.41.915 0 1.425-.54 1.44-1.41l.015-.69-.585-3.015c-.015-.915-.54-1.47-1.47-1.47zm1.395.375c-.93 0-1.455.555-1.47 1.11l.615 3.015.015.63c.016.93.54 1.455 1.47 1.455.945 0 1.47-.555 1.485-1.455l.015-.63-.615-3.015c-.015-.945-.555-1.515-1.515-1.515zm1.41.39c-.96 0-1.5.57-1.515 1.14l.645 3.015.015.57c.016.96.555 1.5 1.515 1.5.975 0 1.515-.57 1.53-1.5l.015-.57-.645-3.015c-.015-.975-.57-1.56-1.56-1.56zm1.425.405c-.99 0-1.545.585-1.56 1.17l.675 3.015.015.51c.016.99.57 1.545 1.56 1.5451.005 0 1.56-.585 1.575-1.545l.015-.51-.675-3.015c-.015-1.005-.585-1.605-1.605-1.605zm1.44.42c-1.02 0-1.59.6-1.605 1.2l.705 3.015.015.45c.016 1.02.585 1.59 1.605 1.591.035 0 1.59-.6 1.605-1.59l.015-.45-.705-3.015c-.015-1.035-.6-1.65-1.65-1.65zm1.455.435c-1.05 0-1.635.615-1.65 1.23l.735 3.015.015.39c.016 1.05.6 1.635 1.65 1.6351.065 0 1.635-.615 1.65-1.635l.015-.39-.735-3.015c-.015-1.065-.615-1.695-1.695-1.695zm1.47.45c-1.08 0-1.68.63-1.695 1.26l.765 3.015.015.33c.016 1.08.615 1.68 1.695 1.681.095 0 1.68-.63 1.695-1.68l.015-.33-.765-3.015c-.015-1.095-.63-1.74-1.74-1.74zm1.485.465c-1.11 0-1.725.645-1.74 1.29l.795 3.015.015.27c.016 1.11.63 1.725 1.74 1.7251.125 0 1.725-.645 1.74-1.725l.015-.27-.795-3.015c-.015-1.125-.645-1.785-1.785-1.785zm1.5.48c-1.14 0-1.77.66-1.785 1.32l.825 3.015.015.21c.016 1.14.645 1.77 1.785 1.771.155 0 1.77-.66 1.785-1.77l.015-.21-.825-3.015c-.015-1.155-.66-1.83-1.83-1.83zm1.515.495c-1.17 0-1.815.675-1.83 1.35l.855 3.015.015.15c.016 1.17.66 1.815 1.83 1.8151.185 0 1.815-.675 1.83-1.815l.015-.15-.855-3.015c-.015-1.185-.675-1.875-1.875-1.875zm1.53.51c-1.2 0-1.86.69-1.875 1.38l.885 3.015.015.09c.016 1.2.675 1.86 1.875 1.861.215 0 1.86-.69 1.875-1.86l.015-.09-.885-3.015c-.015-1.215-.69-1.92-1.92-1.92zm1.545.525c-1.23 0-1.905.705-1.92 1.41l.915 3.015.015.03c.016 1.23.69 1.905 1.92 1.9051.245 0 1.905-.705 1.92-1.905l.015-.03-.915-3.015c-.015-1.245-.705-1.965-1.965-1.965z"/></svg>
+                </a>
+                <a href="https://soundcloud.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="SoundCloud">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1.175 12.225c-.051 0-.094.046-.101.1l-.233 2.154.233 2.105c.007.058.05.098.101.098.05 0 .09-.04.099-.098l.255-2.105-.27-2.154c-.009-.06-.052-.1-.084-.1zm-.899.828c-.06 0-.091.037-.104.094L0 14.479l.165 1.308c.014.057.045.094.09.094s.089-.037.099-.094l.195-1.308-.21-1.332c-.01-.057-.055-.094-.063-.094zm1.83-1.229c-.061 0-.12.045-.12.104l-.21 2.563.225 2.458c0 .06.045.104.106.104.061 0 .12-.045.12-.104l.24-2.474-.255-2.547c0-.06-.061-.104-.106-.104zm.945-.089c-.075 0-.135.06-.15.135l-.193 2.64.21 2.544c.016.077.075.138.149.138.075 0 .135-.061.15-.138l.24-2.544-.24-2.64c-.015-.075-.06-.135-.166-.135zm.93-.045c-.09 0-.149.075-.165.165l-.18 2.7.195 2.52c.016.09.075.165.165.165.089 0 .165-.075.165-.165l.21-2.52-.21-2.7c0-.09-.076-.165-.18-.165zm.915-.045c-.104 0-.18.09-.18.18l-.165 2.76.18 2.46c.015.104.09.18.18.18.089 0 .18-.09.18-.18l.195-2.46-.21-2.76c-.015-.104-.09-.18-.18-.18zm.93-.045c-.119 0-.209.09-.209.195l-.15 2.82.165 2.415c.016.104.105.195.21.195.119 0 .209-.09.209-.195l.18-2.415-.18-2.82c0-.105-.09-.195-.225-.195zm.945-.015c-.135 0-.225.105-.24.225l-.135 2.88.15 2.37c.016.119.105.225.24.225.135 0 .24-.106.24-.225l.165-2.37-.165-2.88c-.015-.135-.105-.225-.255-.225zm.96-.015c-.149 0-.255.12-.27.255l-.12 2.925.135 2.31c.015.135.12.255.27.255.149 0 .27-.12.27-.255l.15-2.31-.15-2.925c-.015-.149-.12-.255-.285-.255zm.99-.015c-.165 0-.285.135-.3.285l-.105 2.955.12 2.25c.015.165.135.285.3.285.164 0 .3-.12.3-.285l.135-2.25-.135-2.955c-.015-.165-.135-.285-.315-.285zm1.005-.015c-.18 0-.315.15-.33.315l-.09 2.985.105 2.19c.016.18.15.315.33.315.18 0 .315-.135.33-.315l.12-2.19-.12-2.985c-.015-.18-.15-.315-.345-.315zm1.02 0c-.195 0-.345.165-.36.345l-.075 3 .09 2.13c.016.195.165.345.36.345.195 0 .345-.165.36-.345l.105-2.13-.105-3c-.015-.195-.165-.345-.375-.345zm1.035.015c-.21 0-.375.18-.39.375l-.06 3.015.075 2.07c.016.21.18.375.39.375.225 0 .39-.18.405-.375l.09-2.07-.09-3.015c-.015-.225-.18-.375-.42-.375zm1.05.03c-.24 0-.42.195-.435.405l-.045 3.015.06 2.01c.016.24.195.42.435.42.24 0 .435-.195.45-.42l.075-2.01-.075-3.015c-.015-.24-.21-.405-.465-.405zm1.065.045c-.27 0-.465.21-.48.435l-.03 3.015.045 1.95c.016.27.21.465.48.465.27 0 .48-.21.495-.465l.06-1.95-.06-3.015c-.015-.27-.225-.435-.51-.435zm1.08.06c-.3 0-.51.24-.525.48l-.015 3.015.03 1.89c.016.3.225.51.525.51.315 0 .525-.24.54-.51l.045-1.89-.045-3.015c-.015-.315-.24-.48-.555-.48zm1.095.075c-.33 0-.555.255-.57.51l.015 3.015.015 1.83c.016.33.24.555.57.555.345 0 .57-.255.585-.555l.03-1.83-.03-3.015c-.015-.345-.255-.555-.615-.555zm1.11.09c-.36 0-.6.27-.615.54l.045 3.015.015 1.77c.016.36.255.6.615.6.375 0 .615-.27.63-.6l.015-1.77-.045-3.015c-.015-.375-.27-.615-.66-.615zm1.125.105c-.39 0-.645.285-.66.57l.075 3.015.015 1.71c.016.39.27.645.66.645.405 0 .66-.285.675-.645l.015-1.71-.075-3.015c-.015-.405-.285-.66-.705-.66zm1.14.12c-.42 0-.69.3-.705.6l.105 3.015.015 1.65c.016.42.285.69.705.69.435 0 .705-.3.72-.69l.015-1.65-.105-3.015c-.015-.435-.3-.72-.75-.72zm1.155.135c-.45 0-.735.315-.75.63l.135 3.015.015 1.59c.016.45.3.735.75.735.465 0 .75-.315.765-.735l.015-1.59-.135-3.015c-.015-.465-.315-.765-.795-.765zm1.17.15c-.48 0-.78.33-.795.66l.165 3.015.015 1.53c.016.48.315.78.795.78.495 0 .795-.33.81-.78l.015-1.53-.165-3.015c-.015-.495-.33-.825-.84-.825zm1.185.165c-.51 0-.825.345-.84.69l.195 3.015.015 1.47c.016.51.33.825.84.825.525 0 .84-.345.855-.825l.015-1.47-.195-3.015c-.015-.525-.345-.885-.885-.885zm1.2.18c-.54 0-.87.36-.885.72l.225 3.015.015 1.41c.016.54.345.87.885.87.555 0 .885-.36.9-.87l.015-1.41-.225-3.015c-.015-.555-.36-.93-.93-.93zm1.215.195c-.57 0-.915.375-.93.75l.255 3.015.015 1.35c.016.57.36.915.93.915.585 0 .93-.375.945-.915l.015-1.35-.255-3.015c-.015-.585-.375-.975-.975-.975zm1.23.21c-.6 0-.96.39-.975.78l.285 3.015.015 1.29c.016.6.375.96.975.96.615 0 .975-.39.99-.96l.015-1.29-.285-3.015c-.015-.615-.39-1.02-1.02-1.02zm1.245.225c-.63 0-1.005.405-1.02.81l.315 3.015.015 1.23c.016.63.39 1.005 1.02 1.005.645 0 1.02-.405 1.035-1.005l.015-1.23-.315-3.015c-.015-.645-.405-1.065-1.065-1.065zm1.26.24c-.66 0-1.05.42-1.065.84l.345 3.015.015 1.17c.016.66.405 1.05 1.065 1.05.675 0 1.065-.42 1.08-1.05l.015-1.17-.345-3.015c-.015-.675-.42-1.11-1.11-1.11zm1.275.255c-.69 0-1.095.435-1.11.87l.375 3.015.015 1.11c.016.69.42 1.095 1.11 1.095.705 0 1.11-.435 1.125-1.095l.015-1.11-.375-3.015c-.015-.705-.435-1.155-1.155-1.155zm1.29.27c-.72 0-1.14.45-1.155.9l.405 3.015.015 1.05c.016.72.435 1.14 1.155 1.14.735 0 1.155-.45 1.17-1.14l.015-1.05-.405-3.015c-.015-.735-.45-1.2-1.2-1.2zm1.305.285c-.75 0-1.185.465-1.2.93l.435 3.015.015.99c.016.75.45 1.185 1.2 1.185.765 0 1.2-.465 1.215-1.185l.015-.99-.435-3.015c-.015-.765-.465-1.245-1.245-1.245zm1.32.3c-.78 0-1.23.48-1.245.96l.465 3.015.015.93c.016.78.465 1.23 1.245 1.23.795 0 1.245-.48 1.26-1.23l.015-.93-.465-3.015c-.015-.795-.48-1.29-1.29-1.29zm1.335.315c-.81 0-1.275.495-1.29.99l.495 3.015.015.87c.016.81.48 1.275 1.29 1.275.825 0 1.29-.495 1.305-1.275l.015-.87-.495-3.015c-.015-.825-.495-1.335-1.335-1.335zm1.35.33c-.84 0-1.32.51-1.335 1.02l.525 3.015.015.81c.016.84.495 1.32 1.335 1.32.855 0 1.335-.51 1.35-1.32l.015-.81-.525-3.015c-.015-.855-.51-1.38-1.38-1.38zm1.365.345c-.87 0-1.365.525-1.38 1.05l.555 3.015.015.75c.016.87.51 1.365 1.38 1.365.885 0 1.38-.525 1.395-1.365l.015-.75-.555-3.015c-.015-.885-.525-1.425-1.425-1.425zm1.38.36c-.9 0-1.41.54-1.425 1.08l.585 3.015.015.69c.016.9.525 1.41 1.425 1.41.915 0 1.425-.54 1.44-1.41l.015-.69-.585-3.015c-.015-.915-.54-1.47-1.47-1.47zm1.395.375c-.93 0-1.455.555-1.47 1.11l.615 3.015.015.63c.016.93.54 1.455 1.47 1.455.945 0 1.47-.555 1.485-1.455l.015-.63-.615-3.015c-.015-.945-.555-1.515-1.515-1.515zm1.41.39c-.96 0-1.5.57-1.515 1.14l.645 3.015.015.57c.016.96.555 1.5 1.515 1.5.975 0 1.515-.57 1.53-1.5l.015-.57-.645-3.015c-.015-.975-.57-1.56-1.56-1.56zm1.425.405c-.99 0-1.545.585-1.56 1.17l.675 3.015.015.51c.016.99.57 1.545 1.56 1.5451.005 0 1.56-.585 1.575-1.545l.015-.51-.675-3.015c-.015-1.005-.585-1.605-1.605-1.605zm1.44.42c-1.02 0-1.59.6-1.605 1.2l.705 3.015.015.45c.016 1.02.585 1.59 1.605 1.591.035 0 1.59-.6 1.605-1.59l.015-.45-.705-3.015c-.015-1.035-.6-1.65-1.65-1.65zm1.455.435c-1.05 0-1.635.615-1.65 1.23l.735 3.015.015.39c.016 1.05.6 1.635 1.65 1.6351.065 0 1.635-.615 1.65-1.635l.015-.39-.735-3.015c-.015-1.065-.615-1.695-1.695-1.695zm1.47.45c-1.08 0-1.68.63-1.695 1.26l.765 3.015.015.33c.016 1.08.615 1.68 1.695 1.681.095 0 1.68-.63 1.695-1.68l.015-.33-.765-3.015c-.015-1.095-.63-1.74-1.74-1.74zm1.485.465c-1.11 0-1.725.645-1.74 1.29l.795 3.015.015.27c.016 1.11.63 1.725 1.74 1.7251.125 0 1.725-.645 1.74-1.725l.015-.27-.795-3.015c-.015-1.125-.645-1.785-1.785-1.785zm1.5.48c-1.14 0-1.77.66-1.785 1.32l.825 3.015.015.21c.016 1.14.645 1.77 1.785 1.771.155 0 1.77-.66 1.785-1.77l.015-.21-.825-3.015c-.015-1.155-.66-1.83-1.83-1.83zm1.515.495c-1.17 0-1.815.675-1.83 1.35l.855 3.015.015.15c.016 1.17.66 1.815 1.83 1.8151.185 0 1.815-.675 1.83-1.815l.015-.15-.855-3.015c-.015-1.185-.675-1.875-1.875-1.875zm1.53.51c-1.2 0-1.86.69-1.875 1.38l.885 3.015.015.09c.016 1.2.675 1.86 1.875 1.861.215 0 1.86-.69 1.875-1.86l.015-.09-.885-3.015c-.015-1.215-.69-1.92-1.92-1.92zm1.545.525c-1.23 0-1.905.705-1.92 1.41l.915 3.015.015.03c.016 1.23.69 1.905 1.92 1.9051.245 0 1.905-.705 1.92-1.905l.015-.03-.915-3.015c-.015-1.245-.705-1.965-1.965-1.965z"/></svg>
+                </a>
+                <a href="https://es.ra.co/clubs/163338" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Resident Advisor">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97-.001c-.156 0-.313.127-.313.283v7.027c0 .156.157.283.313.283h1.97c.156 0 .313-.127.313-.283V8.504c0-.156-.157-.283-.313-.283zM8.402 8.22H6.106c-.156 0-.313.127-.313.283v7.027c0 .156.157.283.313.283h2.296c.156 0 .313-.127.313-.283V8.504c0-.156-.157-.283-.313-.283zm3.598 0H9.704c-.156 0-.313.127-.313.283v7.027c0 .156.157.283.313.283h2.296c.156 0 .313-.127.313-.283V8.504c0-.156-.157-.283-.313-.283zm3.598 0h-2.296c-.156 0-.313.127-.313.283v7.027c0 .156.157.283.313.283h2.296c.156 0 .313-.127.313-.283V8.504c0-.156-.157-.283-.313-.283z"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <img src="Logo Detroit club-OSW-01.png" alt="Detroit Club" class="footer-logo" loading="lazy">
+            <nav class="footer-nav" aria-label="Social links">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram</a>
+                <a href="https://soundcloud.com" target="_blank" rel="noopener noreferrer" class="footer-link">SoundCloud</a>
+                <a href="https://es.ra.co/clubs/163338" target="_blank" rel="noopener noreferrer" class="footer-link">Resident Advisor</a>
+                <a href="mailto:info@detroitclub.es" class="footer-link">Email</a>
+            </nav>
+            <p class="copyright">© 2026 Detroit Club. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Section -->
+    <section class="admin-section layer-admin" id="admin">
+        <div class="admin-inner">
+            <button class="admin-toggle" id="adminToggle" onclick="toggleAdmin()">
+                ⚙ Staff Access
+            </button>
+            <div class="admin-panel" id="adminPanel">
+                <input type="password" 
+                       class="admin-input" 
+                       id="adminPassword" 
+                       placeholder="Enter password..."
+                       onkeypress="if(event.key==='Enter')checkPassword()">
+                <button class="admin-submit" onclick="checkPassword()">Access Dashboard</button>
+                <div class="admin-error" id="adminError">Incorrect password</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAB -->
+    <div class="fab">
+        <a href="https://t.me/+34618438166" target="_blank" rel="noopener noreferrer" class="fab-btn" aria-label="Contactar por Telegram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+        </a>
+    </div>
+
+    <script>
+        // I18N
+        const i18n = {
+            es: {
+                'nav.events': 'Eventos', 'nav.agenda': 'Agenda', 'nav.merch': 'Merch', 'nav.location': 'Ubicación', 'nav.tickets': 'Tickets',
+                'hero.tagline': 'Tecnología Underground desde 2026', 'hero.scroll': 'Scroll',
+                'events.label': 'Programación', 'events.title': 'Próximos Eventos', 'events.inauguration': 'Inauguración', 'events.inauguration_title': 'Inauguración Detroit Club', 'events.tickets': 'Tickets RA', 'events.share': 'Compartir',
+                'calendar.label': 'Calendario', 'calendar.title': 'Agenda',
+                'merch.label': 'Tienda', 'merch.title': 'Merch',
+                'location.label': 'Contacto', 'location.title': 'Ubicación', 'location.address_title': 'Dirección', 'location.transport': 'Transporte', 'location.metro': 'Av. Carrilet / Bellvitge', 'location.hours': 'Horario', 'location.hours_text': 'Sábados: 23:59 → 06:00\nEventos especiales: Consultar agenda',
+                'months.february': 'Febrero',
+                'days.mon': 'Lun', 'days.tue': 'Mar', 'days.wed': 'Mié', 'days.thu': 'Jue', 'days.fri': 'Vie', 'days.sat': 'Sáb', 'days.sun': 'Dom'
+            },
+            en: {
+                'nav.events': 'Events', 'nav.agenda': 'Agenda', 'nav.merch': 'Merch', 'nav.location': 'Location', 'nav.tickets': 'Tickets',
+                'hero.tagline': 'Underground Techno since 2026', 'hero.scroll': 'Scroll',
+                'events.label': 'Program', 'events.title': 'Upcoming Events', 'events.inauguration': 'Opening', 'events.inauguration_title': 'Detroit Club Opening', 'events.tickets': 'RA Tickets', 'events.share': 'Share',
+                'calendar.label': 'Calendar', 'calendar.title': 'Agenda',
+                'merch.label': 'Shop', 'merch.title': 'Merch',
+                'location.label': 'Contact', 'location.title': 'Location', 'location.address_title': 'Address', 'location.transport': 'Transport', 'location.metro': 'Av. Carrilet / Bellvitge', 'location.hours': 'Hours', 'location.hours_text': 'Saturdays: 23:59 → 06:00\nSpecial events: Check agenda',
+                'months.february': 'February',
+                'days.mon': 'Mon', 'days.tue': 'Tue', 'days.wed': 'Wed', 'days.thu': 'Thu', 'days.fri': 'Fri', 'days.sat': 'Sat', 'days.sun': 'Sun'
+            },
+            ca: {
+                'nav.events': 'Esdeveniments', 'nav.agenda': 'Agenda', 'nav.merch': 'Merch', 'nav.location': 'Ubicació', 'nav.tickets': 'Entrades',
+                'hero.tagline': 'Tecnologia Underground des de 2026', 'hero.scroll': 'Scroll',
+                'events.label': 'Programació', 'events.title': 'Pròxims Esdeveniments', 'events.inauguration': 'Inauguració', 'events.inauguration_title': 'Inauguració Detroit Club', 'events.tickets': 'Entrades RA', 'events.share': 'Compartir',
+                'calendar.label': 'Calendari', 'calendar.title': 'Agenda',
+                'merch.label': 'Botiga', 'merch.title': 'Merch',
+                'location.label': 'Contacte', 'location.title': 'Ubicació', 'location.address_title': 'Adreça', 'location.transport': 'Transport', 'location.metro': 'Av. Carrilet / Bellvitge', 'location.hours': 'Horari', 'location.hours_text': 'Dissabtes: 23:59 → 06:00\nEsdeveniments especials: Consultar agenda',
+                'months.february': 'Febrer',
+                'days.mon': 'Dl', 'days.tue': 'Dt', 'days.wed': 'Dc', 'days.thu': 'Dj', 'days.fri': 'Dv', 'days.sat': 'Ds', 'days.sun': 'Dg'
+            },
+            it: {
+                'nav.events': 'Eventi', 'nav.agenda': 'Agenda', 'nav.merch': 'Merch', 'nav.location': 'Location', 'nav.tickets': 'Biglietti',
+                'hero.tagline': 'Tecnologia Underground dal 2026', 'hero.scroll': 'Scroll',
+                'events.label': 'Programma', 'events.title': 'Prossimi Eventi', 'events.inauguration': 'Inaugurazione', 'events.inauguration_title': 'Inaugurazione Detroit Club', 'events.tickets': 'Biglietti RA', 'events.share': 'Condividi',
+                'calendar.label': 'Calendario', 'calendar.title': 'Agenda',
+                'merch.label': 'Negozio', 'merch.title': 'Merch',
+                'location.label': 'Contatto', 'location.title': 'Location', 'location.address_title': 'Indirizzo', 'location.transport': 'Trasporto', 'location.metro': 'Av. Carrilet / Bellvitge', 'location.hours': 'Orari', 'location.hours_text': 'Sabato: 23:59 → 06:00\nEventi speciali: Consultare agenda',
+                'months.february': 'Febbraio',
+                'days.mon': 'Lun', 'days.tue': 'Mar', 'days.wed': 'Mer', 'days.thu': 'Gio', 'days.fri': 'Ven', 'days.sat': 'Sab', 'days.sun': 'Dom'
+            }
+        };
+
+        let currentLang = 'es';
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentLang = e.target.dataset.lang;
+                updateTranslations();
+            });
+        });
+
+        function updateTranslations() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (i18n[currentLang]?.[key]) {
+                    el.textContent = i18n[currentLang][key];
+                }
+            });
+        }
+
+        // Menu
+        const menuTrigger = document.getElementById('menuTrigger');
+        const fullscreenMenu = document.getElementById('fullscreenMenu');
+        let menuOpen = false;
+
+        function toggleMenu() {
+            menuOpen = !menuOpen;
+            menuTrigger.classList.toggle('active');
+            fullscreenMenu.classList.toggle('active');
+            menuTrigger.setAttribute('aria-expanded', menuOpen);
+            fullscreenMenu.setAttribute('aria-hidden', !menuOpen);
+            document.body.style.overflow = menuOpen ? 'hidden' : '';
+        }
+
+        menuTrigger.addEventListener('click', toggleMenu);
+        fullscreenMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => { if (menuOpen) toggleMenu(); });
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menuOpen) toggleMenu();
+        });
+
+        // Header scroll
+        const header = document.getElementById('header');
+        let ticking = false;
+        function updateHeader() {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+            ticking = false;
+        }
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateHeader);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Calendar
+        function generateCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const year = 2026, month = 1;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            const events = { '14': 'inauguration', '21': 'industrial', '28': 'berlin' };
+            
+            for (let i = startOffset - 1; i >= 0; i--) {
+                grid.appendChild(createCell(daysInPrevMonth - i, true));
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                const hasEvent = events[day] !== undefined;
+                grid.appendChild(createCell(day, false, hasEvent, day === 14, events[day]));
+            }
+            const remaining = 42 - (startOffset + daysInMonth);
+            for (let day = 1; day <= remaining; day++) {
+                grid.appendChild(createCell(day, true));
+            }
+        }
+
+        function createCell(day, isOther, hasEvent = false, highlight = false, eventId = null) {
+            const cell = document.createElement('div');
+            cell.className = 'calendar-cell';
+            cell.setAttribute('role', 'gridcell');
+            if (isOther) cell.classList.add('other-month');
+            if (hasEvent) cell.classList.add('has-event');
+            if (highlight) cell.classList.add('highlight');
+            cell.innerHTML = `<span class="cell-number">${day}</span>${hasEvent && !highlight ? '<span class="cell-event-dot"></span>' : ''}`;
+            if (hasEvent) {
+                cell.addEventListener('click', () => {
+                    const target = document.querySelector(`[data-date="2026-02-${String(day).padStart(2,'0')}"]`);
+                    target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    target?.classList.add('visible');
+                });
+            }
+            return cell;
+        }
+
+        // Dust Background
+        function initDustBackground() {
+            const container = document.getElementById('dustBgContainer');
+            for (let i = 0; i < 15; i++) {
+                const p = document.createElement('div');
+                p.className = 'dust-bg-particle';
+                const size = Math.random() * 2 + 1;
+                p.style.cssText = `
+                    width: ${size}px; height: ${size}px;
+                    left: ${Math.random() * 100}%;
+                    animation-delay: ${Math.random() * 25}s;
+                    animation-duration: ${20 + Math.random() * 15}s;
+                `;
+                container.appendChild(p);
+            }
+        }
+
+        // Dust FOREGROUND - MÁS INTENSO
+        function initDustForeground() {
+            const container = document.getElementById('dustFgContainer');
+            const count = window.matchMedia('(pointer: coarse)').matches ? 40 : 60;
+            
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                const rand = Math.random();
+                let type;
+                
+                if (rand < 0.4) type = 'small';
+                else if (rand < 0.7) type = 'medium';
+                else if (rand < 0.9) type = 'large';
+                else type = 'xl';
+                
+                p.className = `dust-fg-particle ${type}`;
+                p.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    animation-delay: ${Math.random() * 20}s;
+                    animation-duration: ${8 + Math.random() * 12}s;
+                    opacity: ${Math.random() * 0.5 + 0.3};
+                `;
+                container.appendChild(p);
+            }
+        }
+
+        // Admin
+        function toggleAdmin() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('active');
+            if (panel.classList.contains('active')) {
+                setTimeout(() => document.getElementById('adminPassword').focus(), 100);
+            }
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('adminPassword');
+            const error = document.getElementById('adminError');
+            if (input.value === '1234567890') {
+                window.location.href = 'index2.html';
+            } else {
+                error.classList.add('active');
+                input.value = '';
+                input.focus();
+                setTimeout(() => error.classList.remove('active'), 3000);
+            }
+        }
+
+        // Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+        // Share
+        function shareEvent(id) {
+            const text = `Detroit Club // ${id.toUpperCase()}`;
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({ title: 'Detroit Club', text, url });
+            } else {
+                navigator.clipboard.writeText(`${text} — ${url}`);
+            }
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1800);
+            
+            generateCalendar();
+            initDustBackground();
+            initDustForeground();
+            
+            document.querySelectorAll('.event-card').forEach(card => observer.observe(card));
+            
+            setTimeout(() => {
+                document.querySelector('.event-card')?.classList.add('visible');
+            }, 1500);
+        });
+
+        // Pause when hidden
+        document.addEventListener('visibilitychange', () => {
+            document.body.style.setProperty('--animation-play-state', document.hidden ? 'paused' : 'running');
+        });
+    </script>
+</body>
+</html>
