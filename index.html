@@ -722,4 +722,663 @@
             text-transform: uppercase;
             text-align: center;
             padding: 12px 4px;
-            lette
+            letter-spacing: 0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-day-header { 
+                font-size: 11px; 
+                padding: 16px 8px; 
+                letter-spacing: 0.1em; 
+            }
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            padding: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 60px;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-day { padding: 8px; min-height: 80px; }
+        }
+
+        .calendar-day:hover, .calendar-day:active {
+            border-color: var(--ember);
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.25;
+        }
+
+        .calendar-day-number {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--mist);
+            margin-bottom: 2px;
+        }
+
+        @media (min-width: 768px) {
+            .calendar-day-number { font-size: 14px; margin-bottom: 4px; }
+        }
+
+        .calendar-day-event {
+            font-size: 8px;
+            color: var(--ember);
+            line-height: 1.2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: none;
+        }
+
+        @media (min-width: 480px) {
+            .calendar-day-event { display: block; }
+        }
+
+        @media (min-width: 768px) {
+            .calendar-day-event { font-size: 9px; line-height: 1.3; }
+        }
+
+        .calendar-day.has-event {
+            background: rgba(138,38,53,0.1);
+        }
+
+        .calendar-day.has-event .calendar-day-number {
+            color: var(--ember);
+            font-weight: bold;
+        }
+
+        /* EVENTS LIST - Mobile First */
+        .events-section {
+            padding: 64px 16px;
+            background: var(--void);
+        }
+
+        @media (min-width: 768px) {
+            .events-section { padding: 80px 24px; }
+        }
+
+        .events-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .events-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        }
+
+        @media (min-width: 1200px) {
+            .events-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        }
+
+        .event-card {
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .event-card:hover, .event-card:active {
+            border-color: var(--ember);
+            transform: translateY(-4px);
+        }
+
+        .event-share-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid var(--ash);
+            color: var(--mist);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        @media (min-width: 1024px) {
+            .event-share-btn { opacity: 0; }
+            .event-card:hover .event-share-btn { opacity: 1; }
+        }
+
+        .event-share-btn:hover, .event-share-btn:active {
+            background: var(--ember);
+            border-color: var(--ember);
+        }
+
+        .event-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+
+        .event-content {
+            padding: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .event-content { padding: 24px; }
+        }
+
+        .event-date {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--ember);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .event-date { font-size: 11px; letter-spacing: 0.15em; margin-bottom: 12px; }
+        }
+
+        .event-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--mist);
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+
+        @media (min-width: 768px) {
+            .event-title { font-size: 1.5rem; margin-bottom: 12px; }
+        }
+
+        .event-lineup {
+            font-size: 13px;
+            color: var(--bone);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            .event-lineup { font-size: 14px; margin-bottom: 16px; }
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--ash);
+        }
+
+        @media (min-width: 768px) {
+            .event-footer { padding-top: 16px; }
+        }
+
+        .event-price {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--smoke);
+        }
+
+        @media (min-width: 768px) {
+            .event-price { font-size: 13px; }
+        }
+
+        .event-status {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            background: var(--rust);
+            color: var(--mist);
+        }
+
+        @media (min-width: 768px) {
+            .event-status { font-size: 10px; padding: 4px 12px; }
+        }
+
+        .event-status.sold-out {
+            background: var(--ash);
+            color: var(--fog);
+        }
+
+        /* MERCH - Mobile First */
+        .merch-section {
+            padding: 64px 16px;
+            background: var(--bg-darker);
+        }
+
+        @media (min-width: 768px) {
+            .merch-section { padding: 80px 24px; }
+        }
+
+        .merch-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .merch-description {
+            color: var(--bone);
+            margin-bottom: 24px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        @media (min-width: 768px) {
+            .merch-description { margin-bottom: 32px; font-size: 1.1rem; }
+        }
+
+        .merch-card-large {
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: inline-block;
+            max-width: 100%;
+            width: 100%;
+        }
+
+        @media (min-width: 480px) {
+            .merch-card-large { max-width: 400px; }
+        }
+
+        .merch-card-large:hover, .merch-card-large:active {
+            border-color: var(--ember);
+            transform: translateY(-4px);
+        }
+
+        .merch-image-large {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .merch-info-large {
+            padding: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .merch-info-large { padding: 24px; }
+        }
+
+        .merch-name-large {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--mist);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .merch-name-large { font-size: 1.5rem; }
+        }
+
+        .merch-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            color: var(--ember);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @media (min-width: 768px) {
+            .merch-cta { margin-top: 16px; font-size: 12px; }
+        }
+
+        /* MAP - Mobile First */
+        .map-section {
+            padding: 64px 16px;
+            background: var(--void);
+        }
+
+        @media (min-width: 768px) {
+            .map-section { padding: 80px 24px; }
+        }
+
+        .map-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .map-container { grid-template-columns: 1fr 1fr; gap: 48px; }
+        }
+
+        .map-info h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--mist);
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .map-info h3 { font-size: 2rem; margin-bottom: 24px; }
+        }
+
+        .map-address {
+            color: var(--bone);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .map-address { line-height: 1.8; margin-bottom: 24px; font-size: 16px; }
+        }
+
+        .map-address strong {
+            color: var(--ember);
+        }
+
+        .map-frame {
+            width: 100%;
+            height: 300px;
+            border: 1px solid var(--ash);
+            filter: grayscale(100%) invert(92%) contrast(83%);
+        }
+
+        @media (min-width: 768px) {
+            .map-frame { height: 400px; }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) {
+            .event-card:hover { transform: none; }
+            .event-card:active { transform: translateY(-2px); }
+            
+            .merch-card-large:hover { transform: none; }
+            .merch-card-large:active { transform: translateY(-2px); }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Telegram Float - Ahora en derecha inferior y rojo -->
+    <a href="https://t.me/detroitclub" class="telegram-float" aria-label="Telegram">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.498a2.25 2.25 0 0 0 .106 4.238l3.5 1.429a1.5 1.5 0 0 0 1.7-.634l2.818-4.375a.375.375 0 0 1 .63.375l-2.35 4.375a1.5 1.5 0 0 0 1.7.634l4.375-1.429a2.25 2.25 0 0 0 1.588-2.15V4.68a2.242 2.242 0 0 0-2.145-2.247z"/>
+            <path d="m9.35 13.35 1.3 3.15a.375.375 0 0 0 .7 0l1.3-3.15"/>
+        </svg>
+    </a>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <img src="https://via.placeholder.com/120x32/0a0a0a/d4d4d4?text=DETROIT" alt="DETROIT CLUB" class="header-logo">
+            <div class="header-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active">ES</button>
+                    <button class="lang-btn">EN</button>
+                    <button class="lang-btn">CA</button>
+                    <button class="lang-btn">IT</button>
+                </div>
+                <button class="menu-trigger" id="menuTrigger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Fullscreen Menu -->
+    <nav class="fullscreen-menu" id="fullscreenMenu">
+        <a href="#about" class="menu-link" style="transition-delay: 0.1s">Nosotros</a>
+        <a href="#calendar" class="menu-link" style="transition-delay: 0.2s">Calendario</a>
+        <a href="#events" class="menu-link" style="transition-delay: 0.3s">Eventos</a>
+        <a href="#merch" class="menu-link" style="transition-delay: 0.4s">Merch</a>
+        <a href="#location" class="menu-link" style="transition-delay: 0.5s">Ubicación</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-tagline">Underground Techno</div>
+        <img src="https://via.placeholder.com/550x200/0a0a0a/d4d4d4?text=DETROIT+CLUB" alt="DETROIT CLUB" class="hero-logo">
+        <div class="hero-location">L'Hospitalet de Llobregat, Barcelona</div>
+        
+        <div class="inauguration-box">
+            <div class="inauguration-badge">Inauguración</div>
+            <div class="inauguration-date">SÁBADO • 14 FEB 2026</div>
+            <div class="inauguration-lineup">
+                <span class="headliner">CECILIA TOSH</span>
+                <span>James Ruskin • Aaron Bleek</span>
+            </div>
+            <div class="btn-group">
+                <a href="#" class="btn-primary">Comprar Entradas →</a>
+                <a href="#" class="btn-secondary">Info Evento</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section" id="about">
+        <div class="about-grid">
+            <div class="about-content">
+                <div class="about-label">El Concepto</div>
+                <h2 class="about-title">90s <span class="text-accent">Underground</span> Techno</h2>
+                <p class="about-text">
+                    Detroit Club es el espacio donde renace el underground techno de los 90. Un santuario para la música techno más pura y despiadada, inspirado en las raíces industriales de Detroit.
+                </p>
+                <p class="about-text">
+                    Nuestra pista de baile es un territorio sin ley donde los 909s retumban y los bajos atraviesan cuerpos. No hay luces de discoteca, no hay concesiones comerciales. Solo techno en su forma más primitiva y poderosa.
+                </p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <div class="stat-number">250</div>
+                        <div class="stat-label">Aforo Máx</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Horas</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">90s</div>
+                        <div class="stat-label">Spirit</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-visual">
+                <img src="https://via.placeholder.com/600x750/1c1c1c/8b2635?text=Industrial+Techno" alt="Detroit Club Interior">
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar -->
+    <section class="calendar-section" id="calendar">
+        <div class="section-header">
+            <h2 class="section-title">Calendario <span class="text-accent">2026</span></h2>
+        </div>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button class="calendar-nav-btn">←</button>
+                <div class="calendar-month-year">Febrero 2026</div>
+                <button class="calendar-nav-btn">→</button>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-day-header">Lun</div>
+                <div class="calendar-day-header">Mar</div>
+                <div class="calendar-day-header">Mié</div>
+                <div class="calendar-day-header">Jue</div>
+                <div class="calendar-day-header">Vie</div>
+                <div class="calendar-day-header">Sáb</div>
+                <div class="calendar-day-header">Dom</div>
+                
+                <!-- Days -->
+                <div class="calendar-day other-month"><div class="calendar-day-number">26</div></div>
+                <div class="calendar-day other-month"><div class="calendar-day-number">27</div></div>
+                <div class="calendar-day other-month"><div class="calendar-day-number">28</div></div>
+                <div class="calendar-day other-month"><div class="calendar-day-number">29</div></div>
+                <div class="calendar-day other-month"><div class="calendar-day-number">30</div></div>
+                <div class="calendar-day other-month"><div class="calendar-day-number">31</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">1</div></div>
+                
+                <div class="calendar-day"><div class="calendar-day-number">2</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">3</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">4</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">5</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">6</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">7</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">8</div></div>
+                
+                <div class="calendar-day"><div class="calendar-day-number">9</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">10</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">11</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">12</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">13</div></div>
+                <div class="calendar-day has-event">
+                    <div class="calendar-day-number">14</div>
+                    <div class="calendar-day-event">INAUGURACIÓN</div>
+                </div>
+                <div class="calendar-day"><div class="calendar-day-number">15</div></div>
+                
+                <div class="calendar-day"><div class="calendar-day-number">16</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">17</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">18</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">19</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">20</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">21</div></div>
+                <div class="calendar-day"><div class="calendar-day-number">22</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events -->
+    <section class="events-section" id="events">
+        <div class="section-header">
+            <h2 class="section-title">Próximos <span class="text-accent">Eventos</span></h2>
+        </div>
+        <div class="events-grid">
+            <article class="event-card">
+                <button class="event-share-btn">↗</button>
+                <img src="https://via.placeholder.com/600x338/1c1c1c/8b2635?text=Cecilia+Tosh" alt="Cecilia Tosh" class="event-image">
+                <div class="event-content">
+                    <div class="event-date">Sábado 14 Feb 2026</div>
+                    <h3 class="event-title">INAUGURACIÓN</h3>
+                    <p class="event-lineup">Cecilia Tosh • James Ruskin • Aaron Bleek</p>
+                    <div class="event-footer">
+                        <span class="event-price">Desde 15€</span>
+                        <span class="event-status">Disponible</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Merch -->
+    <section class="merch-section" id="merch">
+        <div class="section-header">
+            <h2 class="section-title">Merch <span class="text-accent">Oficial</span></h2>
+        </div>
+        <div class="merch-container">
+            <p class="merch-description">Edición limitada disponible en nuestra tienda TikTok Shop</p>
+            <div class="merch-card-large">
+                <img src="https://via.placeholder.com/400x400/1c1c1c/d4d4d4?text=Camiseta+Detroit" alt="Camiseta Detroit Club" class="merch-image-large">
+                <div class="merch-info-large">
+                    <h3 class="merch-name-large">Camiseta Inauguración</h3>
+                    <span class="merch-cta">Ver en TikTok Shop →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map-section" id="location">
+        <div class="section-header">
+            <h2 class="section-title">Ubicación</h2>
+        </div>
+        <div class="map-container">
+            <div class="map-info">
+                <h3>Detroit Club</h3>
+                <p class="map-address">
+                    <strong>Passatge Can Politic, 13</strong><br>
+                    08907 L'Hospitalet de Llobregat<br>
+                    Barcelona, España<br><br>
+                    <strong>Metro:</strong> L1 Av. Carrilet - Bellvitge
+                </p>
+            </div>
+            <iframe 
+                class="map-frame"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.4455046082!2d2.1075!3d41.35!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDIxJzAwLjAiTiAywrAwNiczMC4wIkU!5e0!3m2!1ses!2ses!4v1234567890"
+                allowfullscreen=""
+                loading="lazy">
+            </iframe>
+        </div>
+    </section>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Menu toggle
+        const menuTrigger = document.getElementById('menuTrigger');
+        const fullscreenMenu = document.getElementById('fullscreenMenu');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        menuTrigger.addEventListener('click', () => {
+            menuTrigger.classList.toggle('active');
+            fullscreenMenu.classList.toggle('active');
+            document.body.style.overflow = fullscreenMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close menu on link click
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuTrigger.classList.remove('active');
+                fullscreenMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Language switcher
+        const langBtns = document.querySelectorAll('.lang-btn');
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
