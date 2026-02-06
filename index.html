@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>DETROIT CLUB — Underground Techno</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --void: #0a0a0a;
+            --concrete: #141414;
+            --steel: #1c1c1c;
+            --iron: #242424;
+            --ash: #2e2e2e;
+            --fog: #5a5a5a;
+            --smoke: #7a7a7a;
+            --bone: #a0a0a0;
+            --mist: #d4d4d4;
+            --bg-dark: #1f1f1f;
+            --bg-darker: #161616;
+            --rust: #6b1a24;
+            --blood: #7a1f2a;
+            --ember: #8b2635;
+            
+            --font-display: 'Anton', Impact, sans-serif;
+            --font-body: 'Space Grotesk', system-ui, sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            background: var(--bg-dark);
+            color: var(--mist);
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.6;
+            background: var(--bg-dark);
+            color: var(--mist);
+            overflow-x: hidden;
+        }
+
+        /* TELEGRAM FLOAT */
+        .telegram-float {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            width: 56px;
+            height: 56px;
+            background: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 28px;
+            z-index: 95;
+            animation: pulse-telegram 2s infinite;
+            transition: transform 0.3s;
+        }
+
+        .telegram-float:hover {
+            transform: scale(1.1);
+            animation: none;
+        }
+
+        @keyframes pulse-telegram {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0,136,204,0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(0,136,204,0); }
+        }
+
+        /* HEADER */
+        .header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 90;
+            padding: 16px;
+            background: linear-gradient(to bottom, rgba(31,31,31,0.95) 0%, transparent 100%);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s;
+        }
+
+        .header.scrolled {
+            background: rgba(22,22,22,0.98);
+            padding: 12px 16px;
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 32px;
+            opacity: 0.9;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            padding: 2px;
+        }
+
+        .lang-btn {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            padding: 6px 10px;
+            background: transparent;
+            border: none;
+            color: var(--fog);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .lang-btn.active {
+            background: var(--ember);
+            color: var(--mist);
+        }
+
+        .menu-trigger {
+            width: 28px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .menu-trigger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--bone);
+            transition: all 0.3s;
+        }
+
+        .menu-trigger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .menu-trigger.active span:nth-child(2) { opacity: 0; }
+        .menu-trigger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* FULLSCREEN MENU */
+        .fullscreen-menu {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: var(--bg-dark);
+            z-index: 80;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s;
+        }
+
+        .fullscreen-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-link {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 12vw, 5rem);
+            text-transform: uppercase;
+            color: var(--mist);
+            text-decoration: none;
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.3s;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .fullscreen-menu.active .menu-link {
+            opacity: 0.8;
+            transform: translateX(0);
+        }
+
+        .menu-link:hover {
+            color: var(--ember);
+            padding-left: 32px;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 96px 16px;
+            background: var(--bg-dark);
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: 100%;
+            max-width: 550px;
+            margin-bottom: 48px;
+            animation: fadeIn 1.4s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .hero-tagline {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--smoke);
+            margin-bottom: 8px;
+        }
+
+        .hero-location {
+            font-size: 12px;
+            letter-spacing: 0.25em;
+            color: var(--fog);
+            text-transform: uppercase;
+            margin-bottom: 48px;
+        }
+
+        .inauguration-box {
+            padding: 32px;
+            background: rgba(138,38,53,0.15);
+            border: 2px solid var(--ember);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .inauguration-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ember);
+            color: var(--mist);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+        }
+
+        .inauguration-date {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--mist);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .inauguration-lineup {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--bone);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .inauguration-lineup span {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .inauguration-lineup .headliner {
+            font-size: 18px;
+            color: var(--ember);
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--ember);
+            color: var(--mist);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--blood);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--mist);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--ash);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 12px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--ember);
+            color: var(--ember);
+        }
+
+        /* SECTIONS */
+        .section-header {
+            max-width: 1600px;
+            margin: 0 auto 48px;
+            padding: 0 16px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 4rem);
+            text-transform: uppercase;
+            color: var(--mist);
+            line-height: 1;
+        }
+
+        .text-accent { color: var(--ember); }
+
+        /* ABOUT */
+        .about-section {
+            padding: 96px 16px;
+            background: var(--bg-dark);
+        }
+
+        .about-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .about-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+        }
+
+        .about-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--ember);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 16px;
+        }
+
+        .about-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--mist);
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            line-height: 1;
+        }
+
+        .about-text {
+            color: var(--bone);
+            margin-bottom: 24px;
+            max-width: 540px;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--ember);
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--smoke);
+            text-transform: uppercase;
+        }
+
+        .about-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 4/5;
+        }
+
+        /* CALENDAR */
+        .calendar-section {
+            padding: 80px 16px;
+            background: var(--bg-darker);
+        }
+
+        .calendar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding: 0 16px;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 16px;
+        }
+
+        .calendar-nav-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            color: var(--mist);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .calendar-nav-btn:hover {
+            background: var(--ember);
+            border-color: var(--ember);
+        }
+
+        .calendar-month-year {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--mist);
+            text-transform: uppercase;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .calendar-day-header {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--fog);
+            text-transform: uppercase;
+            text-align: center;
+            padding: 16px 8px;
+            letter-spacing: 0.1em;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 80px;
+        }
+
+        .calendar-day:hover {
+            border-color: var(--ember);
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+        }
+
+        .calendar-day-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--mist);
+            margin-bottom: 4px;
+        }
+
+        .calendar-day-event {
+            font-size: 9px;
+            color: var(--ember);
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .calendar-day.has-event {
+            background: rgba(138,38,53,0.1);
+        }
+
+        .calendar-day.has-event .calendar-day-number {
+            color: var(--ember);
+            font-weight: bold;
+        }
+
+        /* EVENTS LIST */
+        .events-section {
+            padding: 80px 16px;
+            background: var(--bg-dark);
+        }
+
+        .events-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .events-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 1200px) {
+            .events-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .event-card {
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .event-card:hover {
+            border-color: var(--ember);
+            transform: translateY(-4px);
+        }
+
+        .event-share-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--ash);
+            color: var(--mist);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .event-card:hover .event-share-btn {
+            opacity: 1;
+        }
+
+        .event-share-btn:hover {
+            background: var(--ember);
+            border-color: var(--ember);
+        }
+
+        .event-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+
+        .event-content {
+            padding: 24px;
+        }
+
+        .event-date {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--ember);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 12px;
+        }
+
+        .event-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--mist);
+            margin-bottom: 12px;
+        }
+
+        .event-lineup {
+            font-size: 14px;
+            color: var(--bone);
+            margin-bottom: 16px;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--ash);
+        }
+
+        .event-price {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--smoke);
+        }
+
+        .event-status {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            background: var(--rust);
+            color: var(--mist);
+        }
+
+        .event-status.sold-out {
+            background: var(--ash);
+            color: var(--fog);
+        }
+
+        /* MERCH - TIKTOK SHOP */
+        .merch-section {
+            padding: 80px 16px;
+            background: var(--bg-darker);
+        }
+
+        .merch-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .merch-description {
+            color: var(--bone);
+            margin-bottom: 32px;
+            font-size: 1.1rem;
+        }
+
+        .merch-card-large {
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            overflow: hidden;
+            transition: all 0.3s;
+            display: inline-block;
+            max-width: 400px;
+        }
+
+        .merch-card-large:hover {
+            border-color: var(--ember);
+            transform: translateY(-4px);
+        }
+
+        .merch-image-large {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .merch-info-large {
+            padding: 24px;
+        }
+
+        .merch-name-large {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--mist);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .merch-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            color: var(--ember);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* MAP */
+        .map-section {
+            padding: 80px 16px;
+            background: var(--bg-dark);
+        }
+
+        .map-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        @media (min-width: 1024px) {
+            .map-container { grid-template-columns: 1fr 1fr; gap: 48px; }
+        }
+
+        .map-info h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--mist);
+            margin-bottom: 24px;
+        }
+
+        .map-address {
+            color: var(--bone);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .map-address strong {
+            color: var(--ember);
+        }
+
+        .map-frame {
+            width: 100%;
+            height: 400px;
+            border: 1px solid var(--ash);
+            filter: grayscale(100%) invert(92%) contrast(83%);
+        }
+
+        /* NEWSLETTER */
+        .newsletter-section {
+            padding: 96px 16px;
+            background: var(--bg-darker);
+            text-align: center;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: var(--mist);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .newsletter-subtitle {
+            color: var(--bone);
+            margin-bottom: 48px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 640px) {
+            .newsletter-form { flex-direction: row; }
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 16px 24px;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            color: var(--mist);
+            font-size: 16px;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--ember);
+        }
+
+        .newsletter-btn {
+            padding: 16px 32px;
+            background: var(--ember);
+            color: var(--mist);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background: var(--blood);
+        }
+
+        .newsletter-message {
+            margin-top: 16px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            min-height: 20px;
+        }
+
+        .newsletter-message.success { color: #4ade80; }
+        .newsletter-message.error { color: var(--ember); }
+
+        /* FOOTER */
+        .footer {
+            padding: 64px 16px;
+            background: var(--void);
+            border-top: 1px solid var(--steel);
+        }
+
+        .footer-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+        }
+
+        .footer-logo {
+            height: 28px;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+
+        .footer-tagline {
+            color: var(--smoke);
+            font-size: 14px;
+        }
+
+        .footer-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--fog);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            color: var(--bone);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover { color: var(--ember); }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--ash);
+            color: var(--bone);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            border-color: var(--ember);
+            color: var(--ember);
+        }
+
+        .footer-bottom {
+            max-width: 1600px;
+            margin: 48px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid var(--steel);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--fog);
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom { flex-direction: row; }
+        }
+
+        /* ADMIN */
+        .admin-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            color: var(--fog);
+            cursor: pointer;
+            z-index: 200;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .admin-toggle:hover {
+            background: var(--ember);
+            color: var(--mist);
+        }
+
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            background: var(--bg-darker);
+            border-left: 1px solid var(--ash);
+            z-index: 200;
+            padding: 64px 24px 24px;
+            overflow-y: auto;
+            transition: right 0.6s;
+        }
+
+        .admin-panel.active { right: 0; }
+
+        .admin-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: 1px solid var(--ash);
+            color: var(--fog);
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .admin-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--mist);
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--ash);
+        }
+
+        .admin-tab {
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            color: var(--fog);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .admin-tab.active {
+            color: var(--ember);
+            border-bottom-color: var(--ember);
+        }
+
+        .admin-tab-content { display: none; }
+        .admin-tab-content.active { display: block; }
+
+        .admin-section { margin-bottom: 32px; }
+
+        .admin-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--fog);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .admin-input, .admin-textarea, .admin-select {
+            width: 100%;
+            padding: 12px;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            color: var(--mist);
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .admin-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .admin-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--ember);
+            color: var(--mist);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+
+        .admin-btn:hover { background: var(--blood); }
+        .admin-btn.secondary { background: var(--ash); }
+        .admin-btn.secondary:hover { background: var(--fog); }
+        .admin-btn.danger { background: var(--rust); }
+        .admin-btn.danger:hover { background: var(--blood); }
+
+        .admin-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            margin-bottom: 8px;
+        }
+
+        .admin-list-title { font-size: 14px; color: var(--mist); }
+        .admin-list-subtitle { font-family: var(--font-mono); font-size: 11px; color: var(--fog); }
+        .admin-list-btn {
+            padding: 6px 12px;
+            background: var(--ash);
+            border: none;
+            color: var(--mist);
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .admin-list-btn:hover { background: var(--ember); }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(10,10,10,0.95);
+            z-index: 80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: 1px solid var(--ash);
+            color: var(--fog);
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 10;
+        }
+
+        .modal-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+
+        .modal-body { padding: 32px; }
+
+        .modal-date {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--ember);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--mist);
+            margin-bottom: 16px;
+        }
+
+        .modal-description {
+            color: var(--bone);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .modal-lineup {
+            border-top: 1px solid var(--ash);
+            border-bottom: 1px solid var(--ash);
+            padding: 24px 0;
+            margin-bottom: 24px;
+        }
+
+        .modal-lineup-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--fog);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .modal-artist {
+            color: var(--mist);
+            margin-bottom: 8px;
+        }
+
+        .modal-artist::before {
+            content: '▸ ';
+            color: var(--ember);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .modal-price {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--mist);
+        }
+
+        .share-event-btn {
+            padding: 12px 20px;
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            color: var(--mist);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .share-event-btn:hover {
+            border-color: var(--ember);
+            color: var(--ember);
+        }
+
+        /* REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- TELEGRAM -->
+    <a href="https://t.me/detroitclub" class="telegram-float" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+    </a>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <img src="Logo Detroit club-OSW-01.png" alt="DETROIT CLUB" class="header-logo">
+            <div class="header-controls">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="es">ES</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ca">CA</button>
+                    <button class="lang-btn" data-lang="it">IT</button>
+                </div>
+                <button class="menu-trigger" id="menuTrigger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENU -->
+    <nav class="fullscreen-menu" id="fullscreenMenu">
+        <div class="menu-nav">
+            <a href="#inauguracion" class="menu-link" data-nav>Inauguración</a>
+            <a href="#about" class="menu-link" data-nav>Nosotros</a>
+            <a href="#calendario" class="menu-link" data-nav>Calendario</a>
+            <a href="#eventos" class="menu-link" data-nav>Eventos</a>
+            <a href="#merch" class="menu-link" data-nav>Merch</a>
+            <a href="#mapa" class="menu-link" data-nav>Ubicación</a>
+            <a href="#newsletter" class="menu-link" data-nav>Newsletter</a>
+        </div>
+    </nav>
+
+    <!-- HERO / INAUGURACIÓN -->
+    <section class="hero" id="inauguracion">
+        <img src="Logo Detroit club-OSW-01.png" alt="DETROIT CLUB" class="hero-logo">
+        <p class="hero-tagline">Underground Techno Institution</p>
+        <p class="hero-location">L'Hospitalet de Llobregat, Barcelona</p>
+        
+        <div class="inauguration-box">
+            <span class="inauguration-badge">Inauguración</span>
+            <div class="inauguration-date">14 FEBRERO 2026</div>
+            <div class="inauguration-lineup">
+                <span class="headliner">JAMES RUSKIN</span>
+                <span>CECILIA TOSH</span>
+                <span>AARON BLEEK</span>
+            </div>
+            <a href="https://es.ra.co/clubs/163338" class="btn-primary" target="_blank">Entradas Resident Advisor →</a>
+            <button class="btn-secondary" onclick="shareInauguration()">Compartir</button>
+        </div>
+        
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--fog); max-width: 400px; margin-top: 32px; line-height: 1.8;">
+            Detroit Club es el espacio donde renace el underground techno de los 90.<br>
+            Aforo máximo: 250 personas.
+        </p>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-section" id="about">
+        <div class="about-grid">
+            <div class="about-content reveal">
+                <span class="about-label">Est. 2026</span>
+                <h2 class="about-title">Pure Industrial<br>Techno</h2>
+                <p class="about-text">
+                    Detroit Club es el espacio donde renace el underground techno de los 90. 
+                    Un santuario para la música techno más pura y despiadada, inspirado en las 
+                    raíces industriales de Detroit.
+                </p>
+                <p class="about-text">
+                    Nuestra pista de baile es un territorio sin ley donde los 909s retumban 
+                    y los bajos atraviesan cuerpos. No hay luces de discoteca, no hay concesiones 
+                    comerciales. Solo techno en su forma más primitiva y poderosa.
+                </p>
+                <div class="about-stats">
+                    <div>
+                        <div class="stat-number">250</div>
+                        <div class="stat-label">Aforo Máximo</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Horas</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">90s</div>
+                        <div class="stat-label">Spirit</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-visual reveal">
+                <img src="IMG-20260202-WA0006.jpg" alt="Detroit Club Interior">
+            </div>
+        </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section class="calendar-section" id="calendario">
+        <div class="section-header reveal">
+            <h2 class="section-title">Calendario<br><span class="text-accent">2026</span></h2>
+        </div>
+        <div class="calendar-container reveal">
+            <div class="calendar-header">
+                <button class="calendar-nav-btn" onclick="changeMonth(-1)">←</button>
+                <div class="calendar-month-year" id="calendarMonthYear">FEBRERO 2026</div>
+                <button class="calendar-nav-btn" onclick="changeMonth(1)">→</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENTOS -->
+    <section class="events-section" id="eventos">
+        <div class="section-header reveal">
+            <h2 class="section-title">Próximos<br><span class="text-accent">Eventos</span></h2>
+        </div>
+        <div class="events-grid" id="eventsGrid"></div>
+    </section>
+
+    <!-- MERCH - TIKTOK SHOP -->
+    <section class="merch-section" id="merch">
+        <div class="section-header reveal">
+            <h2 class="section-title">Official<br><span class="text-accent">Merch</span></h2>
+        </div>
+        <div class="merch-container reveal">
+            <p class="merch-description">
+                Ediciones limitadas disponibles exclusivamente en nuestro TikTok Shop
+            </p>
+            <a href="https://www.tiktok.com/@detroitclub_bcn" target="_blank" rel="noopener noreferrer" class="merch-card-large">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80" alt="Detroit Club Merch" class="merch-image-large">
+                <div class="merch-info-large">
+                    <h3 class="merch-name-large">Detroit Club Collection</h3>
+                    <span class="merch-cta">Ver en TikTok Shop →</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- MAPA -->
+    <section class="map-section" id="mapa">
+        <div class="section-header reveal">
+            <h2 class="section-title">Encuéntranos</h2>
+        </div>
+        <div class="map-container reveal">
+            <div class="map-info">
+                <h3>Detroit Club</h3>
+                <p class="map-address">
+                    <strong>Dirección:</strong><br>
+                    Carrer de la Industria, 42<br>
+                    08901 L'Hospitalet de Llobregat<br>
+                    Barcelona, España<br><br>
+                    <strong>Metro:</strong> L1 - Santa Eulàlia (5 min)<br>
+                    <strong>Bus:</strong> L12, L14, LH1
+                </p>
+            </div>
+            <iframe 
+                class="map-frame"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.5!2d2.143!3d41.36!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDIxJzM2LjAiTiAywrAwOCczNC44IkU!5e0!3m2!1ses!2ses!4v1234567890"
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter-section" id="newsletter">
+        <div class="newsletter-container reveal">
+            <h2 class="newsletter-title">Mantente Conectado</h2>
+            <p class="newsletter-subtitle">
+                Suscríbete para recibir información exclusiva sobre eventos y ventas anticipadas.
+            </p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" class="newsletter-input" id="emailInput" placeholder="tu@email.com" required>
+                <button type="submit" class="newsletter-btn" id="submitBtn">Suscribirse</button>
+            </form>
+            <div class="newsletter-message" id="formMessage"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contact">
+        <div class="footer-grid">
+            <div>
+                <img src="Logo Detroit club-OSW-01.png" alt="DETROIT CLUB" class="footer-logo">
+                <p class="footer-tagline">
+                    Underground techno institution.<br>
+                    Pure industrial sound since 2026.
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-title">Navegar</h4>
+                <div class="footer-links">
+                    <a href="#inauguracion" class="footer-link">Inauguración</a>
+                    <a href="#about" class="footer-link">Nosotros</a>
+                    <a href="#calendario" class="footer-link">Calendario</a>
+                    <a href="#eventos" class="footer-link">Eventos</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Legal</h4>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacidad</a>
+                    <a href="#" class="footer-link">Términos</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Social</h4>
+                <div class="social-links">
+                    <a href="https://instagram.com/detroitclub_bcn" class="social-link" target="_blank">IG</a>
+                    <a href="https://www.tiktok.com/@detroitclub_bcn" class="social-link" target="_blank">TT</a>
+                    <a href="https://es.ra.co/clubs/163338" class="social-link" target="_blank">RA</a>
+                    <a href="https://t.me/detroitclub" class="social-link" target="_blank">TG</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Detroit Club. Todos los derechos reservados.</p>
+            <p>@detroitclub_bcn</p>
+        </div>
+    </footer>
+
+    <!-- EVENT MODAL -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">×</button>
+            <img src="" alt="" class="modal-image" id="modalImage">
+            <div class="modal-body">
+                <div class="modal-date" id="modalDate"></div>
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-lineup">
+                    <div class="modal-lineup-title">Line Up</div>
+                    <div id="modalLineup"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-price" id="modalPrice"></div>
+                    <button class="share-event-btn" onclick="shareCurrentEvent()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                        Compartir
+                    </button>
+                    <a href="https://es.ra.co/clubs/163338" class="btn-primary" target="_blank" id="modalRaLink">Entradas RA →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <button class="admin-toggle" id="adminToggle">⚙</button>
+    <div class="admin-panel" id="adminPanel">
+        <button class="admin-close" id="adminClose">×</button>
+        <h3 class="admin-title">Panel Admin</h3>
+        
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-tab="events">Eventos</button>
+            <button class="admin-tab" data-tab="config">Config</button>
+        </div>
+
+        <div class="admin-tab-content active" id="tab-events">
+            <div class="admin-section">
+                <label class="admin-label">Añadir Evento</label>
+                <input type="text" class="admin-input" id="adminEventTitle" placeholder="Título">
+                <input type="date" class="admin-input" id="adminEventDate">
+                <input type="text" class="admin-input" id="adminEventLineup" placeholder="Artistas (separados por coma)">
+                <input type="text" class="admin-input" id="adminEventPrice" placeholder="Precio">
+                <input type="text" class="admin-input" id="adminEventImage" placeholder="URL imagen">
+                <textarea class="admin-textarea" id="adminEventDescription" placeholder="Descripción"></textarea>
+                <select class="admin-select" id="adminEventStatus">
+                    <option value="active">Disponible</option>
+                    <option value="sold-out">Agotado</option>
+                </select>
+                <button class="admin-btn" id="addEventBtn">Añadir</button>
+            </div>
+            <div class="admin-section">
+                <label class="admin-label">Eventos</label>
+                <div id="adminEventList"></div>
+            </div>
+            <div class="admin-section">
+                <button class="admin-btn secondary" id="exportDataBtn">Exportar JSON</button>
+                <button class="admin-btn danger" id="clearEventsBtn">Borrar Todo</button>
+            </div>
+        </div>
+
+        <div class="admin-tab-content" id="tab-config">
+            <div class="admin-section">
+                <label class="admin-label">Google Sheets URL</label>
+                <input type="text" class="admin-input" id="sheetUrl" placeholder="URL Apps Script">
+                <button class="admin-btn" id="saveConfigBtn">Guardar</button>
+            </div>
+            <div class="admin-section">
+                <label class="admin-label">Stats</label>
+                <p style="color: var(--bone); font-size: 14px;">
+                    Eventos: <span id="statEvents">0</span><br>
+                    Suscriptores: <span id="statSubscribers">0</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIG
+        var CONFIG = {
+            GOOGLE_SCRIPT_URL: localStorage.getItem('detroit_sheet_url') || '',
+            EVENTS_KEY: 'detroit_events_v2',
+            SUBS_KEY: 'detroit_subscribers',
+            RA_URL: 'https://es.ra.co/clubs/163338'
+        };
+
+        // DEFAULT EVENTS
+        var DEFAULT_EVENTS = [
+            {
+                id: 1,
+                title: "Inauguración Detroit Club",
+                date: "2026-02-14",
+                lineup: ["James Ruskin", "Cecilia Tosh", "Aaron Bleek"],
+                price: "20€",
+                image: "IMG-20260202-WA0006.jpg",
+                description: "Gran inauguración de Detroit Club. El renacimiento del underground techno de los 90 en Barcelona.",
+                status: "active"
+            }
+        ];
+
+        // STATE
+        var state = {
+            events: [],
+            subscribers: [],
+            currentLang: 'es',
+            currentMonth: new Date(2026, 1, 1), // Febrero 2026
+            selectedEvent: null
+        };
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            renderCalendar();
+            renderEvents();
+            setupListeners();
+            setupScroll();
+            setupHeader();
+        });
+
+        function loadData() {
+            var e = localStorage.getItem(CONFIG.EVENTS_KEY);
+            state.events = e ? JSON.parse(e) : DEFAULT_EVENTS.slice();
+            var s = localStorage.getItem(CONFIG.SUBS_KEY);
+            state.subscribers = s ? JSON.parse(s) : [];
+        }
+
+        function saveData() {
+            localStorage.setItem(CONFIG.EVENTS_KEY, JSON.stringify(state.events));
+            localStorage.setItem(CONFIG.SUBS_KEY, JSON.stringify(state.subscribers));
+            updateStats();
+        }
+
+        // CALENDARIO
+        function renderCalendar() {
+            var year = state.currentMonth.getFullYear();
+            var month = state.currentMonth.getMonth();
+            var monthNames = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
+            document.getElementById('calendarMonthYear').textContent = monthNames[month] + ' ' + year;
+            
+            var firstDay = new Date(year, month, 1).getDay();
+            var daysInMonth = new Date(year, month + 1, 0).getDate();
+            var daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            var grid = document.getElementById('calendarGrid');
+            var html = '';
+            
+            // Headers
+            var dayNames = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB', 'DOM'];
+            dayNames.forEach(function(d) {
+                html += '<div class="calendar-day-header">' + d + '</div>';
+            });
+            
+            // Previous month days
+            var startDay = firstDay === 0 ? 6 : firstDay - 1;
+            for (var i = startDay - 1; i >= 0; i--) {
+                html += '<div class="calendar-day other-month"><div class="calendar-day-number">' + (daysInPrevMonth - i) + '</div></div>';
+            }
+            
+            // Current month days
+            for (var day = 1; day <= daysInMonth; day++) {
+                var dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+                var events = state.events.filter(function(ev) { return ev.date === dateStr; });
+                var hasEvent = events.length > 0;
+                
+                html += '<div class="calendar-day ' + (hasEvent ? 'has-event' : '') + '" ' + (hasEvent ? 'onclick="openModal(' + events[0].id + ')"' : '') + '>';
+                html += '<div class="calendar-day-number">' + day + '</div>';
+                if (hasEvent) {
+                    html += '<div class="calendar-day-event">' + events[0].title + '</div>';
+                }
+                html += '</div>';
+            }
+            
+            // Next month days
+            var totalCells = startDay + daysInMonth;
+            var remaining = 42 - totalCells;
+            for (var j = 1; j <= remaining; j++) {
+                html += '<div class="calendar-day other-month"><div class="calendar-day-number">' + j + '</div></div>';
+            }
+            
+            grid.innerHTML = html;
+        }
+
+        function changeMonth(delta) {
+            state.currentMonth.setMonth(state.currentMonth.getMonth() + delta);
+            renderCalendar();
+        }
+
+        // RENDER EVENTS
+        function renderEvents() {
+            var grid = document.getElementById('eventsGrid');
+            var sorted = state.events.slice().sort(function(a,b) {
+                return new Date(a.date) - new Date(b.date);
+            });
+            
+            grid.innerHTML = sorted.map(function(ev) {
+                return '<article class="event-card" data-id="' + ev.id + '">' +
+                    '<button class="event-share-btn" onclick="event.stopPropagation(); shareEvent(' + ev.id + ')" title="Compartir">' +
+                        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+                            '<circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>' +
+                            '<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>' +
+                        '</svg>' +
+                    '</button>' +
+                    '<img src="' + ev.image + '" class="event-image" alt="' + ev.title + '" onerror="this.src=\'IMG-20260202-WA0006.jpg\'">' +
+                    '<div class="event-content">' +
+                        '<div class="event-date">' + formatDate(ev.date) + '</div>' +
+                        '<h3 class="event-title">' + ev.title + '</h3>' +
+                        '<p class="event-lineup">' + ev.lineup.join(' • ') + '</p>' +
+                        '<div class="event-footer">' +
+                            '<span class="event-price">' + ev.price + '</span>' +
+                            '<span class="event-status ' + ev.status + '">' + (ev.status === 'sold-out' ? 'Agotado' : 'Disponible') + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</article>';
+            }).join('');
+
+            document.querySelectorAll('.event-card').forEach(function(card) {
+                card.addEventListener('click', function() {
+                    openModal(parseInt(this.dataset.id));
+                });
+            });
+        }
+
+        function formatDate(d) {
+            var date = new Date(d);
+            var months = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+            return date.getDate() + ' ' + months[date.getMonth()];
+        }
+
+        // MODAL
+        function openModal(id) {
+            var ev = state.events.find(function(e) { return e.id === id; });
+            if (!ev) return;
+            state.selectedEvent = ev;
+            
+            document.getElementById('modalImage').src = ev.image;
+            document.getElementById('modalDate').textContent = formatDate(ev.date);
+            document.getElementById('modalTitle').textContent = ev.title;
+            document.getElementById('modalDescription').textContent = ev.description;
+            document.getElementById('modalPrice').textContent = ev.price;
+            document.getElementById('modalLineup').innerHTML = ev.lineup.map(function(a) {
+                return '<div class="modal-artist">' + a + '</div>';
+            }).join('');
+            
+            document.getElementById('eventModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('eventModal').classList.remove('active');
+            document.body.style.overflow = '';
+            state.selectedEvent = null;
+        }
+
+        // SHARE
+        function shareInauguration() {
+            var text = '🔥 INAUGURACIÓN DETROIT CLUB 🔥\n\n14 FEBRERO 2026\nJAMES RUSKIN\nCECILIA TOSH\nAARON BLEEK\n\nAforo limitado: 250 personas\n\n🎟️ Entradas: https://es.ra.co/clubs/163338\n\n@detroitclub_bcn';
+            shareText(text);
+        }
+
+        function shareEvent(id) {
+            var ev = state.events.find(function(e) { return e.id === id; });
+            if (!ev) return;
+            var text = '🔥 ' + ev.title.toUpperCase() + ' 🔥\n\n📅 ' + formatDate(ev.date) + '\n🎧 ' + ev.lineup.join(', ') + '\n💶 ' + ev.price + '\n\n🎟️ Entradas: ' + CONFIG.RA_URL + '\n\n@detroitclub_bcn';
+            shareText(text);
+        }
+
+        function shareCurrentEvent() {
+            if (state.selectedEvent) {
+                shareEvent(state.selectedEvent.id);
+            }
+        }
+
+        function shareText(text) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Detroit Club',
+                    text: text,
+                    url: window.location.href
+                }).catch(function() {});
+            } else {
+                navigator.clipboard.writeText(text).then(function() {
+                    alert('¡Copiado al portapapeles!');
+                }).catch(function() {
+                    prompt('Copia este texto:', text);
+                });
+            }
+        }
+
+        // NEWSLETTER
+        function handleSubscribe(e) {
+            e.preventDefault();
+            var email = document.getElementById('emailInput').value.trim();
+            var btn = document.getElementById('submitBtn');
+            var msg = document.getElementById('formMessage');
+            
+            if (!email || email.indexOf('@') === -1) {
+                msg.textContent = 'Email inválido';
+                msg.className = 'newsletter-message error';
+                return;
+            }
+            
+            btn.disabled = true;
+            
+            var sub = { email: email, date: new Date().toISOString(), lang: state.currentLang };
+            if (!state.subscribers.find(function(s) { return s.email === email; })) {
+                state.subscribers.push(sub);
+                saveData();
+            }
+            
+            if (CONFIG.GOOGLE_SCRIPT_URL) {
+                fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email: email, timestamp: new Date().toISOString(), lang: state.currentLang})
+                }).catch(function() {});
+            }
+            
+            msg.textContent = '¡Bienvenido a la familia!';
+            msg.className = 'newsletter-message success';
+            document.getElementById('emailInput').value = '';
+            btn.disabled = false;
+            
+            setTimeout(function() { msg.textContent = ''; }, 5000);
+        }
+
+        // ADMIN
+        function toggleAdmin() {
+            var panel = document.getElementById('adminPanel');
+            panel.classList.toggle('active');
+            if (panel.classList.contains('active')) {
+                renderAdminList();
+                updateStats();
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(function(t) {
+                t.classList.toggle('active', t.dataset.tab === tab);
+            });
+            document.querySelectorAll('.admin-tab-content').forEach(function(c) {
+                c.classList.toggle('active', c.id === 'tab-' + tab);
+            });
+        }
+
+        function addEvent() {
+            var title = document.getElementById('adminEventTitle').value;
+            var date = document.getElementById('adminEventDate').value;
+            if (!title || !date) { alert('Faltan datos obligatorios'); return; }
+            
+            var newEv = {
+                id: Date.now(),
+                title: title,
+                date: date,
+                lineup: document.getElementById('adminEventLineup').value.split(',').map(function(s) { return s.trim(); }).filter(function(s) { return s; }),
+                price: document.getElementById('adminEventPrice').value || 'TBA',
+                image: document.getElementById('adminEventImage').value || 'IMG-20260202-WA0006.jpg',
+                description: document.getElementById('adminEventDescription').value || 'Próximamente...',
+                status: document.getElementById('adminEventStatus').value
+            };
+            
+            state.events.push(newEv);
+            saveData();
+            renderCalendar();
+            renderEvents();
+            renderAdminList();
+            
+            // Clear form
+            document.getElementById('adminEventTitle').value = '';
+            document.getElementById('adminEventDate').value = '';
+            document.getElementById('adminEventLineup').value = '';
+            document.getElementById('adminEventPrice').value = '';
+            document.getElementById('adminEventImage').value = '';
+            document.getElementById('adminEventDescription').value = '';
+        }
+
+        function deleteEvent(id) {
+            if (!confirm('¿Eliminar este evento?')) return;
+            state.events = state.events.filter(function(e) { return e.id !== id; });
+            saveData();
+            renderCalendar();
+            renderEvents();
+            renderAdminList();
+        }
+
+        function renderAdminList() {
+            var container = document.getElementById('adminEventList');
+            container.innerHTML = state.events.map(function(ev) {
+                return '<div class="admin-list-item">' +
+                    '<div><div class="admin-list-title">' + ev.title + '</div><div class="admin-list-subtitle">' + formatDate(ev.date) + '</div></div>' +
+                    '<button class="admin-list-btn" onclick="deleteEvent(' + ev.id + ')">✕</button>' +
+                '</div>';
+            }).join('') || '<p style="color:var(--fog);font-size:12px;">Sin eventos</p>';
+        }
+
+        function updateStats() {
+            document.getElementById('statEvents').textContent = state.events.length;
+            document.getElementById('statSubscribers').textContent = state.subscribers.length;
+        }
+
+        function exportData() {
+            var data = {events: state.events, subscribers: state.subscribers, date: new Date().toISOString()};
+            var blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'detroit-backup-' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+        }
+
+        function clearAll() {
+            if (!confirm('¿Borrar TODOS los eventos?')) return;
+            state.events = [];
+            saveData();
+            renderCalendar();
+            renderEvents();
+            renderAdminList();
+        }
+
+        function saveConfig() {
+            var url = document.getElementById('sheetUrl').value.trim();
+            if (url) {
+                localStorage.setItem('detroit_sheet_url', url);
+                CONFIG.GOOGLE_SCRIPT_URL = url;
+                alert('Configuración guardada');
+            }
+        }
+
+        // LISTENERS
+        function setupListeners() {
+            // Menu
+            document.getElementById('menuTrigger').addEventListener('click', function() {
+                var menu = document.getElementById('fullscreenMenu');
+                var trigger = document.getElementById('menuTrigger');
+                menu.classList.toggle('active');
+                trigger.classList.toggle('active');
+                document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+            });
+            
+            // Nav links
+            document.querySelectorAll('[data-nav]').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var target = this.getAttribute('href');
+                    document.getElementById('fullscreenMenu').classList.remove('active');
+                    document.getElementById('menuTrigger').classList.remove('active');
+                    document.body.style.overflow = '';
+                    setTimeout(function() {
+                        document.querySelector(target).scrollIntoView({behavior: 'smooth'});
+                    }, 300);
+                });
+            });
+            
+            // Modal
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+            document.getElementById('eventModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+            
+            // Newsletter
+            document.getElementById('newsletterForm').addEventListener('submit', handleSubscribe);
+            
+            // Admin
+            document.getElementById('adminToggle').addEventListener('click', toggleAdmin);
+            document.getElementById('adminClose').addEventListener('click', toggleAdmin);
+            
+            document.querySelectorAll('.admin-tab').forEach(function(tab) {
+                tab.addEventListener('click', function() { switchTab(this.dataset.tab); });
+            });
+            
+            document.getElementById('addEventBtn').addEventListener('click', addEvent);
+            document.getElementById('exportDataBtn').addEventListener('click', exportData);
+            document.getElementById('clearEventsBtn').addEventListener('click', clearAll);
+            document.getElementById('saveConfigBtn').addEventListener('click', saveConfig);
+            
+            // Lang
+            document.querySelectorAll('.lang-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    state.currentLang = this.dataset.lang;
+                });
+            });
+            
+            // Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('fullscreenMenu').classList.remove('active');
+                    document.getElementById('menuTrigger').classList.remove('active');
+                    document.body.style.overflow = '';
+                    document.getElementById('adminPanel').classList.remove('active');
+                    closeModal();
+                }
+            });
+        }
+
+        function setupScroll() {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, {threshold: 0.1});
+            
+            document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+        }
+
+        function setupHeader() {
+            var header = document.getElementById('header');
+            window.addEventListener('scroll', function() {
+                header.classList.toggle('scrolled', window.scrollY > 100);
+            }, {passive: true});
+        }
+    </script>
+</body>
+</html>
