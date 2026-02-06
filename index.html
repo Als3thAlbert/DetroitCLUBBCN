@@ -1109,7 +1109,41 @@
             .merch-card-large:hover { transform: none; }
             .merch-card-large:active { transform: translateY(-2px); }
         }
+.btn-maps {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--ember);
+    color: var(--mist);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+@media (min-width: 480px) {
+    .btn-maps {
+        padding: 14px 28px;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+    }
+}
+
+.btn-maps:hover, .btn-maps:active {
+    background: var(--blood);
+    transform: translateY(-2px);
+}
+
+.btn-maps svg {
+    flex-shrink: 0;
+}
+        
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -1331,6 +1365,13 @@
                 allowfullscreen=""
                 loading="lazy">
             </iframe>
+            <a href="https://www.google.com/maps/search/?api=1&query=Passatge+Can+Politic+13,+08907+L'Hospitalet+de+Llobregat,+Barcelona,+España" class="btn-maps" target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+    </svg>
+    Abrir en Google Maps
+            </a>
+            
         </div>
     </section>
 
