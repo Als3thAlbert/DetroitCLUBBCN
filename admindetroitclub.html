@@ -78,7 +78,7 @@
         }
 
         .login-screen.hidden {
-            display: none;
+            display: none !important;
         }
 
         .login-box {
@@ -425,6 +425,11 @@
             color: var(--fog);
         }
 
+        .event-status.soldout {
+            background: var(--blood);
+            color: var(--mist);
+        }
+
         .table-actions {
             display: flex;
             gap: 8px;
@@ -768,9 +773,632 @@
 </head>
 <body>
 
+    <!-- ========================================== -->
     <!-- LOGIN SCREEN -->
+    <!-- ========================================== -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <img src="Logo Detroit club-OSW-01.png" alt="Detroit Club" class="login-logo">
+            <!-- Reemplaza con tu logo -->
+            <div style="font-family: var(--font-display); font-size: 2rem; color: var(--mist); margin-bottom: 32px;">
+                DETROIT CLUB
+            </div>
             <h1 class="login-title">Admin Access</h1>
-            <p class="login-subtitle">Panel de control - Staff
+            <p class="login-subtitle">Panel de control - Staff only</p>
+            
+            <!-- INPUT CONTRASEÑA -->
+            <input 
+                type="password" 
+                class="login-input" 
+                id="loginPassword" 
+                placeholder="Contraseña..."
+                onkeypress="if(event.key==='Enter')doLogin()"
+            >
+            
+            <!-- BOTÓN ACCEDER -->
+            <button class="login-btn" onclick="doLogin()">
+                ACCEDER
+            </button>
+            
+            <!-- MENSAJE ERROR -->
+            <div class="login-error" id="loginError">
+                Contraseña incorrecta
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LOADING OVERLAY -->
+    <!-- ========================================== -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Cargando...</div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TOAST CONTAINER -->
+    <!-- ========================================== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ========================================== -->
+    <!-- ADMIN INTERFACE -->
+    <!-- ========================================== -->
+    <div class="admin-interface" id="adminInterface" style="display: none;">
+        
+        <!-- Header -->
+        <header class="admin-header">
+            <div style="font-family: var(--font-display); font-size: 1.25rem; color: var(--mist);">
+                DETROIT CLUB
+            </div>
+            <div class="admin-header-actions">
+                <span class="admin-user">Staff Admin</span>
+                <button class="admin-logout" onclick="logout()">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="admin-nav">
+            <button class="admin-nav-btn active" onclick="showSection('dashboard', this)">Dashboard</button>
+            <button class="admin-nav-btn" onclick="showSection('events', this)">Eventos</button>
+            <button class="admin-nav-btn" onclick="showSection('newsletter', this)">Newsletter</button>
+            <button class="admin-nav-btn" onclick="showSection('settings', this)">Configuración</button>
+        </nav>
+
+        <!-- Content -->
+        <main class="admin-container">
+
+            <!-- DASHBOARD SECTION -->
+            <section class="admin-section active" id="section-dashboard">
+                <div class="admin-content">
+                    <h2 class="admin-section-title">Dashboard</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-number" id="statTotalEvents">0</div>
+                            <div class="stat-card-label">Eventos totales</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-number" id="statUpcomingEvents">0</div>
+                            <div class="stat-card-label">Próximos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-number" id="statSubscribers">0</div>
+                            <div class="stat-card-label">Suscriptores</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-number" id="statThisMonth">0</div>
+                            <div class="stat-card-label">Este mes</div>
+                        </div>
+                    </div>
+
+                    <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--mist); text-transform: uppercase; margin-bottom: 24px;">Próximos eventos</h3>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Evento</th>
+                                    <th>Fecha</th>
+                                    <th>Precio</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardEventsTable">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EVENTS SECTION -->
+            <section class="admin-section" id="section-events">
+                <div class="admin-content">
+                    <div class="admin-section-title">
+                        <span>Gestión de Eventos</span>
+                        <button class="admin-btn-primary" onclick="openEventModal()">+ Nuevo Evento</button>
+                    </div>
+
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Precio</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="eventsTable">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="empty-state" id="eventsEmpty" style="display: none;">
+                        <div class="empty-state-icon">📅</div>
+                        <p class="empty-state-text">No hay eventos creados</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEWSLETTER SECTION -->
+            <section class="admin-section" id="section-newsletter">
+                <div class="admin-content">
+                    <h2 class="admin-section-title">Suscriptores Newsletter</h2>
+                    
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Lugar</th>
+                                    <th>Dispositivo</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="newsletterTable">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SETTINGS SECTION -->
+            <section class="admin-section" id="section-settings">
+                <div class="admin-content">
+                    <h2 class="admin-section-title">Configuración</h2>
+                    <p style="color: var(--bone);">Configuración del sitio (próximamente)</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- EVENT MODAL -->
+    <!-- ========================================== -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Nuevo Evento</h3>
+                <button class="modal-close" onclick="closeEventModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm">
+                    <input type="hidden" id="eventId">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nombre del evento *</label>
+                            <input type="text" class="form-input" id="eventName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Fecha *</label>
+                            <input type="date" class="form-input" id="eventDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Hora inicio - fin *</label>
+                            <input type="text" class="form-input" id="eventTime" placeholder="23:59 - 06:00" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Precio *</label>
+                            <input type="text" class="form-input" id="eventPrice" placeholder="15€" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">URL Resident Advisor</label>
+                        <input type="url" class="form-input" id="eventUrl" placeholder="https://es.ra.co/events/...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Descripción *</label>
+                        <textarea class="form-textarea" id="eventDescription" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Imagen (archivo)</label>
+                            <input type="file" class="form-input" id="eventImageFile" accept="image/*" onchange="previewImage(this)">
+                            <img src="" alt="Preview" class="form-image-preview" id="imagePreview" style="display: none;">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">O URL de imagen</label>
+                            <input type="text" class="form-input" id="eventImageUrl" placeholder="ruta/imagen.jpg" onchange="previewUrl(this.value)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Estado</label>
+                        <select class="form-select" id="eventStatus">
+                            <option value="active">Activo</option>
+                            <option value="inactive">Inactivo</option>
+                            <option value="soldout">Sold Out</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="admin-btn-secondary" onclick="closeEventModal()">Cancelar</button>
+                <button class="admin-btn-primary" onclick="saveEvent()">Guardar Evento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- DELETE CONFIRM MODAL -->
+    <!-- ========================================== -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal" style="max-width: 400px;">
+            <div class="confirm-modal">
+                <div class="confirm-modal-icon">⚠</div>
+                <h3 class="confirm-modal-title">Eliminar Evento</h3>
+                <p class="confirm-modal-text">¿Estás seguro de que quieres eliminar este evento? Esta acción no se puede deshacer.</p>
+                <div class="confirm-modal-actions">
+                    <button class="admin-btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+                    <button class="admin-btn-danger" onclick="confirmDelete()">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================== -->
+    <script>
+        // ==========================================
+        // CONFIGURACIÓN
+        // ==========================================
+        const ADMIN_PASSWORD = '1234567890';
+
+        // ==========================================
+        // ESTADO
+        // ==========================================
+        let events = [];
+        let subscribers = [];
+        let deleteEventId = null;
+
+        // ==========================================
+        // LOGIN
+        // ==========================================
+        function doLogin() {
+            const password = document.getElementById('loginPassword').value;
+            const error = document.getElementById('loginError');
+            
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminInterface').style.display = 'block';
+                sessionStorage.setItem('adminLogged', 'true');
+                loadData();
+            } else {
+                error.classList.add('show');
+                setTimeout(() => error.classList.remove('show'), 3000);
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('adminLogged');
+            location.reload();
+        }
+
+        // Check session on load
+        if (sessionStorage.getItem('adminLogged') === 'true') {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('adminInterface').style.display = 'block';
+            loadData();
+        }
+
+        // ==========================================
+        // NAVEGACIÓN
+        // ==========================================
+        function showSection(sectionName, btnElement) {
+            // Update nav buttons
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (btnElement) {
+                btnElement.classList.add('active');
+            }
+            
+            // Update sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`section-${sectionName}`).classList.add('active');
+        }
+
+        // ==========================================
+        // DATOS
+        // ==========================================
+        function loadData() {
+            showLoading(true);
+            
+            // Datos de ejemplo
+            events = [
+                {
+                    id: 1,
+                    name: 'INAUGURACIÓN',
+                    date: '2026-02-14',
+                    time: '23:59 - 06:00',
+                    description: 'James Ruskin • Cecilia Tosh • Aaron Bleek. El nacimiento de Detroit Club Barcelona.',
+                    price: '15€',
+                    image: 'InauguracionDtrotTRES.jpg',
+                    url: 'https://es.ra.co/events/2358822',
+                    status: 'active'
+                },
+                {
+                    id: 2,
+                    name: 'AUTOMATA: DOCUMENT ONE (UK)',
+                    date: '2026-02-20',
+                    time: '23:59 - 06:00',
+                    description: 'AUTOMATA presenta: DOCUMENT ONE (UK) 🔥 Noche completa de Drum & Bass. Prime Bassound, Ktahx, LOJ, Powser, Red, Jane Again.',
+                    price: '15€',
+                    image: 'AutomataFebrero.jpeg',
+                    url: 'https://es.ra.co/events/2358822',
+                    status: 'active'
+                }
+            ];
+            
+            subscribers = [
+                { email: 'ejemplo@email.com', lugar: 'Detroit Club Web', dispositivo: 'Mozilla/5.0', fecha: '2026-02-07T10:30:00Z' }
+            ];
+            
+            renderEvents();
+            renderDashboard();
+            renderNewsletter();
+            updateStats();
+            
+            showLoading(false);
+        }
+
+        // ==========================================
+        // RENDER
+        // ==========================================
+        function renderEvents() {
+            const tbody = document.getElementById('eventsTable');
+            const empty = document.getElementById('eventsEmpty');
+            
+            if (events.length === 0) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            
+            empty.style.display = 'none';
+            
+            tbody.innerHTML = events.map(event => `
+                <tr>
+                    <td><img src="${event.image}" alt="${event.name}" class="event-thumbnail" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2275%22%3E%3Crect width=%2260%22 height=%2275%22 fill=%22%23333%22/%3E%3Ctext x=%2230%22 y=%2240%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2210%22%3ENO IMG%3C/text%3E%3C/svg%3E'"></td>
+                    <td><strong>${event.name}</strong></td>
+                    <td>${formatDate(event.date)}</td>
+                    <td>${event.time}</td>
+                    <td>${event.price}</td>
+                    <td><span class="event-status ${event.status}">${event.status}</span></td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="table-btn" onclick="editEvent(${event.id})">Editar</button>
+                            <button class="table-btn delete" onclick="deleteEvent(${event.id})">Eliminar</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderDashboard() {
+            const tbody = document.getElementById('dashboardEventsTable');
+            const upcoming = events.filter(e => new Date(e.date) >= new Date()).slice(0, 5);
+            
+            tbody.innerHTML = upcoming.map(event => `
+                <tr>
+                    <td><strong>${event.name}</strong></td>
+                    <td>${formatDate(event.date)}</td>
+                    <td>${event.price}</td>
+                    <td><span class="event-status ${event.status}">${event.status}</span></td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="table-btn" onclick="editEvent(${event.id})">Editar</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderNewsletter() {
+            const tbody = document.getElementById('newsletterTable');
+            
+            tbody.innerHTML = subscribers.map(sub => `
+                <tr>
+                    <td>${sub.email}</td>
+                    <td>${sub.lugar}</td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${sub.dispositivo.substring(0, 50)}...</td>
+                    <td>${formatDateTime(sub.fecha)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('statTotalEvents').textContent = events.length;
+            document.getElementById('statUpcomingEvents').textContent = 
+                events.filter(e => new Date(e.date) >= new Date()).length;
+            document.getElementById('statSubscribers').textContent = subscribers.length;
+            document.getElementById('statThisMonth').textContent = 
+                events.filter(e => {
+                    const d = new Date(e.date);
+                    const now = new Date();
+                    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                }).length;
+        }
+
+        // ==========================================
+        // EVENTOS CRUD
+        // ==========================================
+        function openEventModal(eventId = null) {
+            const modal = document.getElementById('eventModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('eventForm');
+            
+            form.reset();
+            document.getElementById('imagePreview').style.display = 'none';
+            
+            if (eventId) {
+                const event = events.find(e => e.id === eventId);
+                if (event) {
+                    title.textContent = 'Editar Evento';
+                    document.getElementById('eventId').value = event.id;
+                    document.getElementById('eventName').value = event.name;
+                    document.getElementById('eventDate').value = event.date;
+                    document.getElementById('eventTime').value = event.time;
+                    document.getElementById('eventPrice').value = event.price;
+                    document.getElementById('eventUrl').value = event.url || '';
+                    document.getElementById('eventDescription').value = event.description;
+                    document.getElementById('eventImageUrl').value = event.image;
+                    document.getElementById('eventStatus').value = event.status;
+                    
+                    if (event.image) {
+                        document.getElementById('imagePreview').src = event.image;
+                        document.getElementById('imagePreview').style.display = 'block';
+                    }
+                }
+            } else {
+                title.textContent = 'Nuevo Evento';
+                document.getElementById('eventId').value = '';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').classList.remove('active');
+        }
+
+        function editEvent(id) {
+            openEventModal(id);
+        }
+
+        function saveEvent() {
+            const id = document.getElementById('eventId').value;
+            const eventData = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('eventName').value,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                price: document.getElementById('eventPrice').value,
+                url: document.getElementById('eventUrl').value,
+                description: document.getElementById('eventDescription').value,
+                image: document.getElementById('eventImageUrl').value || 'default-event.jpg',
+                status: document.getElementById('eventStatus').value
+            };
+            
+            if (!eventData.name || !eventData.date || !eventData.time || !eventData.price || !eventData.description) {
+                showToast('Completa todos los campos obligatorios', 'error');
+                return;
+            }
+            
+            if (id) {
+                const index = events.findIndex(e => e.id === parseInt(id));
+                if (index !== -1) {
+                    events[index] = eventData;
+                    showToast('Evento actualizado correctamente', 'success');
+                }
+            } else {
+                events.push(eventData);
+                showToast('Evento creado correctamente', 'success');
+            }
+            
+            renderEvents();
+            renderDashboard();
+            updateStats();
+            closeEventModal();
+        }
+
+        function deleteEvent(id) {
+            deleteEventId = id;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            deleteEventId = null;
+        }
+
+        function confirmDelete() {
+            if (deleteEventId) {
+                events = events.filter(e => e.id !== deleteEventId);
+                showToast('Evento eliminado', 'success');
+                renderEvents();
+                renderDashboard();
+                updateStats();
+            }
+            closeDeleteModal();
+        }
+
+        // ==========================================
+        // UTILIDADES
+        // ==========================================
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreview').style.display = 'block';
+                    document.getElementById('eventImageUrl').value = input.files[0].name;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function previewUrl(url) {
+            if (url) {
+                document.getElementById('imagePreview').src = url;
+                document.getElementById('imagePreview').style.display = 'block';
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function formatDateTime(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleString('es-ES');
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').classList.toggle('active', show);
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span class="toast-message">${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 4000);
+        }
+
+        // Cerrar modales al hacer click fuera
+        document.getElementById('eventModal').addEventListener('click', (e) => {
+            if (e.target.id === 'eventModal') {
+                closeEventModal();
+            }
+        });
+    </script>
+</body>
+</html>
