@@ -91,9 +91,10 @@
         }
 
         .login-logo {
-            height: 48px;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--mist);
             margin-bottom: 32px;
-            opacity: 0.9;
         }
 
         .login-title {
@@ -176,7 +177,9 @@
         }
 
         .admin-header-logo {
-            height: 32px;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--mist);
         }
 
         .admin-header-actions {
@@ -364,6 +367,197 @@
             color: var(--bone);
             text-transform: uppercase;
             letter-spacing: 0.1em;
+        }
+
+        /* CALENDAR SECTION */
+        .calendar-admin {
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            padding: 24px;
+            margin-bottom: 48px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .calendar-nav-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--iron);
+            border: 1px solid var(--ash);
+            color: var(--mist);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-nav-btn:hover {
+            background: var(--ember);
+            border-color: var(--ember);
+        }
+
+        .calendar-month-year {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--mist);
+            text-transform: uppercase;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day-header {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--fog);
+            text-transform: uppercase;
+            text-align: center;
+            padding: 12px 4px;
+            letter-spacing: 0.05em;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            background: var(--bg-darker);
+            border: 1px solid var(--ash);
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 80px;
+        }
+
+        .calendar-day:hover {
+            border-color: var(--ember);
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+        }
+
+        .calendar-day.today {
+            border-color: var(--ember);
+        }
+
+        .calendar-day-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--mist);
+            margin-bottom: 4px;
+        }
+
+        .calendar-day-event {
+            font-size: 9px;
+            color: var(--ember);
+            line-height: 1.2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            background: rgba(138, 38, 53, 0.2);
+            padding: 2px 4px;
+            margin-top: 2px;
+        }
+
+        .calendar-day.has-event {
+            background: rgba(138, 38, 53, 0.1);
+        }
+
+        /* FEATURED EVENT */
+        .featured-event {
+            background: var(--steel);
+            border: 1px solid var(--ash);
+            padding: 32px;
+            margin-bottom: 48px;
+        }
+
+        .featured-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--ash);
+        }
+
+        .featured-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--mist);
+            text-transform: uppercase;
+        }
+
+        .featured-content {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .featured-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .featured-image {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border: 1px solid var(--ash);
+        }
+
+        .featured-info h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--mist);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .featured-date {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--ember);
+            margin-bottom: 16px;
+        }
+
+        .featured-description {
+            color: var(--bone);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .featured-meta-item {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--smoke);
+        }
+
+        .featured-meta-item strong {
+            color: var(--mist);
+            display: block;
+            margin-bottom: 4px;
         }
 
         /* EVENTS TABLE */
@@ -768,6 +962,23 @@
                 margin: 0 -16px;
                 width: calc(100% + 32px);
             }
+
+            .calendar-grid {
+                gap: 2px;
+            }
+
+            .calendar-day {
+                min-height: 60px;
+                padding: 4px;
+            }
+
+            .calendar-day-number {
+                font-size: 12px;
+            }
+
+            .calendar-day-event {
+                font-size: 8px;
+            }
         }
     </style>
 </head>
@@ -778,14 +989,10 @@
     <!-- ========================================== -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <!-- Reemplaza con tu logo -->
-            <div style="font-family: var(--font-display); font-size: 2rem; color: var(--mist); margin-bottom: 32px;">
-                DETROIT CLUB
-            </div>
+            <div class="login-logo">DETROIT CLUB</div>
             <h1 class="login-title">Admin Access</h1>
             <p class="login-subtitle">Panel de control - Staff only</p>
             
-            <!-- INPUT CONTRASEÑA -->
             <input 
                 type="password" 
                 class="login-input" 
@@ -794,12 +1001,10 @@
                 onkeypress="if(event.key==='Enter')doLogin()"
             >
             
-            <!-- BOTÓN ACCEDER -->
             <button class="login-btn" onclick="doLogin()">
                 ACCEDER
             </button>
             
-            <!-- MENSAJE ERROR -->
             <div class="login-error" id="loginError">
                 Contraseña incorrecta
             </div>
@@ -826,9 +1031,7 @@
         
         <!-- Header -->
         <header class="admin-header">
-            <div style="font-family: var(--font-display); font-size: 1.25rem; color: var(--mist);">
-                DETROIT CLUB
-            </div>
+            <div class="admin-header-logo">DETROIT CLUB</div>
             <div class="admin-header-actions">
                 <span class="admin-user">Staff Admin</span>
                 <button class="admin-logout" onclick="logout()">Cerrar sesión</button>
@@ -870,22 +1073,31 @@
                         </div>
                     </div>
 
-                    <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--mist); text-transform: uppercase; margin-bottom: 24px;">Próximos eventos</h3>
-                    <div class="admin-table-container">
-                        <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>Evento</th>
-                                    <th>Fecha</th>
-                                    <th>Precio</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dashboardEventsTable">
-                                <!-- Dynamic content -->
-                            </tbody>
-                        </table>
+                    <!-- CALENDARIO -->
+                    <div class="calendar-admin">
+                        <div class="calendar-header">
+                            <div class="calendar-nav">
+                                <button class="calendar-nav-btn" onclick="changeMonth(-1)">←</button>
+                            </div>
+                            <div class="calendar-month-year" id="calendarMonthYear">Febrero 2026</div>
+                            <div class="calendar-nav">
+                                <button class="calendar-nav-btn" onclick="changeMonth(1)">→</button>
+                            </div>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Generado dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- EVENTO DESTACADO -->
+                    <div class="featured-event" id="featuredEvent">
+                        <div class="featured-header">
+                            <span class="featured-title">Próximo Evento Destacado</span>
+                            <button class="admin-btn-secondary" onclick="editFeaturedEvent()">Editar Destacado</button>
+                        </div>
+                        <div class="featured-content" id="featuredContent">
+                            <!-- Generado dinámicamente -->
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1005,23 +1217,18 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">Imagen (archivo)</label>
-                            <input type="file" class="form-input" id="eventImageFile" accept="image/*" onchange="previewImage(this)">
+                            <label class="form-label">URL de imagen</label>
+                            <input type="text" class="form-input" id="eventImageUrl" placeholder="ruta/imagen.jpg" onchange="previewUrl(this.value)">
                             <img src="" alt="Preview" class="form-image-preview" id="imagePreview" style="display: none;">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">O URL de imagen</label>
-                            <input type="text" class="form-input" id="eventImageUrl" placeholder="ruta/imagen.jpg" onchange="previewUrl(this.value)">
+                            <label class="form-label">Estado</label>
+                            <select class="form-select" id="eventStatus">
+                                <option value="active">Activo</option>
+                                <option value="inactive">Inactivo</option>
+                                <option value="soldout">Sold Out</option>
+                            </select>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Estado</label>
-                        <select class="form-select" id="eventStatus">
-                            <option value="active">Activo</option>
-                            <option value="inactive">Inactivo</option>
-                            <option value="soldout">Sold Out</option>
-                        </select>
                     </div>
                 </form>
             </div>
@@ -1050,6 +1257,33 @@
     </div>
 
     <!-- ========================================== -->
+    <!-- FEATURED EVENT MODAL -->
+    <!-- ========================================== -->
+    <div class="modal-overlay" id="featuredModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Editar Evento Destacado</h3>
+                <button class="modal-close" onclick="closeFeaturedModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Seleccionar evento destacado</label>
+                    <select class="form-select" id="featuredSelect" style="width: 100%;">
+                        <!-- Opciones generadas dinámicamente -->
+                    </select>
+                </div>
+                <p style="color: var(--bone); font-size: 12px; margin-top: 16px;">
+                    El evento destacado aparecerá en la página principal como próximo evento principal.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="admin-btn-secondary" onclick="closeFeaturedModal()">Cancelar</button>
+                <button class="admin-btn-primary" onclick="saveFeaturedEvent()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
     <!-- JAVASCRIPT -->
     <!-- ========================================== -->
     <script>
@@ -1064,6 +1298,8 @@
         let events = [];
         let subscribers = [];
         let deleteEventId = null;
+        let currentDate = new Date(2026, 1, 1); // Febrero 2026 por defecto
+        let featuredEventId = null;
 
         // ==========================================
         // LOGIN
@@ -1092,14 +1328,14 @@
         if (sessionStorage.getItem('adminLogged') === 'true') {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('adminInterface').style.display = 'block';
-            loadData();
+            // No llamamos loadData aquí porque el DOM puede no estar listo
+            document.addEventListener('DOMContentLoaded', loadData);
         }
 
         // ==========================================
         // NAVEGACIÓN
         // ==========================================
         function showSection(sectionName, btnElement) {
-            // Update nav buttons
             document.querySelectorAll('.admin-nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
@@ -1107,7 +1343,6 @@
                 btnElement.classList.add('active');
             }
             
-            // Update sections
             document.querySelectorAll('.admin-section').forEach(section => {
                 section.classList.remove('active');
             });
@@ -1115,51 +1350,220 @@
         }
 
         // ==========================================
-        // DATOS
+        // DATOS MOCK (simulando backend)
         // ==========================================
         function loadData() {
             showLoading(true);
             
-            // Datos de ejemplo
-            events = [
-                {
-                    id: 1,
-                    name: 'INAUGURACIÓN',
-                    date: '2026-02-14',
-                    time: '23:59 - 06:00',
-                    description: 'James Ruskin • Cecilia Tosh • Aaron Bleek. El nacimiento de Detroit Club Barcelona.',
-                    price: '15€',
-                    image: 'InauguracionDtrotTRES.jpg',
-                    url: 'https://es.ra.co/events/2358822',
-                    status: 'active'
-                },
-                {
-                    id: 2,
-                    name: 'AUTOMATA: DOCUMENT ONE (UK)',
-                    date: '2026-02-20',
-                    time: '23:59 - 06:00',
-                    description: 'AUTOMATA presenta: DOCUMENT ONE (UK) 🔥 Noche completa de Drum & Bass. Prime Bassound, Ktahx, LOJ, Powser, Red, Jane Again.',
-                    price: '15€',
-                    image: 'AutomataFebrero.jpeg',
-                    url: 'https://es.ra.co/events/2358822',
-                    status: 'active'
-                }
-            ];
-            
-            subscribers = [
-                { email: 'ejemplo@email.com', lugar: 'Detroit Club Web', dispositivo: 'Mozilla/5.0', fecha: '2026-02-07T10:30:00Z' }
-            ];
-            
-            renderEvents();
-            renderDashboard();
-            renderNewsletter();
-            updateStats();
-            
-            showLoading(false);
+            // Simular delay de red
+            setTimeout(() => {
+                // Datos de ejemplo
+                events = [
+                    {
+                        id: 1,
+                        name: 'INAUGURACIÓN',
+                        date: '2026-02-14',
+                        time: '23:59 - 06:00',
+                        description: 'James Ruskin • Cecilia Tosh • Aaron Bleek. El nacimiento de Detroit Club Barcelona.',
+                        price: '15€',
+                        image: 'LOSTRESNEWVERSION_4_5.jpg',
+                        url: 'https://es.ra.co/events/2358822',
+                        status: 'active'
+                    },
+                    {
+                        id: 2,
+                        name: 'AUTOMATA: DOCUMENT ONE (UK)',
+                        date: '2026-02-20',
+                        time: '23:59 - 06:00',
+                        description: 'AUTOMATA presenta: DOCUMENT ONE (UK) 🔥 Noche completa de Drum & Bass.',
+                        price: '15€',
+                        image: 'AutomataFebrero.jpeg',
+                        url: 'https://es.ra.co/events/2358822',
+                        status: 'active'
+                    },
+                    {
+                        id: 3,
+                        name: 'TECHNO UNDERGROUND',
+                        date: '2026-03-07',
+                        time: '23:59 - 06:00',
+                        description: 'Noche de techno industrial con artistas locales e internacionales.',
+                        price: '12€',
+                        image: 'default-event.jpg',
+                        url: '',
+                        status: 'active'
+                    }
+                ];
+                
+                // Evento destacado (el más próximo)
+                featuredEventId = 1;
+                
+                subscribers = [
+                    { email: 'ejemplo@email.com', lugar: 'Detroit Club Web', dispositivo: 'Mozilla/5.0', fecha: '2026-02-07T10:30:00Z' },
+                    { email: 'test@mail.com', lugar: 'Detroit Club Web', dispositivo: 'Mozilla/5.0 Mobile', fecha: '2026-02-08T14:22:00Z' }
+                ];
+                
+                renderEvents();
+                renderCalendar();
+                renderFeaturedEvent();
+                renderNewsletter();
+                updateStats();
+                
+                showLoading(false);
+            }, 500);
         }
 
         // ==========================================
-        // RENDER
+        // CALENDARIO
+        // ==========================================
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Actualizar título
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+                              'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            document.getElementById('calendarMonthYear').textContent = `${monthNames[month]} ${year}`;
+            
+            // Generar grid
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            // Ajustar para que lunes sea 0
+            const startDay = firstDay === 0 ? 6 : firstDay - 1;
+            
+            let html = '';
+            
+            // Headers
+            const dayHeaders = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+            dayHeaders.forEach(day => {
+                html += `<div class="calendar-day-header">${day}</div>`;
+            });
+            
+            // Días mes anterior
+            for (let i = startDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                html += `<div class="calendar-day other-month"><div class="calendar-day-number">${day}</div></div>`;
+            }
+            
+            // Días mes actual
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayEvents = events.filter(e => e.date === dateStr);
+                const isToday = today.getDate() === day && today.getMonth() === month && today.getFullYear() === year;
+                
+                let eventHtml = '';
+                dayEvents.forEach(evt => {
+                    eventHtml += `<div class="calendar-day-event">${evt.name.substring(0, 15)}${evt.name.length > 15 ? '...' : ''}</div>`;
+                });
+                
+                const hasEvent = dayEvents.length > 0 ? 'has-event' : '';
+                const isTodayClass = isToday ? 'today' : '';
+                
+                html += `
+                    <div class="calendar-day ${hasEvent} ${isTodayClass}" onclick="selectDate('${dateStr}')">
+                        <div class="calendar-day-number">${day}</div>
+                        ${eventHtml}
+                    </div>
+                `;
+            }
+            
+            // Días mes siguiente
+            const remainingCells = 42 - (startDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                html += `<div class="calendar-day other-month"><div class="calendar-day-number">${day}</div></div>`;
+            }
+            
+            document.getElementById('calendarGrid').innerHTML = html;
+        }
+
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            renderCalendar();
+        }
+
+        function selectDate(dateStr) {
+            const event = events.find(e => e.date === dateStr);
+            if (event) {
+                editEvent(event.id);
+            } else {
+                // Pre-llenar fecha en nuevo evento
+                openEventModal();
+                document.getElementById('eventDate').value = dateStr;
+            }
+        }
+
+        // ==========================================
+        // EVENTO DESTACADO
+        // ==========================================
+        function renderFeaturedEvent() {
+            const container = document.getElementById('featuredContent');
+            const event = events.find(e => e.id === featuredEventId);
+            
+            if (!event) {
+                container.innerHTML = '<p style="color: var(--bone);">No hay evento destacado seleccionado</p>';
+                return;
+            }
+            
+            const date = new Date(event.date);
+            const dateStr = date.toLocaleDateString('es-ES', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            container.innerHTML = `
+                <img src="${event.image}" alt="${event.name}" class="featured-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22%3E%3Crect width=%22400%22 height=%22500%22 fill=%22%23333%22/%3E%3Ctext x=%22200%22 y=%22250%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2220%22%3E${event.name}%3C/text%3E%3C/svg%3E'">
+                <div class="featured-info">
+                    <h3>${event.name}</h3>
+                    <div class="featured-date">${dateStr}</div>
+                    <p class="featured-description">${event.description}</p>
+                    <div class="featured-meta">
+                        <div class="featured-meta-item">
+                            <strong>Hora</strong>
+                            ${event.time}
+                        </div>
+                        <div class="featured-meta-item">
+                            <strong>Precio</strong>
+                            ${event.price}
+                        </div>
+                        <div class="featured-meta-item">
+                            <strong>Estado</strong>
+                            ${event.status}
+                        </div>
+                    </div>
+                    <div class="table-actions">
+                        <button class="table-btn" onclick="editEvent(${event.id})">Editar Evento</button>
+                        <button class="table-btn" onclick="window.open('${event.url}', '_blank')">Ver en RA</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function editFeaturedEvent() {
+            const select = document.getElementById('featuredSelect');
+            select.innerHTML = events.map(e => 
+                `<option value="${e.id}" ${e.id === featuredEventId ? 'selected' : ''}>${e.name} - ${e.date}</option>`
+            ).join('');
+            
+            document.getElementById('featuredModal').classList.add('active');
+        }
+
+        function closeFeaturedModal() {
+            document.getElementById('featuredModal').classList.remove('active');
+        }
+
+        function saveFeaturedEvent() {
+            featuredEventId = parseInt(document.getElementById('featuredSelect').value);
+            renderFeaturedEvent();
+            showToast('Evento destacado actualizado', 'success');
+            closeFeaturedModal();
+        }
+
+        // ==========================================
+        // EVENTOS CRUD
         // ==========================================
         function renderEvents() {
             const tbody = document.getElementById('eventsTable');
@@ -1191,54 +1595,6 @@
             `).join('');
         }
 
-        function renderDashboard() {
-            const tbody = document.getElementById('dashboardEventsTable');
-            const upcoming = events.filter(e => new Date(e.date) >= new Date()).slice(0, 5);
-            
-            tbody.innerHTML = upcoming.map(event => `
-                <tr>
-                    <td><strong>${event.name}</strong></td>
-                    <td>${formatDate(event.date)}</td>
-                    <td>${event.price}</td>
-                    <td><span class="event-status ${event.status}">${event.status}</span></td>
-                    <td>
-                        <div class="table-actions">
-                            <button class="table-btn" onclick="editEvent(${event.id})">Editar</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderNewsletter() {
-            const tbody = document.getElementById('newsletterTable');
-            
-            tbody.innerHTML = subscribers.map(sub => `
-                <tr>
-                    <td>${sub.email}</td>
-                    <td>${sub.lugar}</td>
-                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${sub.dispositivo.substring(0, 50)}...</td>
-                    <td>${formatDateTime(sub.fecha)}</td>
-                </tr>
-            `).join('');
-        }
-
-        function updateStats() {
-            document.getElementById('statTotalEvents').textContent = events.length;
-            document.getElementById('statUpcomingEvents').textContent = 
-                events.filter(e => new Date(e.date) >= new Date()).length;
-            document.getElementById('statSubscribers').textContent = subscribers.length;
-            document.getElementById('statThisMonth').textContent = 
-                events.filter(e => {
-                    const d = new Date(e.date);
-                    const now = new Date();
-                    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-                }).length;
-        }
-
-        // ==========================================
-        // EVENTOS CRUD
-        // ==========================================
         function openEventModal(eventId = null) {
             const modal = document.getElementById('eventModal');
             const title = document.getElementById('modalTitle');
@@ -1280,6 +1636,8 @@
 
         function editEvent(id) {
             openEventModal(id);
+            // Si estamos en dashboard, cambiar a sección eventos
+            showSection('events', document.querySelectorAll('.admin-nav-btn')[1]);
         }
 
         function saveEvent() {
@@ -1313,7 +1671,8 @@
             }
             
             renderEvents();
-            renderDashboard();
+            renderCalendar();
+            renderFeaturedEvent();
             updateStats();
             closeEventModal();
         }
@@ -1331,29 +1690,40 @@
         function confirmDelete() {
             if (deleteEventId) {
                 events = events.filter(e => e.id !== deleteEventId);
+                
+                // Si eliminamos el destacado, seleccionar el primero
+                if (deleteEventId === featuredEventId) {
+                    featuredEventId = events.length > 0 ? events[0].id : null;
+                }
+                
                 showToast('Evento eliminado', 'success');
                 renderEvents();
-                renderDashboard();
+                renderCalendar();
+                renderFeaturedEvent();
                 updateStats();
             }
             closeDeleteModal();
         }
 
         // ==========================================
-        // UTILIDADES
+        // NEWSLETTER
         // ==========================================
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreview').src = e.target.result;
-                    document.getElementById('imagePreview').style.display = 'block';
-                    document.getElementById('eventImageUrl').value = input.files[0].name;
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+        function renderNewsletter() {
+            const tbody = document.getElementById('newsletterTable');
+            
+            tbody.innerHTML = subscribers.map(sub => `
+                <tr>
+                    <td>${sub.email}</td>
+                    <td>${sub.lugar}</td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${sub.dispositivo.substring(0, 50)}...</td>
+                    <td>${formatDateTime(sub.fecha)}</td>
+                </tr>
+            `).join('');
         }
 
+        // ==========================================
+        // UTILIDADES
+        // ==========================================
         function previewUrl(url) {
             if (url) {
                 document.getElementById('imagePreview').src = url;
@@ -1376,6 +1746,19 @@
             return date.toLocaleString('es-ES');
         }
 
+        function updateStats() {
+            document.getElementById('statTotalEvents').textContent = events.length;
+            document.getElementById('statUpcomingEvents').textContent = 
+                events.filter(e => new Date(e.date) >= new Date()).length;
+            document.getElementById('statSubscribers').textContent = subscribers.length;
+            document.getElementById('statThisMonth').textContent = 
+                events.filter(e => {
+                    const d = new Date(e.date);
+                    const now = new Date();
+                    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                }).length;
+        }
+
         function showLoading(show) {
             document.getElementById('loadingOverlay').classList.toggle('active', show);
         }
@@ -1394,10 +1777,14 @@
         }
 
         // Cerrar modales al hacer click fuera
-        document.getElementById('eventModal').addEventListener('click', (e) => {
-            if (e.target.id === 'eventModal') {
-                closeEventModal();
-            }
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    if (modal.id === 'eventModal') closeEventModal();
+                    if (modal.id === 'deleteModal') closeDeleteModal();
+                    if (modal.id === 'featuredModal') closeFeaturedModal();
+                }
+            });
         });
     </script>
 </body>
